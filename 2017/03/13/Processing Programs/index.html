@@ -17,7 +17,7 @@
 <meta property="og:description" content="Processing 简介 无意中找到了这个…… 这里有一个3D Delauny Triangulation算法 感谢   Processing 简介Processing是一种具有革命前瞻性的新兴计算机语言，它的概念是在电子艺术的环境下介绍程序语言，并将电子艺术的概念介绍给程序设计师。它是 Java 语言的延伸，并支持许多现有的 Java 语言架构，不过在语法 (syntax) 上简易许多，并">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://domacles.github.io/2017/03/13/Processing%20Programs/3d_Delaunay.gif">
-<meta property="og:updated_time" content="2017-09-30T10:37:49.279Z">
+<meta property="og:updated_time" content="2017-09-30T10:39:32.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Processing Program">
 <meta name="twitter:description" content="Processing 简介 无意中找到了这个…… 这里有一个3D Delauny Triangulation算法 感谢   Processing 简介Processing是一种具有革命前瞻性的新兴计算机语言，它的概念是在电子艺术的环境下介绍程序语言，并将电子艺术的概念介绍给程序设计师。它是 Java 语言的延伸，并支持许多现有的 Java 语言架构，不过在语法 (syntax) 上简易许多，并">
@@ -184,7 +184,7 @@
 <h2 id="Processing-简介"><a href="#Processing-简介" class="headerlink" title="Processing 简介"></a>Processing 简介</h2><p><strong>Processing</strong>是一种具有革命前瞻性的新兴计算机语言，它的概念是在电子艺术的环境下介绍程序语言，并将电子艺术的概念介绍给程序设计师。它是 <strong>Java</strong> 语言的延伸，并支持许多现有的 Java 语言架构，不过在语法 (<code>syntax</code>) 上简易许多，并具有许多贴心及人性化的设计。<strong>Processing</strong> 可以在 <em>Windows、MAC OS X、MAC OS 9 、Linux</em> 等操作系统上使用。目前最新版本为<strong>Processing 3.3</strong>。以 <strong>Processing</strong> 完成的作品可在个人本机端作用，或以<strong>Java Applets</strong> 的模式外输至网络上发布。</p>
 <p>虽然图形用户界面(<code>GUI</code>)早在二十年前成为主流，但是基础编程语言的教学到今天仍是以命令行接口为主，学习编程语言为什么要那么枯燥呢？人脑天生擅长空间辨识，图形用户界面利用的正是这种优势，加上它能提供各种实时且鲜明的图像式反馈 (<strong>feedback</strong>)，可以大幅缩短学习曲线，并帮助理解抽象逻辑法则。举例来说，计算机屏幕上的一个像素(<strong>pixel</strong>) 就是一个变量值(<strong>the value of a variable</strong>) 的可视化表现。<strong>Processing</strong>将Java的语法简化并将其运算结果“感官化”，让使用者能很快享有声光兼备的交互式多媒体作品。</p>
 <p><strong>Processing</strong>的源代码是开放的，和近来广受欢迎的 Linux 操作系统、Mozilla浏览器、或Perl语言等一样，用户可依照自己的需要自由裁剪出最合适的使用模式。<strong>Processing</strong>的应用非常丰富，而且它们全部遵守开放源代码的规定，这样的设计大幅增加了整个社群的互动性与学习效率。</p>
-<h2 id="无意中找到了这个……"><a href="#无意中找到了这个……" class="headerlink" title="无意中找到了这个……"></a>无意中找到了这个……</h2><p>话说，我在公司里负责三维模型的处理，而我司的<strong>垃圾代码</strong>不仅经常出Bug，还要什么没什么，基本上只有一个简单的<strong>Mesh</strong>数据结构(OpenMesh)，矩阵计算也只支持 4 <em> 4 规模的。而我处理三维模型的点线面需要用到多维矩阵。不仅如此，接口调用复杂，一个想法难以用这套软件快速实现……最主要是没有API文档，没有注释，也不给看函数的实现，给的全是<em>*lib</em></em>文件！！！</p>
+<h2 id="无意中找到了这个……"><a href="#无意中找到了这个……" class="headerlink" title="无意中找到了这个……"></a>无意中找到了这个……</h2><p>话说，我在公司里负责三维模型的处理，而我司的<strong>垃圾代码</strong>不仅经常出Bug，还要什么没什么，基本上只有一个简单的<strong>Mesh</strong>数据结构(OpenMesh)，矩阵计算也只支持 4x4 规模的。而我处理三维模型的点线面需要用到多维矩阵。不仅如此，接口调用复杂，一个想法难以用这套软件快速实现……最主要是没有API文档，没有注释，也不给看函数的实现，给的全是<strong>lib</strong>文件！！！</p>
 <p>我想写一下<strong>Delaunay三角化算法</strong>的实现也得先从<strong>参数化</strong>开始一步一步实现……</p>
 <p><strong>Processing</strong> 真是及时雨啊。</p>
 <h2 id="这里有一个3D-Delauny-Triangulation算法"><a href="#这里有一个3D-Delauny-Triangulation算法" class="headerlink" title="这里有一个3D Delauny Triangulation算法"></a>这里有一个3D Delauny Triangulation算法</h2><p>来自：<a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">www.openprocessing.org - By Tercel</a>，是一个日本人写的代码，我跑了一下效果如下：</p>
