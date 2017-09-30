@@ -155,20 +155,106 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Vulkan Samples Tutorial 7" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Processing Programs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/27/Vulkan Samples Tutorial 7/">Vulkan Samples Tutorial 7</a>
+      <a class="article-title" href="/2017/03/13/Processing Programs/">Processing Program</a>
     </h1>
   
 
         
-        <a href="/2017/04/27/Vulkan Samples Tutorial 7/" class="archive-article-date">
-  	<time datetime="2017-04-27T05:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-27</time>
+        <a href="/2017/03/13/Processing Programs/" class="archive-article-date">
+  	<time datetime="2017-03-13T14:29:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Processing-简介"><a href="#Processing-简介" class="headerlink" title="Processing 简介"></a>Processing 简介</h2><p><strong>Processing</strong>是一种具有革命前瞻性的新兴计算机语言，它的概念是在电子艺术的环境下介绍程序语言，并将电子艺术的概念介绍给程序设计师。它是 <strong>Java</strong> 语言的延伸，并支持许多现有的 Java 语言架构，不过在语法 (<code>syntax</code>) 上简易许多，并具有许多贴心及人性化的设计。<strong>Processing</strong> 可以在 <em>Windows、MAC OS X、MAC OS 9 、Linux</em> 等操作系统上使用。目前最新版本为<strong>Processing 3.3</strong>。以 <strong>Processing</strong> 完成的作品可在个人本机端作用，或以<strong>Java Applets</strong> 的模式外输至网络上发布。</p>
+<p>虽然图形用户界面(<code>GUI</code>)早在二十年前成为主流，但是基础编程语言的教学到今天仍是以命令行接口为主，学习编程语言为什么要那么枯燥呢？人脑天生擅长空间辨识，图形用户界面利用的正是这种优势，加上它能提供各种实时且鲜明的图像式反馈 (<strong>feedback</strong>)，可以大幅缩短学习曲线，并帮助理解抽象逻辑法则。举例来说，计算机屏幕上的一个像素(<strong>pixel</strong>) 就是一个变量值(<strong>the value of a variable</strong>) 的可视化表现。<strong>Processing</strong>将Java的语法简化并将其运算结果“感官化”，让使用者能很快享有声光兼备的交互式多媒体作品。</p>
+<p><strong>Processing</strong>的源代码是开放的，和近来广受欢迎的 Linux 操作系统、Mozilla浏览器、或Perl语言等一样，用户可依照自己的需要自由裁剪出最合适的使用模式。<strong>Processing</strong>的应用非常丰富，而且它们全部遵守开放源代码的规定，这样的设计大幅增加了整个社群的互动性与学习效率。</p>
+<h2 id="无意中找到了这个……"><a href="#无意中找到了这个……" class="headerlink" title="无意中找到了这个……"></a>无意中找到了这个……</h2><p>话说，我在公司里负责三维模型的处理，而我司的<strong>垃圾代码</strong>不仅经常出Bug，还要什么没什么，基本上只有一个简单的<strong>Mesh</strong>数据结构(OpenMesh)，矩阵计算也只支持 4 <em> 4 规模的。而我处理三维模型的点线面需要用到多维矩阵。不仅如此，接口调用复杂，一个想法难以用这套软件快速实现……最主要是没有API文档，没有注释，也不给看函数的实现，给的全是<em>*lib</em></em>文件！！！</p>
+<p>我想写一下<strong>Delaunay三角化算法</strong>的实现也得先从<strong>参数化</strong>开始一步一步实现……</p>
+<p><strong>Processing</strong> 真是及时雨啊。</p>
+<h2 id="这里有一个3D-Delauny-Triangulation算法"><a href="#这里有一个3D-Delauny-Triangulation算法" class="headerlink" title="这里有一个3D Delauny Triangulation算法"></a>这里有一个3D Delauny Triangulation算法</h2><p>来自：<a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">www.openprocessing.org - By Tercel</a>，是一个日本人写的代码，我跑了一下效果如下：</p>
+<p><img src="/2017/03/13/Processing Programs/3d_Delaunay.gif" alt="3d_Delaunay"></p>
+<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
+<li><a href="https://www.openprocessing.org" target="_blank" rel="external">openprocessing</a> 软件的支持</li>
+<li><a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">Tercel</a> 的实现</li>
+<li><a href="https://www.openprocessing.org/sketch/180760" target="_blank" rel="external">jakkubu</a> 的另外一种实现</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CG</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/13/Processing Programs/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Vulkan 简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/08/Vulkan 简介/">Vulkan 简介与使用</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/08/Vulkan 简介/" class="archive-article-date">
+  	<time datetime="2017-03-07T18:18:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-08</time>
 </a>
         
       </header>
@@ -177,46 +263,80 @@
       
         <!-- TOC -->
 <ul>
-<li><a href="#create-a-graphics-pipeline">Create a Graphics Pipeline</a><ul>
-<li><a href="#dynamic-state">Dynamic State</a></li>
-<li><a href="#pipeline-vertex-input-state">Pipeline Vertex Input State</a></li>
-<li><a href="#pipeline-vertex-input-assembly-state">Pipeline Vertex Input Assembly State</a></li>
-<li><a href="#pipeline-rasterization-state">Pipeline Rasterization State</a></li>
-<li><a href="#pipeline-color-blend-state">Pipeline Color Blend State</a></li>
-<li><a href="#pipeline-viewport-state">Pipeline Viewport State</a></li>
-<li><a href="#pipeline-depth-stencil-state">Pipeline Depth Stencil State</a></li>
-<li><a href="#pipeline-multisample-state">Pipeline Multisample State</a></li>
-<li><a href="#pulling-it-all-together---create-graphics-pipeline">Pulling It All Together - Create Graphics Pipeline</a></li>
+<li><a href="#vulkan介绍">Vulkan介绍</a></li>
+<li><a href="#使用vulkan之前的准备">使用Vulkan之前的准备</a></li>
+<li><a href="#vulkan-sdk安装与使用指南">Vulkan SDK安装与使用指南</a><ul>
+<li><a href="#vulkan-sdk的下载">Vulkan SDK的下载</a></li>
+<li><a href="#vulkan-sdk的安装">Vulkan SDK的安装</a></li>
 </ul>
 </li>
+<li><a href="#感谢">感谢</a></li>
 </ul>
 <!-- /TOC -->
-<h2 id="Create-a-Graphics-Pipeline"><a href="#Create-a-Graphics-Pipeline" class="headerlink" title="Create a Graphics Pipeline"></a>Create a Graphics Pipeline</h2><p>本章节代码在<code>14-init_pipeline.cpp</code>文件中。</p>
-<p>我们将更进一步把所有之前进行的步骤放到一起去画立方体。接下来，我们通过设置图形管线（graphics pipeline）来设置渲染的GPU。</p>
-<p>图形管线由着色器阶段、管线布局、渲染通道和固定功能的管线阶段。在以前的章节中定义了着色器阶段和管线布局。在此，将设置余下的固定功能的管线阶段。包括填充一些创建管线的”create info”数据结构。在将图像片元(fragments)放到帧缓存之前，这里完成的大部分工作是设置预片段(per-fragment)操作。简图如下：</p>
-<p><img src="/2017/04/27/Vulkan Samples Tutorial 7/GraphicsPipeline.png" alt="GraphicsPipeline"></p>
-<p>下一步将设置管线状态对象，即上图中右下角的灰色框。最后一步是连接其它对象指向左上角的紫色管线框，为了完成图形管线的定义。</p>
-<h3 id="Dynamic-State"><a href="#Dynamic-State" class="headerlink" title="Dynamic State"></a>Dynamic State</h3><p>在命令缓冲区运行期间，动态管线状态(Dynamic State)是能被命令缓冲区改变的。预先通知哪些状态是动态状态对驱动器可能有用，因为它可能会为命令缓存的执行创建GPU对象。</p>
-<p>样例提供了一个在命令缓存执行期间会改变状态的状态列表。在此，代码以创建动态状态列表开始，开始时这些动状态都是disabled。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">VkDynamicState dynamicStateEnables[VK_DYNAMIC_STATE_RANGE_SIZE];</div><div class="line">VkPipelineDynamicStateCreateInfo dynamicState = &#123;&#125;;</div><div class="line">memset(dynamicStateEnables, 0, sizeof dynamicStateEnables);</div><div class="line">dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;</div><div class="line">dynamicState.pNext = NULL;</div><div class="line">dynamicState.pDynamicStates = dynamicStateEnables;</div><div class="line">dynamicState.dynamicStateCount = 0;</div></pre></td></tr></table></figure></p>
-<p>样例表明样例将使用命令缓存动态地改变一些状态，所以，当设置视区（viewport）和剪切（scissors）矩形时，样例会改变<code>dynamicStateEnables</code>数组。代码通过修改<code>dynamicStateEnables</code>来保持清楚地设置viewport和scissors。</p>
-<h3 id="Pipeline-Vertex-Input-State"><a href="#Pipeline-Vertex-Input-State" class="headerlink" title="Pipeline Vertex Input State"></a>Pipeline Vertex Input State</h3><p>当创建vertex buffer时，我们已经对vertex输入状态进行了初始化，因为它在创建时就直接完成了。输入状态包括顶点数据的格式和管理。可以回顾vertexbuffer样例去查看<code>vi_binding</code>和<code>vi_attribs</code>变量是如何设置的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">VkPipelineVertexInputStateCreateInfo vi;</div><div class="line">vi.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;</div><div class="line">vi.pNext = NULL;</div><div class="line">vi.flags = 0;</div><div class="line">vi.vertexBindingDescriptionCount = 1;</div><div class="line">vi.pVertexBindingDescriptions = &amp;info.vi_binding;</div><div class="line">vi.vertexAttributeDescriptionCount = 2;</div><div class="line">vi.pVertexAttributeDescriptions = info.vi_attribs;</div></pre></td></tr></table></figure></p>
-<h3 id="Pipeline-Vertex-Input-Assembly-State"><a href="#Pipeline-Vertex-Input-Assembly-State" class="headerlink" title="Pipeline Vertex Input Assembly State"></a>Pipeline Vertex Input Assembly State</h3><p>输入组件的状态（input assembly state）主要是什么时候声明顶点如何从我们想要画的几何图形中得到。例如，顶点可能形成三角带（triangle strip）和三角扇（triangle fan）。这里，我们仅仅用三角形列表，每三个点描述一个三角形。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">VkPipelineInputAssemblyStateCreateInfo ia;</div><div class="line">ia.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;</div><div class="line">ia.pNext = NULL;</div><div class="line">ia.flags = 0;</div><div class="line">ia.primitiveRestartEnable = VK_FALSE;</div><div class="line">ia.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;</div></pre></td></tr></table></figure></p>
-<h3 id="Pipeline-Rasterization-State"><a href="#Pipeline-Rasterization-State" class="headerlink" title="Pipeline Rasterization State"></a>Pipeline Rasterization State</h3><p>在GPU中，下面的数据结构设置了光栅化(rasterization)操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">VkPipelineRasterizationStateCreateInfo rs;</div><div class="line">rs.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;</div><div class="line">rs.pNext = NULL;</div><div class="line">rs.flags = 0;</div><div class="line">rs.polygonMode = VK_POLYGON_MODE_FILL;</div><div class="line">rs.cullMode = VK_CULL_MODE_BACK_BIT;</div><div class="line">rs.frontFace = VK_FRONT_FACE_CLOCKWISE;</div><div class="line">rs.depthClampEnable = VK_TRUE;</div><div class="line">rs.rasterizerDiscardEnable = VK_FALSE;</div><div class="line">rs.depthBiasEnable = VK_FALSE;</div><div class="line">rs.depthBiasConstantFactor = 0;</div><div class="line">rs.depthBiasClamp = 0;</div><div class="line">rs.depthBiasSlopeFactor = 0;</div><div class="line">rs.lineWidth = 1.0f;</div></pre></td></tr></table></figure></p>
-<p>用常见值设置这些字段。我们可以通过GL函数<code>glFrontFace()</code>的来识别<code>frontFace</code>成员。</p>
-<h3 id="Pipeline-Color-Blend-State"><a href="#Pipeline-Color-Blend-State" class="headerlink" title="Pipeline Color Blend State"></a>Pipeline Color Blend State</h3><p>绑定是另一个<code>end of the fixed pipe</code>操作，即在目的地设置像素的简单替换。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">VkPipelineColorBlendStateCreateInfo cb;</div><div class="line">cb.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;</div><div class="line">cb.pNext = NULL;</div><div class="line">cb.flags = 0;</div><div class="line">VkPipelineColorBlendAttachmentState att_state[1];</div><div class="line">att_state[0].colorWriteMask = 0xf;</div><div class="line">att_state[0].blendEnable = VK_FALSE;</div><div class="line">att_state[0].alphaBlendOp = VK_BLEND_OP_ADD;</div><div class="line">att_state[0].colorBlendOp = VK_BLEND_OP_ADD;</div><div class="line">att_state[0].srcColorBlendFactor = VK_BLEND_FACTOR_ZERO;</div><div class="line">att_state[0].dstColorBlendFactor = VK_BLEND_FACTOR_ZERO;</div><div class="line">att_state[0].srcAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;</div><div class="line">att_state[0].dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;</div><div class="line">cb.attachmentCount = 1;</div><div class="line">cb.pAttachments = att_state;</div><div class="line">cb.logicOpEnable = VK_FALSE;</div><div class="line">cb.logicOp = VK_LOGIC_OP_NO_OP;</div><div class="line">cb.blendConstants[0] = 1.0f;</div><div class="line">cb.blendConstants[1] = 1.0f;</div><div class="line">cb.blendConstants[2] = 1.0f;</div><div class="line">cb.blendConstants[3] = 1.0f;</div></pre></td></tr></table></figure></p>
-<p>注意，在每个附件基础(per-attachment basis)上，我们都提供了一些配置信息的。在管线中，每一个颜色附件需要一个<code>VkPipelineColorBlendAttachmentState</code>。在这种情况下，这里只有一个颜色附件。</p>
-<p><code>colorWriteMask</code>从R, G, B(, A)四个类型中选择出支持写（writing）的组件（components）。这里，可以选择这4个组件。</p>
-<p>我们禁用了<code>blendEnable</code>，表示剩下的<code>att_state[0]</code>中的设置与绑定(blending)并不是至关紧要的。</p>
-<p>我们也可以禁用pixel-writing逻辑操作，因为，这个样例仅仅在写像素到帧缓存时做了一个简单的替换。</p>
-<p>绑定常量用于一些”blend factors”(如，<code>VK_BLEND_FACTOR_CONSTANT_COLOR</code>)，或仅是用于设置一些东西使其合理，但在这个样例没有使用到。</p>
-<h3 id="Pipeline-Viewport-State"><a href="#Pipeline-Viewport-State" class="headerlink" title="Pipeline Viewport State"></a>Pipeline Viewport State</h3><p>draw_cube样例在命令缓存中用命令设置视口(viewport)和裁剪(scissors)矩形。下面的代码告诉驱动哪些viewport和scissors状态是动态的，并忽略<code>pViewPorts</code>和<code>pScissors</code>成员。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkPipelineViewportStateCreateInfo vp = &#123;&#125;;</div><div class="line">vp.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;</div><div class="line">vp.pNext = NULL;</div><div class="line">vp.flags = 0;</div><div class="line">vp.viewportCount = 1;</div><div class="line">dynamicStateEnables[dynamicState.dynamicStateCount++] = VK_DYNAMIC_STATE_VIEWPORT;</div><div class="line">vp.scissorCount = 1;</div><div class="line">dynamicStateEnables[dynamicState.dynamicStateCount++] = VK_DYNAMIC_STATE_SCISSOR;</div><div class="line">vp.pScissors = NULL;</div><div class="line">vp.pViewports = NULL;</div></pre></td></tr></table></figure></p>
-<h3 id="Pipeline-Depth-Stencil-State"><a href="#Pipeline-Depth-Stencil-State" class="headerlink" title="Pipeline Depth Stencil State"></a>Pipeline Depth Stencil State</h3><p>紧接着，通过建立共用配置和禁用模版操作(stencil operations)来完成后端固定功能( fixed-function)的初始化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">VkPipelineDepthStencilStateCreateInfo ds;</div><div class="line">ds.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;</div><div class="line">ds.pNext = NULL;</div><div class="line">ds.flags = 0;</div><div class="line">ds.depthTestEnable = VK_TRUE;</div><div class="line">ds.depthWriteEnable = VK_TRUE;</div><div class="line">ds.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;</div><div class="line">ds.depthBoundsTestEnable = VK_FALSE;</div><div class="line">ds.minDepthBounds = 0;</div><div class="line">ds.maxDepthBounds = 0;</div><div class="line">ds.stencilTestEnable = VK_FALSE;</div><div class="line">ds.back.failOp = VK_STENCIL_OP_KEEP;</div><div class="line">ds.back.passOp = VK_STENCIL_OP_KEEP;</div><div class="line">ds.back.compareOp = VK_COMPARE_OP_ALWAYS;</div><div class="line">ds.back.compareMask = 0;</div><div class="line">ds.back.reference = 0;</div><div class="line">ds.back.depthFailOp = VK_STENCIL_OP_KEEP;</div><div class="line">ds.back.writeMask = 0;</div><div class="line">ds.front = ds.back;</div></pre></td></tr></table></figure></p>
-<p>因为我们想使用深度缓存，所以开启了深度缓存writing和testing。此外，一般使用<code>VK_COMPARE_OP_LESS_OR_EQUAL</code>设置深度缓存比较操作。最后，我们禁用了模板（stencil）操作，由于这个样例并不需要它。</p>
-<h3 id="Pipeline-Multisample-State"><a href="#Pipeline-Multisample-State" class="headerlink" title="Pipeline Multisample State"></a>Pipeline Multisample State</h3><p>这个例子我们不打算做任何精细的多采样，所以通过建立无多采样来完成管线设置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkPipelineMultisampleStateCreateInfo ms;</div><div class="line">ms.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;</div><div class="line">ms.pNext = NULL;</div><div class="line">ms.flags = 0;</div><div class="line">ms.pSampleMask = NULL;</div><div class="line">ms.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;</div><div class="line">ms.sampleShadingEnable = VK_FALSE;</div><div class="line">ms.alphaToCoverageEnable = VK_FALSE;</div><div class="line">ms.alphaToOneEnable = VK_FALSE;</div><div class="line">ms.minSampleShading = 0.0;</div></pre></td></tr></table></figure></p>
-<h3 id="Pulling-It-All-Together-Create-Graphics-Pipeline"><a href="#Pulling-It-All-Together-Create-Graphics-Pipeline" class="headerlink" title="Pulling It All Together - Create Graphics Pipeline"></a>Pulling It All Together - Create Graphics Pipeline</h3><p>最后，我们综合所有需要的信息来创建管线。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">VkGraphicsPipelineCreateInfo pipeline;</div><div class="line">pipeline.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;</div><div class="line">pipeline.pNext = NULL;</div><div class="line">pipeline.layout = info.pipeline_layout;</div><div class="line">pipeline.basePipelineHandle = VK_NULL_HANDLE;</div><div class="line">pipeline.basePipelineIndex = 0;</div><div class="line">pipeline.flags = 0;</div><div class="line">pipeline.pVertexInputState = &amp;vi;</div><div class="line">pipeline.pInputAssemblyState = &amp;ia;</div><div class="line">pipeline.pRasterizationState = &amp;rs;</div><div class="line">pipeline.pColorBlendState = &amp;cb;</div><div class="line">pipeline.pTessellationState = NULL;</div><div class="line">pipeline.pMultisampleState = &amp;ms;</div><div class="line">pipeline.pDynamicState = &amp;dynamicState;</div><div class="line">pipeline.pViewportState = &amp;vp;</div><div class="line">pipeline.pDepthStencilState = &amp;ds;</div><div class="line">pipeline.pStages = info.shaderStages;</div><div class="line">pipeline.stageCount = 2;</div><div class="line">pipeline.renderPass = info.render_pass;</div><div class="line">pipeline.subpass = 0;</div><div class="line"></div><div class="line">res = vkCreateGraphicsPipelines(info.device, NULL, 1,</div><div class="line">                                &amp;pipeline, NULL, &amp;info.pipeline);</div></pre></td></tr></table></figure></p>
-<p><code>info.pipeline_layout</code>、<code>info.shaderStages</code>和<code>and info.render_pass</code>成员已在以前的章节初始化。这个结构中的余下成员在本章节设置。</p>
-<hr>
-<p>本篇<strong>Vulkan Samples Tutorial</strong>原文是<strong>LUNAEXCHANGE</strong>中的<a href="https://vulkan.lunarg.com/doc/sdk/1.0.42.1/windows/tutorial/html/index.html" target="_blank" rel="external">Vulkan Tutorial</a>的译文。<br>并非逐字逐句翻译，如有错误之处请告知。O(∩_∩)O谢谢~~</p>
+<h2 id="Vulkan介绍"><a href="#Vulkan介绍" class="headerlink" title="Vulkan介绍"></a>Vulkan介绍</h2><p><strong>Vulkan</strong> 是一个低CPU开销、跨平台的2D和3D绘图与计算的应用程序接口（<code>API</code>），最早由科纳斯组织（<code>Khronos</code>）在2015年游戏开发者大会（<code>GDC</code>）上发表。科纳斯最先把<code>Vulkan API</code>称为“<strong>次世代OpenGL行动</strong>”（next generation OpenGL initiative）或“<strong>glNext</strong>”，但在正式宣布Vulkan之后这些名字就没有再使用了。</p>
+<p><code>Vulkan</code>基于<code>Mantle</code>而构建，这是由于 <strong>AMD</strong> 将 <strong>Mantle API</strong> 捐赠给科纳斯组织，给予该组织开发底层<code>API</code>的基础，使其成为行业标准。</p>
+<p>与<code>OpenGL</code>类似，<code>Vulkan</code>针对<strong>全平台即时3D程序</strong>（如电子游戏和交互媒体）设计，并提供<strong>高性能</strong>与<strong>更均衡</strong>的CPU/GPU使用，这也是<code>Direct3D 12</code>和AMD的<code>Mantle</code>的目标。与<code>Direct3D</code>（12版之前）和<code>OpenGL</code>的其他主要区别是，<code>Vulkan</code>是一个底层<code>API</code>，并且能执行并行任务。除此之外，<code>Vulkan</code>还能更好地分配多个CPU核心的使用。</p>
+<h2 id="使用Vulkan之前的准备"><a href="#使用Vulkan之前的准备" class="headerlink" title="使用Vulkan之前的准备"></a>使用Vulkan之前的准备</h2><ul>
+<li>PC配备一块支持Vulkan的显卡，并安装支持Vulkan的显卡驱动(NVDIA, AMD, Inter)</li>
+<li>具备使用C++的经验(RAII, Class, STL…)</li>
+<li>支持C++11的编译器(VS 2013+, GCC 4.8+, Clang…)</li>
+<li>有一定的计算机图形学基础，了解一些OpenGL渲染运行机制</li>
+</ul>
+<p>注意：实际上<strong>Vulkan</strong>也提供了<strong>C Vulkan API</strong>， 如果使用windows系统，安装<strong>LUNAR vulkan SDK</strong>后，可以按照使用说明建立VS工程：<code>Vulkan Program</code>，<code>Vulkan Windowed Program</code>，<code>Vulkan C++ Program</code>，<code>Vulkan C++ Windowed Program</code>。</p>
+<h2 id="Vulkan-SDK安装与使用指南"><a href="#Vulkan-SDK安装与使用指南" class="headerlink" title="Vulkan SDK安装与使用指南"></a>Vulkan SDK安装与使用指南</h2><p>LunarG Vulkan SDK 提供了一套用于创建、运行并调试 Vulkan 应用程序的开发和运行组件。但该 SDK 并不提供支持Vulkan的<strong>驱动程序</strong>，驱动程序需要从你所使用的显卡提供商那进行获取并安装。</p>
+<p>在使用 SDK 之前需要了解下面这7个术语：</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ICD</td>
+<td>Installable Client Driver — A Vulkan-compatible display driver（安装在PC上的支持Vulkan的驱动程序）</td>
+</tr>
+<tr>
+<td>GLSL</td>
+<td>OpenGL Shading Language（OpenGL的着色器语言，Vulkan支持）</td>
+</tr>
+<tr>
+<td>Layer</td>
+<td>A library designed to work as a plug-in for the loader. It usually serves to provide validation and debugging functionality to applications（一种可用于加载器的插件库，这个库可以为应用程序的图形渲染提供检查和调试功能，插件）</td>
+</tr>
+<tr>
+<td>Loader</td>
+<td>A library which implements the Vulkan API entry points and manages layers, extensions, and drivers. It can be found in the SDK, as well as independent hardware vendor driver installs（独立于硬件驱动安装的软件库，是用于实现Vulkan API入口，管理插件、扩展和驱动程序。）</td>
+</tr>
+<tr>
+<td>SPIR-V</td>
+<td>Standard Portable Intermediate Representation — A cross-API intermediate language that natively represents parallel compute and graphics programs（SPIR-V 中间语言(比如GLSL)，用于程序与硬件进行交流的语言）</td>
+</tr>
+<tr>
+<td>Vulkan</td>
+<td>A low overhead, explicit graphics API developed by the Khronos Group and member companies（一个由科纳斯组织及其成员设计的底层图形API）</td>
+</tr>
+<tr>
+<td>WSI</td>
+<td>Window System Integration（窗口系统集组件）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Vulkan-SDK的下载"><a href="#Vulkan-SDK的下载" class="headerlink" title="Vulkan SDK的下载"></a>Vulkan SDK的下载</h3><p>点击<a href="Vulkan.LunarG.com">Vulkan.LunarG.com</a>的“Download Vulkan Tools for Windows”下载其中的<code>VulkanSDK version Installer.exe</code>程序，打开安装即可。如果你使用的是Linux系统则需要到该网站的Linux下载安装页面进行安装。</p>
+<h3 id="Vulkan-SDK的安装"><a href="#Vulkan-SDK的安装" class="headerlink" title="Vulkan SDK的安装"></a>Vulkan SDK的安装</h3><p>Windows系统安装完成之后需要为Vulkan SDK配置环境变量。</p>
+<ul>
+<li>在变量中添加<code>VULKAN_SDK</code>变量，变量的值为安装的Vulkan SDK的位置，SDK的默认安装位置在<code>C:\VulkanSDK\version</code>下，version是版本号。</li>
+<li>在变量中添加<code>VK_SDK_PATH</code>变量，变量的值与<code>VULKAN_SDK</code>相同。</li>
+<li>在环境变量（<code>PATH</code>）中添加：<code>$VULKAN_SDK\Bin</code>（32位操作系统则添加<code>$VULKAN_SDK\Bin32</code>）。</li>
+</ul>
+<p>Vulkan loader程序，即<code>vulkan-1.dll</code>，在32位的系统上需要将32位版本的dll安装到<code>C:\Windows\System32</code>中，64位的系统上需要将64位版本的dll安装到<code>C:\Windows\SysWOW64</code>中。</p>
+<blockquote>
+<p>注意：实际上上面的步骤只是需要检查一下，如果Vulkan SDK的安装软件并没有设置这些环境变量则需要手动加上。</p>
+</blockquote>
+<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
+<li><a href="https://vulkan.lunarg.com/doc/sdk/1.0.26.0/windows/getting_started.html" target="_blank" rel="external">Getting Started with the Vulkan SDK - LunarG</a></li>
+</ul>
 
       
 
@@ -240,7 +360,792 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/27/Vulkan Samples Tutorial 7/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/08/Vulkan 简介/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-C++ 11 模版使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/05/C++ 11 模版使用/">C++ 11 模版的使用</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/05/C++ 11 模版使用/" class="archive-article-date">
+  	<time datetime="2017-03-05T02:37:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#为什么要使用模版">为什么要使用模版</a></li>
+<li><a href="#关键字-typename">关键字 typename</a></li>
+<li><a href="#c-11新的模版特性---变参模板">C++ 11新的模版特性 - 变参模板</a></li>
+<li><a href="#c-11新的模板特性---外部模板">C++ 11新的模板特性 - 外部模板</a></li>
+<li><a href="#c-11新的模版特性---模版别名">C++ 11新的模版特性 - 模版别名</a></li>
+<li><a href="#c-11新的模板特性---默认模板实参">C++ 11新的模板特性 - 默认模板实参</a></li>
+<li><a href="#c-11新的模板特性---回返类型后置的函数声明">C++ 11新的模板特性 - 回返类型后置的函数声明</a></li>
+<li><a href="#c-11新的模板特性---用于元编程的类别属性">C++ 11新的模板特性 - 用于元编程的类别属性</a></li>
+<li><a href="#感谢">感谢</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="为什么要使用模版"><a href="#为什么要使用模版" class="headerlink" title="为什么要使用模版"></a>为什么要使用模版</h2><p>在声明变量、函数和大多数其他类型的实体的时候，C++要求我们使用特定的类型。然而许多代码除了类型不同不同之外，其余代码都看起来是相同的。<br>比如<code>sort()</code>函数，每当你实现了一个顺序容器，就需要重新写一个<code>sort()</code>函数……</p>
+<p>如果程序设计语言并不支持这个语言特性，为了实现相同的功能，你只能使用下面这些糟糕的替代方法：</p>
+<ol>
+<li>针对每个所需相同行为的不同类型，你可以一次又一次地实现它。</li>
+<li>你可以把通用代码放在一个注入Object或者void*的公共基础类里面。</li>
+<li>你可以使用特殊的预处理程序，如#define。</li>
+</ol>
+<p>而在Java和C等类似的语言中，上面的方法都有自身的缺点：</p>
+<ol>
+<li>做了许多重复工作，会趋向舍弃复杂但更好用的算法来保证尽可能不出错，复杂算法通常都趋向于引入更多的错误。</li>
+<li>采用公共基类编写代码，会失去类型检查这个优点。另外，对于以后实现的许多类都必须继承自某个特定的基类，这会令代码的维护更加困难。</li>
+<li>如如果使用了预处理程序，你会使代码变得格式混乱难以阅读，使用“文本替换机制”并不会考虑作用域和类型。</li>
+</ol>
+<p>在现今的程序中，模版的应用非常广泛。C++的标准库中，几乎所有代码都是模版代码。</p>
+<h2 id="关键字-typename"><a href="#关键字-typename" class="headerlink" title="关键字 typename"></a>关键字 typename</h2><p>关键字<code>typename</code>用来指明紧跟其后的名称是个类型的名称。最常用在<code>template</code>之后，比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">template &lt;typename T&gt;</div><div class="line">class MyClass&#123;</div><div class="line">private:</div><div class="line">    T val;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>我们应该尽可能使用<code>typename</code><strong>取代</strong><code>class</code>在<code>template</code>后面的尖括号中的应用。<br>当然，关键字<code>typename</code>不仅仅只有这一个用法，还可以像下面的方式进行使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">class MyClass&#123;</div><div class="line">    typename T::SubType *ptr;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在这里<code>typename</code>用来阐明“<code>SubType</code>是个类型，定义于<code>class T</code>内”。因此，<code>ptr</code>是个指针，指向类型为<code>T::SubType</code>。</p>
+<blockquote>
+<p>如果没有<code>typename</code>，则<code>SubType</code>会被视为一个<code>static</code>成员，于是<code>T::SubType *ptr</code>被视为“类型<code>T</code>的数值<code>SubType</code>”乘以<code>ptr</code>。<br>“基于<code>SubType</code>必须是个类型”这样的限定，任何被用来替换<code>T</code>的类型，都必须提供一个内层类型<code>SubType</code>。比如下面的<code>Test</code>类:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">class Test &#123;</div><div class="line">public:</div><div class="line">	void print() &#123;&#125;</div><div class="line">	using SubType = int;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在这里，<code>using SubType = int;</code>等价于<code>typedef int SubType;</code>。C++ 11的关键字using的新的用法比原来的<code>typedef</code>更加强大，建议使用。</p>
+</blockquote>
+<h2 id="C-11新的模版特性-变参模板"><a href="#C-11新的模版特性-变参模板" class="headerlink" title="C++ 11新的模版特性 - 变参模板"></a>C++ 11新的模版特性 - 变参模板</h2><p>自C++11起，<code>template</code>可拥有那种“得以接受不确定个数的<code>template</code>实参”的个数。此能力被称为 <strong>variadic template</strong>。下面代码是<code>print()</code>使用变参模版的实现方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">void print() &#123;&#125;</div><div class="line">template &lt;typename T, typename... Types&gt;</div><div class="line">void print(const T&amp; firstArg, const Type&amp;... args)</div><div class="line">&#123;</div><div class="line">    std::cout &lt;&lt; firstArg &lt;&lt; std::endl; // 输出第一个参数</div><div class="line">    print(args...);                     // 输出剩余的参数，如果没有剩余，则调用print()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这是一种<strong>递归</strong>写法，必须提供一个不用<code>template</code>的重载函数<code>print()</code>，才能结束整个递归过程。如同下面的使用一个用了<code>template</code>的<code>print()</code>的方法虽然可能通过编译，但不推荐：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">template &lt;typename T&gt;</div><div class="line">void print(const T&amp; arg) </div><div class="line">&#123;</div><div class="line">    std::cout &lt;&lt; arg &lt;&lt; std::endl;</div><div class="line">&#125;</div><div class="line">template &lt;typename T, typename... Types&gt;</div><div class="line">void print(const T&amp; firstArg, const Type&amp;... args)</div><div class="line">&#123;</div><div class="line">    std::cout &lt;&lt; firstArg &lt;&lt; std::endl; // 输出第一个参数</div><div class="line">    print(args...);                     // 输出剩余的参数</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>并不确定在只有一个参数的时候，该调用哪一个<code>print()</code>。这种会形成歧义的代码应当避免。</p>
+<p>在<strong>实验楼</strong>的<a href="https://www.shiyanlou.com/courses/605/labs/2023/document" target="_blank" rel="external">《C++ 11/14 高速上手教程中-语言可用性的强化》</a>(需要账号登录)提供了一种使用<code>std::initializer_list</code>和<code>lambda</code>表达式的写法(修改版)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">template&lt;typename... Args&gt;</div><div class="line">void print(Args&amp;&amp;... args)</div><div class="line">&#123;</div><div class="line">	cout &lt;&lt; sizeof...(args) &lt;&lt; endl;</div><div class="line">	auto res = std::initializer_list&lt;int&gt;&#123;</div><div class="line">		([](const Args&amp; arg) &#123; </div><div class="line">            std::cout &lt;&lt; arg &lt;&lt; std::endl; </div><div class="line">            return 0; </div><div class="line">        &#125;)(args)...&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这个写法利用了<code>std::initializer_list</code>对<code>args</code>的展开<code>...</code>所用到的初始化列表构造函数，由于<code>std::initializer_list&lt;int&gt;</code>在这里接受的是<code>int</code>类型的初始化列表，所以匿名<code>lambda</code>表达式返回整数0用于填充<code>std::initializer_list</code>。<br>但在上面的教程说道，可以使用<code>std::bind</code>和完美转发进行<code>args</code>的<code>...</code>操作并转发。没想到该如何做。另外，该做法虽然简洁，但性能问题并不确定，如需使用请通过大规模的调用进行与<strong>递归式</strong>的测试进行比较，选用最合适的方法。</p>
+</blockquote>
+<h2 id="C-11新的模板特性-外部模板"><a href="#C-11新的模板特性-外部模板" class="headerlink" title="C++ 11新的模板特性 - 外部模板"></a>C++ 11新的模板特性 - 外部模板</h2><p>在标准C++中，只要在编译单元内遇到被完整定义的模板，编译器都必须将其<strong>实例化</strong>（instantiate）。这会大大增加编译时间，特别是模板在许多编译单元内使用相同的参数实例化。看起来没有办法告诉C++不要引发模板的实例化。<br>C++11将会引入外部模板这一概念。C++已经有了强制编译器在特定位置开始实例化的语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">template class std::vector&lt;MyClass&gt;;</div></pre></td></tr></table></figure></p>
+<p>而C++所缺乏的是阻止编译器在某个编译单元内实例化模板的能力。C++11将简单地扩充前文语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">extern template class std::vector&lt;MyClass&gt;;</div></pre></td></tr></table></figure></p>
+<p>这样就告诉编译器不要在该编译单元内将该模板实例化。使用方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//fun.h  </div><div class="line">template &lt;typename T&gt;  </div><div class="line">void fun(T t)&#123; &#125;  </div><div class="line">  </div><div class="line">//use1.cpp  </div><div class="line">void test1()</div><div class="line">&#123;  </div><div class="line">    fun&lt;int&gt;(1);  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">//use2.cpp  </div><div class="line">extern template void fun&lt;int&gt;(int);  </div><div class="line">void test2()</div><div class="line">&#123;  </div><div class="line">    fun&lt;int&gt;(1);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>extern</code>有两个作用： 第一个,当它与<code>&quot;C&quot;</code>一起连用时，如: <code>extern &quot;C&quot; void fun(int a, int b);</code>则告诉编译器在编译<code>fun</code>这个函数名时按着C的规则去翻译相应的函数名而不是C++的，C++的规则在翻译这个函数名时会把<code>fun</code>这个名字变得面目全非，可能是<code>fun@aBc_int_int#%$</code>也可能是别的，这要看编译器的”脾气”了(不同的编译器采用的方法不一样)，为什么这么做呢，因为C++支持函数的重载啊，在这里不去过多的论述这个问题，如果你有兴趣可以去网上搜索，相信你可以得到满意的解释! 第二，当<code>extern</code>不与<code>&quot;C&quot;</code>在一起修饰变量或函数时，如在头文件中: <code>extern int g_Int;</code> 它的作用就是声明函数或全局变量的作用范围的关键字，其声明的函数和变量可以在本模块活其他模块中使用，记住它是一个声明不是定义!也就是说B模块(编译单元)要是引用模块(编译单元)A中定义的全局变量或函数时，它只要包含A模块的头文件即可,在编译阶段，模块B虽然找不到该函数或变量，但它不会报错，它会在连接时从模块A生成的目标代码中找到此函数。</p>
+</blockquote>
+<h2 id="C-11新的模版特性-模版别名"><a href="#C-11新的模版特性-模版别名" class="headerlink" title="C++ 11新的模版特性 - 模版别名"></a>C++ 11新的模版特性 - 模版别名</h2><p>自C++11起，支持使用关键字<code>using</code>来命名一个模板的<code>Alias Template</code>，示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">命名方法:</div><div class="line">template&lt;typename T&gt;</div><div class="line">using Vec = std::vector&lt;T, MyAlloc&lt;T&gt;&gt;;</div><div class="line">使用方法:</div><div class="line">Vec&lt;int&gt; coll; </div><div class="line">等价于:</div><div class="line">std::vector&lt;int, MyAlloc&lt;int&gt;&gt; coll;</div></pre></td></tr></table></figure></p>
+<p>上面这样的使用方法，可以避免像STL的<code>vector</code>源码中的各种<code>#define</code>，能很大程度提高模板的可读性。</p>
+<h2 id="C-11新的模板特性-默认模板实参"><a href="#C-11新的模板特性-默认模板实参" class="headerlink" title="C++ 11新的模板特性 - 默认模板实参"></a>C++ 11新的模板特性 - 默认模板实参</h2><p>这里应该提一下以前的一个关于模板的特性，<strong>非类型模板参数(Nontype Tempalte Parameter)</strong>, 声明方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">template&lt; typename T, typename U, int value&gt;</div><div class="line">class SuckType &#123;</div><div class="line">public:</div><div class="line">    T a;</div><div class="line">    U b;</div><div class="line">    SuckType():a(value),b(value)&#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这样在使用<code>SuckType</code>的时候，就可以使用<code>int</code>值使用<code>SuckType</code>类模板生成一个类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SuckType&lt;int, long, 1024&gt; suckType;</div></pre></td></tr></table></figure></p>
+<p>这种用法，在线性代数库 <strong>Eigen</strong> 中的矩阵模板大规模进行使用。</p>
+<h2 id="C-11新的模板特性-回返类型后置的函数声明"><a href="#C-11新的模板特性-回返类型后置的函数声明" class="headerlink" title="C++ 11新的模板特性 - 回返类型后置的函数声明"></a>C++ 11新的模板特性 - 回返类型后置的函数声明</h2><p>C++11引进一种新的函数定义与声明的语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">template&lt; typename LHS, typename RHS&gt; </div><div class="line">auto AddingFunc(const LHS &amp;lhs, const RHS &amp;rhs) -&gt; decltype(lhs+rhs) </div><div class="line">&#123;</div><div class="line">    return lhs + rhs;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>用于解决模板类型推导的实现。这种语法也能套用到一般的函数定义与声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">struct SomeStruct</div><div class="line">&#123;</div><div class="line">  auto FuncName(int x, int y) -&gt; int;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">auto SomeStruct::FuncName(int x, int y) -&gt; int</div><div class="line">&#123;</div><div class="line">  return x + y;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="C-11新的模板特性-用于元编程的类别属性"><a href="#C-11新的模板特性-用于元编程的类别属性" class="headerlink" title="C++ 11新的模板特性 - 用于元编程的类别属性"></a>C++ 11新的模板特性 - 用于元编程的类别属性</h2><p>模版元编程（template metaprogram）是C++中最复杂也是威力最强大的编程范式，它是一种可以创建和操纵程序的程序。模版元编程完全不同于普通的运行期程序，它很独特，因为模版元程序的执行完全是在编译期，并且模版元程序操纵的数据不能是运行时变量，只能是编译期常量，不可修改，另外它用到的语法元素也是相当有限，不能使用运行期的一些语法，比如if-else，for等语句都不能用。因此，模版元编程需要很多技巧，常常需要类型重定义、枚举常量、继承、模板偏特化等方法来配合，因此编写模版元编程比较复杂也比较困难。 </p>
+<p>模版元程序由元数据和元函数组成，元数据就是元编程可以操作的数据，即C++编译器在编译期可以操作的数据。元数据不是运行期变量，只能是编译期常量，不能修改，常见的元数据有<code>enum</code>枚举常量、静态常量、基本类型和自定义类型等。</p>
+<p>　　元函数是模板元编程中用于操作处理元数据的“构件”，可以在编译期被“调用”，因为它的功能和形式和运行时的函数类似，而被称为元函数，它是元编程中最重要的构件。元函数实际上表现为C++的一个类、模板类或模板函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">template&lt;int N, int M&gt;</div><div class="line">struct meta_func</div><div class="line">&#123;</div><div class="line">    static const int value = N+M;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>调用元函数获取<code>value</code>值：<code>cout&lt;&lt;meta_func&lt;1, 2&gt;::value&lt;&lt;endl;</code><br>模板元编程产生的源程序是在编译期执行的程序，因此它首先要遵循C++和模板的语法，但是它操作的对象不是运行时普通的变量，因此不能使用运行时的C++关键字（如if、else、for），可用的语法元素相当有限，最常用的是：</p>
+<ul>
+<li><code>enum</code>、<code>static</code>、<code>const</code>，用来定义编译期的整数常量；</li>
+<li><code>typedef/using</code>，用于定义元数据；</li>
+<li><code>T</code>、<code>Args...</code>，声明元数据类型；</li>
+<li><code>template</code>，主要用于定义元函数；</li>
+<li><code>::</code>，域运算符，用于解析类型作用域获取计算结果（元数据）。</li>
+</ul>
+<blockquote>
+<p>模板元编程中的<code>if-else</code>等逻辑通过<code>type_traits</code>来实现，它不仅仅可以在编译期做判断，还可以做计算、查询、转换和选择。<code>type_traits</code>是C++11提供的模板元基础库，通过<code>type_traits</code>可以实现在编译期计算、查询、判断、转换和选择，提供了模板元编程需要的一些常用元函数。</p>
+<p>模板元中的<code>for</code>等逻辑可以通过<strong>递归</strong>、<strong>重载</strong>、和<strong>模板特化</strong>(<strong>偏特化</strong>)等方法实现。</p>
+</blockquote>
+<p><strong>这个元编程需要仔细再看看。</strong></p>
+<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
+<li><a href="https://www.shiyanlou.com/courses/605/labs/2023/document" target="_blank" rel="external">C++ 11/14 高速上手教程 - 语言可用性的强化 - 实验楼</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/C%2B%2B11#.E5.A4.96.E9.83.A8.E6.A8.A1.E6.9D.BF" target="_blank" rel="external">C++11 - 中文维基百科</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/05/C++ 11 模版使用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-C++ 11 右值引用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/03/C++ 11 右值引用/">C++ 11 右值引用</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/03/C++ 11 右值引用/" class="archive-article-date">
+  	<time datetime="2017-03-03T12:34:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#右值引用解决的问题">右值引用解决的问题</a></li>
+<li><a href="#c11之前与java的对比">C++11之前与Java的对比</a></li>
+<li><a href="#c11右值引用">C++11右值引用</a></li>
+<li><a href="#stdmoveval-和-stdforwardtt-val-的作用">std::move(val) 和 std::forward<t>(T&amp;&amp; val) 的作用</t></a></li>
+<li><a href="#右值引用使用注意">右值引用使用注意</a></li>
+<li><a href="#何时发生移动何时发生复制">何时发生移动，何时发生复制</a></li>
+<li><a href="#感谢">感谢</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="右值引用解决的问题"><a href="#右值引用解决的问题" class="headerlink" title="右值引用解决的问题"></a>右值引用解决的问题</h2><p>右值引用是 C++11 中最重要的新特性之一，它解决了C++中大量的历史遗留问题，使C++标准库的实现在多种场景下消除了不必要的额外开销(如<code>std::vector</code>, <code>std::string</code>)，也使得另外一些标准库成为可以实现的可能。在 C++11 之前，移动语义的确实是C++饱受诟病的问题之一。</p>
+<p>使用右值引用特性，可以实现：<strong>移动语义(move)</strong> 和 <strong>完美转发(perfect forwarding)</strong>。</p>
+<h2 id="C-11之前与Java的对比"><a href="#C-11之前与Java的对比" class="headerlink" title="C++11之前与Java的对比"></a>C++11之前与Java的对比</h2><p>右值引用与对象的资源所有权的交换复制有关。</p>
+<p>在之前初学Java时，我们就要明确两个概念：<strong>深复制</strong> 和 <strong>浅复制</strong> 。</p>
+<blockquote>
+<p>深复制：被复制对象的所有变量都含有与原来的对象相同的值，除去那些引用其他对象的变量。那些引用其他对象的变量将指向被复制过的新对象，而不再是原有的那些被引用的对象。换言之，深复制把要复制的对象所引用的对象都复制了一遍。</p>
+<p>浅复制：被复制对象的所有变量都含有与原来的对象相同的值，而所有的对其他对象的引用仍然指向原来的对象。换言之，浅复制仅仅复制所考虑的对象，而不复制它所引用的对象。</p>
+</blockquote>
+<p>在Java当中，所有的参数与赋值符号，实现的所有权转移都是使用<strong>传递引用</strong>，这里的引用与C中的引用概念类似，但C中的引用在使用过程中并不能改变引用的对象。Java 示例代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public static void main(String args[]) &#123;</div><div class="line">       long t1 = System.currentTimeMillis();</div><div class="line">       Professor p = new Professor(&quot;wangwu&quot;, 50);</div><div class="line">       Student s1 = new Student(&quot;zhangsan&quot;, 18, p);</div><div class="line">       Student s2 = s1; // 浅复制</div><div class="line">       s2.p.name = &quot;lisi&quot;;</div><div class="line">       s2.p.age = 30;</div><div class="line">       System.out.println(&quot;name=&quot; + s1.p.name + &quot;,&quot; + &quot;age=&quot; + s1.p.age);</div><div class="line">       long t2 = System.currentTimeMillis();</div><div class="line">       System.out.println(t2-t1);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>在上述代码中，s2改变则s1也会随之改变，很多情况下，当把s1放到一个函数参数位置上当作参数，参数获取的仍然也是s1的引用。但有一些函数提供复制的语义，如字符串的 “+” 操作符，它会将两个字符串拼成一个，但却是在内存中重新分配了空间。</p>
+<p><strong>浅复制</strong> 是移动语义的实现方法，速度快，同时能够保证不同作用域可以操作同一个对象。而当我们需要使用复制语义存储某一对象的副本时，例如我们存储一个<code>Student</code>对象的副本到ArrayList中，当我们改变了Student，ArrayList中的也随之改变，这并不是我们想要的结果，因此，需要使用 <strong>深复制</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class Student implements Serializable &#123; </div><div class="line">    Student(String name, int age, Professor p) &#123;</div><div class="line">        this.name = name;</div><div class="line">        this.age = age;</div><div class="line">        this.p = p;</div><div class="line">    &#125;</div><div class="line">    public Object deepClone() &#123;</div><div class="line">        ByteArrayOutputStream bo = new ByteArrayOutputStream();</div><div class="line">        ObjectOutputStream oo = new ObjectOutputStream(bo);</div><div class="line">        oo.writeObject(this);</div><div class="line">        ByteArrayInputStream bi = new ByteArrayInputStream(bo.toByteArray());</div><div class="line">        ObjectInputStream oi = new ObjectInputStream(bi);</div><div class="line">        return (oi.readObject());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述代码使用输入输出流将对象 <strong>串行化</strong> 之后进行了复制，返回了复制的对象的引用，调用这个函数可以获得一个<code>Studnet</code>的实例的副本。</p>
+<p>在C++中，浅复制代码可以写成下面这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">int main() </div><div class="line">&#123;</div><div class="line">        Professor p = Professor(&quot;wangwu&quot;, 50);</div><div class="line">        Student s1 = new Student(&quot;zhangsan&quot;, 18, p);</div><div class="line">        Student s2 = s1; // 深复制</div><div class="line">        s2.p.name = &quot;lisi&quot;;</div><div class="line">        s2.p.age = 30;</div><div class="line">        cout&lt;&lt; &quot;name=&quot; + s1.p.name + &quot;,&quot; + &quot;age=&quot; + s1.p.age &lt;&lt; endl;</div><div class="line">        return 0;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>而在C++的表现却是<strong>s1与s2并不是指向同一个对象</strong>，s1的改变并不会影响到s2中的值。 赋值符号”=”在这里会调用s2的复制构造函数，将s1当做复制构造函数的参数进行调用。如果不使用指针，无法实现Java中的<strong>浅复制</strong>。</p>
+<p>C++之所以与Java在内存管理方面存在上面所述的差异，原因是他们两种语言的内存回收方式的不同。C++（RAII机制）在栈上创建的对象(如局部变量)在离开作用于就会被<strong>析构</strong>，在堆上分配内存的对象只有在调用 <code>delete</code> 之后或者程序结束之后才会释放，而Java采用垃圾回收算法来判断是否回收创建的对象。</p>
+<p>C++的指针设计简单，应用灵活，但却很容易造成<strong>内存泄漏</strong>(即便采用 <del>谁开发谁治理</del> 谁负责申请内存谁就负责销毁的方法，在一些过程函数中难以定义“谁”，且在多人协作容易出现问题)，Java虽然采用垃圾回收机制却仍然无法避免使用不当产生的内存泄漏。</p>
+<h2 id="C-11右值引用"><a href="#C-11右值引用" class="headerlink" title="C++11右值引用"></a>C++11右值引用</h2><p>右值引用是C++11引入的与Lambda表达式齐名的重要特征之一。</p>
+<p>右值引用了解之前需要明确这几个定义：<strong>左值</strong>、<strong>右值</strong>，C++11标准中将右值划分出的<strong>纯右值</strong>、<strong>将亡值</strong>。</p>
+<blockquote>
+<p>左值(lvalue, left value)，顾名思义就是赋值符号左边的值。准确来说，左值是表达式（不一定是赋值表达式）后依然存在的持久对象。函数名和变量名（实际上是函数指针③和具名变量，具名变量如std::cin、std::endl等）、返回左值引用的函数调用、前置自增/自减运算符连接的表达式++i/–i、由赋值运算符或复合赋值运算符连接的表达式(a=b、a+=b、a%=b）、解引用表达式*p、字符串字面值”abc”等。</p>
+<p>右值(rvalue, right value)，右边的值，是指表达式结束后就不再存在的临时对象。</p>
+<p>纯右值(prvalue, pure rvalue)，纯粹的右值，要么是纯粹的字面量，例如 10, true；要么是求值结果相当于字面量或匿名(不具名)临时对象，例如 1+2。非引用返回的临时变量、运算表达式产生的临时变量、原始字面量、Lambda 表达式都属于纯右值。</p>
+<p>将亡值(xvalue, expiring value)，是 C++11 为了引入右值引用而提出的概念（因此在传统 C++中，纯右值和右值是统一个概念），也就是即将被销毁、却能够(或者说要使用移动)被移动的值。</p>
+</blockquote>
+<p>将亡值可能稍有些难以理解，我们来看这样的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt; createAVector() &#123;</div><div class="line">    std::vector&lt;int&gt; res = &#123;1, 2, 3, 4&#125;;</div><div class="line">    return res;</div><div class="line">&#125;</div><div class="line">std::vector&lt;int&gt; v = createAVector();</div></pre></td></tr></table></figure></p>
+<p>在这样的代码中，函数 <code>createAVector</code> 的返回值 <code>res</code> 在内部创建然后被赋值给 <code>v</code>，然而 <code>v</code> 获得这个对象时，会将整个 <code>res</code> 拷贝一份，然后把 <code>res</code> 销毁，如果这个 <code>res</code> 非常大，这将造成大量额外的开销（这也就是传统 C++ 一直被诟病的问题）。在最后一行中，<code>v</code> 是左值、<code>createAVector()</code> 返回的值就是右值（也是纯右值）。</p>
+<p>但是，<code>v</code> 可以被别的变量捕获到，而 <code>createAVector()</code> 产生的那个返回值作为一个临时值，一旦被 <code>v</code> 复制后，将立即被销毁，无法获取、也不能修改。</p>
+<p>将亡值就定义了这样一种行为：临时的值能够被识别、同时又能够被移动。</p>
+<p>需要拿到一个将亡值，就需要用到右值引用的申明：<code>T &amp;&amp;</code>，其中 <code>T</code> 是类型。右值引用的声明让这个临时值的生命周期得以延长、只要变量还活着，那么将亡值将继续存活。</p>
+<p>C++11 提供了 <code>std::move</code> 这个方法将左值参数无条件的转换为右值，有了它我们就能够方便的获得一个右值临时对象，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">void reference(std::string&amp; str) &#123;</div><div class="line">    std::cout &lt;&lt; &quot;左值&quot; &lt;&lt; std::endl;</div><div class="line">&#125;</div><div class="line">void reference(std::string&amp;&amp; str) &#123;</div><div class="line">    std::cout &lt;&lt; &quot;右值&quot; &lt;&lt; std::endl;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">    std::string  lv1 = &quot;string,&quot;;       // lv1 是一个左值</div><div class="line">    // std::string&amp;&amp; r1 = s1;           // 非法, 右值引用不能引用左值</div><div class="line">    std::string&amp;&amp; rv1 = std::move(lv1); // 合法, std::move可以将左值转移为右值</div><div class="line">    std::cout &lt;&lt; rv1 &lt;&lt; std::endl;      // string,</div><div class="line"></div><div class="line">    const std::string&amp; lv2 = lv1 + lv1; // 合法, 常量左值引用能够延长临时变量的申明周期</div><div class="line">    // lv2 += &quot;Test&quot;;                   // 非法, 引用的右值无法被修改</div><div class="line">    std::cout &lt;&lt; lv2 &lt;&lt; std::endl;      // string,string</div><div class="line"></div><div class="line">    std::string&amp;&amp; rv2 = lv1 + lv2;      // 合法, 右值引用延长临时对象声明周期</div><div class="line">    rv2 += &quot;Test&quot;;                      // 合法, 非常量引用能够修改临时变量</div><div class="line">    std::cout &lt;&lt; rv2 &lt;&lt; std::endl;      // string,string,string,</div><div class="line"></div><div class="line">    reference(rv2);                     // 输出左值</div><div class="line"></div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>注意：rv2 虽然引用了一个右值，但由于它是个具名变量可以在后面的代码中使用，所以 rv2 是一个左值。</strong></p>
+<p>在程序设计中，我们重点的是如何使用右值引用才能使程序效率提高，而不是区分哪些是左值，哪些是右值。</p>
+<blockquote>
+<p>事实上，将亡值不过是C++11提出的一块晦涩的语法糖。它与纯右值在功能上及其相似，如都不能做操作符的左操作数，都可以使用移动构造函数和移动赋值运算符。当一个纯右值来完成移动构造或移动赋值任务时，其实它也具有“将亡”的特点。一般我们不必刻意区分一个右值到底是纯右值还是将亡值。</p>
+</blockquote>
+<h2 id="std-move-val-和-std-forward-T-amp-amp-val-的作用"><a href="#std-move-val-和-std-forward-T-amp-amp-val-的作用" class="headerlink" title="std::move(val) 和 std::forward(T&amp;&amp; val) 的作用"></a>std::move(val) 和 std::forward<t>(T&amp;&amp; val) 的作用</t></h2><p><code>std::move(val)</code> 会将val强制转换成右值并返回该右值，代码如下（MSVC）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">template&lt;class _Ty&gt; inline</div><div class="line">	constexpr typename remove_reference&lt;_Ty&gt;::type&amp;&amp;</div><div class="line">		move(_Ty&amp;&amp; _Arg) _NOEXCEPT</div><div class="line">	&#123;	// forward _Arg as movable</div><div class="line">	return (static_cast&lt;typename remove_reference&lt;_Ty&gt;::type&amp;&amp;&gt;(_Arg));</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p><code>std::forward&lt;T&gt;(T&amp;&amp; val)</code> 会将val转换成与其传入时相同的类型并将转换后的进行返回，即如果传入时是左值则返回左值，如果传入的是右值则返回右值，实现代码（MSVC）如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">template&lt;class _Ty&gt; inline constexpr _Ty&amp;&amp; forward(</div><div class="line">typename remove_reference&lt;_Ty&gt;::type&amp;&amp; _Arg) _NOEXCEPT</div><div class="line">	&#123;	// forward an rvalue as an rvalue</div><div class="line">	static_assert(!is_lvalue_reference&lt;_Ty&gt;::value, &quot;bad forward call&quot;);</div><div class="line">	return (static_cast&lt;_Ty&amp;&amp;&gt;(_Arg));</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p>使用方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">void fun(int &amp;x) &#123; cout &lt;&lt; &quot;lvalue ref&quot; &lt;&lt; endl; &#125;  </div><div class="line">void fun(int &amp;&amp;x) &#123; cout &lt;&lt; &quot;rvalue ref&quot; &lt;&lt; endl; &#125;  </div><div class="line">void fun(const int &amp;x) &#123; cout &lt;&lt; &quot;const lvalue ref&quot; &lt;&lt; endl; &#125;  </div><div class="line">void fun(const int &amp;&amp;x) &#123; cout &lt;&lt; &quot;const rvalue ref&quot; &lt;&lt; endl; &#125;  </div><div class="line">  </div><div class="line">template&lt;typename T&gt;  </div><div class="line">void PerfectForward(T &amp;&amp;t) &#123; fun(std::forward&lt;T&gt;(t)); &#125;  </div><div class="line">  </div><div class="line">int _tmain(int argc, _TCHAR* argv[])  </div><div class="line">&#123;  </div><div class="line">    PerfectForward(10);           // rvalue ref  </div><div class="line">  </div><div class="line">    int a;  </div><div class="line">    PerfectForward(a);            // lvalue ref  </div><div class="line">    PerfectForward(std::move(a)); // rvalue ref  </div><div class="line">  </div><div class="line">    const int b = 8;  </div><div class="line">    PerfectForward(b);            // const lvalue ref  </div><div class="line">    PerfectForward(std::move(b)); // const rvalue ref  </div><div class="line">  </div><div class="line">    system(&quot;pause&quot;);  </div><div class="line">    return 0;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>完美转发涉及到了<strong>引用折叠规则(reference collapsing rule)</strong>, 以及一个<strong>特殊原则</strong>，在  <a href="http://www.cnblogs.com/catch/p/3507883.html" target="_blank" rel="external">2.两个原则</a> 中有讲到，这两个原则应当归属在 <strong>模板</strong> 的新增特性里。</p>
+<blockquote>
+<p>注意：为了避免这两个原则对我们造成思维混乱，将其归为 <strong>完美转发</strong> ，并使用完美转发来解决根据输入的左值或右值调用参数为左值或右值的重载函数。 若要使用上述原则，则需要进行针对性的测试，并能根据实际情况测试出能得到自己想要的结果的使用方法才可以使用。</p>
+</blockquote>
+<h2 id="右值引用使用注意"><a href="#右值引用使用注意" class="headerlink" title="右值引用使用注意"></a>右值引用使用注意</h2><ul>
+<li><p>对于将亡值，如果对象能够调用 <strong>移动构造函数</strong> 和 <strong>移动赋值函数</strong>，则会自动使用 <strong>移动语义</strong>， 因此，对于右值引用在函数返回值方面，最佳使用方法是：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt; return_vector(void)</div><div class="line">&#123;</div><div class="line">    std::vector&lt;int&gt; tmp &#123;1,2,3,4,5&#125;;</div><div class="line">    return tmp;</div><div class="line">&#125;</div><div class="line"></div><div class="line">std::vector&lt;int&gt; rval_ref = return_vector();</div></pre></td></tr></table></figure>
+<p>  <strong>与我们之前写的函数并无其他特殊之处。</strong></p>
+</li>
+<li><p>无论是左值引用 <code>&amp;</code> 还是右值引用 <code>&amp;&amp;</code>，本质上都是 <strong>引用类型</strong>（是一种基本类型），以前使用 <code>&amp;</code> 会导致的错误的地方，把 <code>&amp;</code> 替换成 <code>&amp;&amp;</code> 也会出现错误。</p>
+<p>  错误使用 <code>&amp;&amp;</code> 和 <code>&amp;</code>的方法如下，该方法返回的对象临时的，在返回完成之后会被析构，导致引用指向错误，运行错误：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt;&amp;&amp; return_vector(void)</div><div class="line">&#123;</div><div class="line">    std::vector&lt;int&gt; tmp &#123;1,2,3,4,5&#125;;</div><div class="line">    return std::move(tmp);</div><div class="line">&#125;</div><div class="line"></div><div class="line">std::vector&lt;int&gt; &amp;&amp;rval_ref = return_vector();</div></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt;&amp; return_vector(void)</div><div class="line">&#123;</div><div class="line">    std::vector&lt;int&gt; tmp &#123;1,2,3,4,5&#125;;</div><div class="line">    return tmp;</div><div class="line">&#125;</div><div class="line"></div><div class="line">std::vector&lt;int&gt; &amp;rval_ref = return_vector();</div></pre></td></tr></table></figure>
+</li>
+<li><p>如何使用右值引用，与上面同理，右值引用也是一种 <strong>引用类型</strong>，以前为了传参数避免参数调用复制构造而使用 <code>&amp;</code> 传引用的地方，或者返回一个非函数内创建的变量的引用而是用 <code>&amp;</code> 的地方，都是可以使用右值引用 <code>&amp;&amp;</code> 的地方。</p>
+<p>  <code>&amp;&amp;</code> 与 <code>&amp;</code> 的声明方法相同，只能在声明<strong>右值引用</strong>的同时必须指定一个引用对象。示例如下：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">MyString&amp; reference(MyString&amp; v) &#123;      // &amp; 引用在参数、返回值上的应用</div><div class="line">    std::cout &lt;&lt; &quot;左值引用&quot; &lt;&lt; std::endl;</div><div class="line">    return v;</div><div class="line">&#125;</div><div class="line">MyString c;</div><div class="line">MyString&amp; d = reference(c);</div></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int&amp;&amp; reference(MyString&amp;&amp; v) &#123;         // &amp;&amp; 引用在参数、返回值上的应用</div><div class="line">    std::cout &lt;&lt; &quot;左值引用&quot; &lt;&lt; std::endl;</div><div class="line">    return std::move(v);                // 注意：这里需要将左值v转换成右值</div><div class="line">&#125;</div><div class="line">MyString c;</div><div class="line">MyString&amp;&amp; d = reference(std::move(c)); // 注意：这里需要将左值c转换成右值</div></pre></td></tr></table></figure>
+</li>
+<li><p>上述<strong>函数返回引用类型</strong>的用法很少用到，如需用到需要参考 <strong>输入输出流</strong> 的<code>&gt;&gt;</code> 或 <code>&lt;&lt;</code> 运算符的写法。我们经常用到的是在函数参数上声明<strong>引用类型</strong>，如 <code>reference(MyString&amp; v)</code>, 如果我们要使用 <strong>移动语义</strong> 对某一对象要将其移动函数内进行操作，则可有如下写法：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int&amp;&amp; reference(MyString&amp;&amp; v)  &#123;        // &amp;&amp; 引用在参数、返回值上的应用</div><div class="line">    MyString&amp;&amp; tmp = std::move(v);</div><div class="line">    ...                                 // op for tmp</div><div class="line">    ...                                 </div><div class="line">    return std::move(tmp);              // 注意：这里需要将左值v转换成右值</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>而实际上，我认为在使用移动语义的时候配合 <strong>完美转发(Perfect Forwarding)</strong> 则能够使函数提供更多的用法，典型用法可参考 <code>vector</code> 的 <code>void push_back(value_type&amp;&amp; _Val)</code>。<del>可我怎么觉得我很少能用到</del></p>
+<h2 id="何时发生移动，何时发生复制"><a href="#何时发生移动，何时发生复制" class="headerlink" title="何时发生移动，何时发生复制"></a>何时发生移动，何时发生复制</h2><p>在实际程序设计时，我们需要知道何时是调用 <strong>复制构造函数</strong> 与 <strong>复制赋值函数</strong>，何时调用 <strong>移动构造函数</strong> 与 <strong>移动赋值函数</strong>。下面是一个我<del>抄的(出处在最后的链接上)</del>一个类的写法，上面粗体的四个函数都有实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">class MyString &#123;</div><div class="line">private:</div><div class="line">    char* _data;</div><div class="line">    size_t   _len;</div><div class="line">    void _init_data(const char *s) &#123;</div><div class="line">        _data = new char[_len + 1];</div><div class="line">        memcpy(_data, s, _len);</div><div class="line">        _data[_len] = &apos;\0&apos;;</div><div class="line">    &#125;</div><div class="line">public:</div><div class="line">    MyString() &#123;</div><div class="line">        _data = NULL;</div><div class="line">        _len = 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    MyString(const char* p) &#123;</div><div class="line">        _len = strlen(p);</div><div class="line">        _init_data(p);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 复制构造函数, 标号1函数</div><div class="line">    MyString(const MyString&amp; str) &#123; </div><div class="line">        _len = str._len;</div><div class="line">        _init_data(str._data);</div><div class="line">        std::cout &lt;&lt; &quot;Copy Constructor is called! source: &quot; &lt;&lt; str._data &lt;&lt; std::endl;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 复制赋值函数, 标号2函数</div><div class="line">    MyString&amp; operator=(const MyString&amp; str) &#123; </div><div class="line">        if (this != &amp;str) &#123;</div><div class="line">            _len = str._len;</div><div class="line">            _init_data(str._data);</div><div class="line">        &#125;</div><div class="line">        std::cout &lt;&lt; &quot;Copy Assignment is called! source: &quot; &lt;&lt; str._data &lt;&lt; std::endl;</div><div class="line">        return *this;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 移动构造函数, 标号3函数</div><div class="line">    MyString(MyString&amp;&amp; str) &#123;</div><div class="line">        std::cout &lt;&lt; &quot;Move Constructor is called! source: &quot; &lt;&lt; str._data &lt;&lt; std::endl;</div><div class="line">        _len = str._len;</div><div class="line">        _data = str._data;</div><div class="line">        str._len = 0;</div><div class="line">        str._data = NULL;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 移动赋值函数, 标号4函数</div><div class="line">    MyString&amp; operator=(MyString&amp;&amp; str) &#123;</div><div class="line">        std::cout &lt;&lt; &quot;Move Assignment is called! source: &quot; &lt;&lt; str._data &lt;&lt; std::endl;</div><div class="line">        if (this != &amp;str) &#123;</div><div class="line">            _len = str._len;</div><div class="line">            _data = str._data;</div><div class="line">            str._len = 0;</div><div class="line">            str._data = NULL;</div><div class="line">        &#125;</div><div class="line">        return *this;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    virtual ~MyString() &#123;</div><div class="line">        if (_data) free(_data);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>接下来我们我们进行试验，来了解 <strong>移动</strong> 和 <strong>复制</strong> 的调用情况，先给出试验用的测试：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">int main() </div><div class="line">&#123;</div><div class="line">    std::vector&lt;MyString&gt; v;</div><div class="line">    MyString a0(&quot;a0&quot;), a1(&quot;a1&quot;), a2(&quot;a2&quot;);</div><div class="line"></div><div class="line">    a0 = a1;                        // 测试调用 复制</div><div class="line">    a0 = std::move(a2);             // 测试调用 移动</div><div class="line">    a0 = MyString(&quot;a4&quot;);            // 测试调用 移动 or 复制</div><div class="line">    a0 = creatAnNumString(1000);    // 测试调用 移动 or 复制</div><div class="line">    v.push_back(MyString(&quot;a5&quot;));    // 测试调用 移动 or 复制</div><div class="line">    v.push_back(a0);                // 测试调用 复制</div><div class="line">    v.push_back(std::move(a0));     // 测试调用 移动</div><div class="line">    </div><div class="line">    system(&quot;pause&quot;);</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>在1, 2, 3, 4都定义的情况下，我们会得到下面的结果：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Copy Assignment is called! source: a1</div><div class="line">Move Assignment is called! source: a2</div><div class="line">Move Assignment is called! source: a4</div><div class="line">Move Assignment is called! source: 1000</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Move Constructor is called! source: 1000</div><div class="line">Move Constructor is called! source: 1000</div></pre></td></tr></table></figure>
+</li>
+<li><p>在1,2,3都定义的情况下，我们会得到下面的结果：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Copy Assignment is called! source: a1</div><div class="line">Copy Assignment is called! source: a2</div><div class="line">Copy Assignment is called! source: a4</div><div class="line">Copy Assignment is called! source: 1000</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Move Constructor is called! source: 1000</div><div class="line">Move Constructor is called! source: 1000</div></pre></td></tr></table></figure>
+</li>
+<li><p>在1,2都定义的情况，我们会得到下面的结果：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Copy Assignment is called! source: a1</div><div class="line">Copy Assignment is called! source: a2</div><div class="line">Copy Assignment is called! source: a4</div><div class="line">Copy Assignment is called! source: 1000</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Copy Constructor is called! source: 1000</div></pre></td></tr></table></figure>
+</li>
+<li><p>在只定义1的情况下，我们得到了一个运行错误的结果.在Debug的过程中，<code>a0 = MyString(&quot;a4&quot;);</code> 在运行时并<strong>未调用</strong>标号1函数，那没有调用 <strong>复制构造函数</strong> 则调用是使用了移动的 <strong>移动赋值函数</strong> 。 </p>
+</li>
+<li><p>在我们定义了1,3,4的情况下，我们得到如下结果:</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Copy Assignment is called! source: a1</div><div class="line">Move Assignment is called! source: a2</div><div class="line">Move Assignment is called! source: a4</div><div class="line">Move Assignment is called! source: 1000</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Copy Constructor is called! source: 1000</div></pre></td></tr></table></figure>
+<p>  本次的输出，告诉我们<strong>第三句</strong>调用的是 <strong>移动赋值函数</strong>。</p>
+</li>
+<li>在1,2,3,4都未定义的情况下，我们在<strong>析构函数</strong>的时候，得到了一个运行错误，而析构函数做的是 <code>delete</code> 操作。</li>
+</ul>
+<p>上述输出结果告诉我们，要想像 <code>main()</code> 函数中那样调用，并且想得到自己最理想的调用结果，就需要自己设计能用的<strong>复制构造函数</strong> 与 <strong>复制赋值函数</strong>，以及 <strong>移动构造函数</strong> 与 <strong>移动赋值函数</strong> 或者 <strong>遵照C++新标准的推荐，避免使用C风格的指针</strong> 。</p>
+<p><del><strong>上述代码可能是使用了<code>C</code>风格的指针，导致在移动赋值函数调用之后，出现问题</strong></del>，本句存疑，容我之后好好想想。</p>
+<blockquote>
+<p>在这里解释一下为什么7行代码却输出了10行输出，原因在于 <code>vector</code> 身上，众所周知，<code>vector</code> 是一个动态数组，其内部的数据是连续存放的，因此，当 <code>vector</code> 每增加一个元素就需要判断一下vector的大小是否已经达到目前分配的最大数量，如果达到了最大数量则需要先申请一个更大的数组，然后将现在的元素 <strong>移动</strong> 或者 <strong>复制</strong> 到新的数组中进行存储，然后将新的元素追加到当前数组的最后位置。</p>
+<p>注意：一个类型如果明确它是可以移动的，则一定要显式定义它的 <strong>移动构造函数</strong> 与 <strong>移动赋值函数</strong>，若是明确它是可以拷贝的，则一定要显式定义它的 <strong>复制构造函数</strong> 与 <strong>复制赋值函数</strong>, 如果明确它不可以移动或者拷贝，则将其 <strong>私有化</strong> 即可封闭相应的函数调用。 </p>
+</blockquote>
+<p><strong>注意：涉及到新特性，需要进行针对特性的测试。</strong></p>
+<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
+<li><a href="http://www.ibm.com/developerworks/cn/aix/library/1307_lisl_c11/" target="_blank" rel="external">C++11 标准新特性: 右值引用与转移语义 - ibm</a></li>
+<li><a href="http://www.cnblogs.com/catch/p/3507883.html" target="_blank" rel="external">c++11 中的 move 与 forward - twoon</a></li>
+<li><a href="http://www.cnblogs.com/catch/p/5019402.html" target="_blank" rel="external">左值右值的一点总结 - twoon</a></li>
+<li><a href="http://blog.csdn.net/aqtata/article/details/35372769" target="_blank" rel="external">C++11：完美转发的使用 - 一如当初</a></li>
+<li><a href="http://www.cnblogs.com/zpcdbky/p/5275959.html" target="_blank" rel="external">话说C++中的左值、纯右值、将亡值 - 同勉共进</a></li>
+<li><a href="https://www.shiyanlou.com/courses/605/labs/2024/document" target="_blank" rel="external">C++ 11/14 高速上手教程 - 语言运行期的强化 - 实验楼</a></li>
+<li><a href="http://stackoverflow.com/questions/4986673/c11-rvalues-and-move-semantics-confusion-return-statement" target="_blank" rel="external">C++11 rvalues and move semantics confusion (return statement) - stackoverflow</a></li>
+<li><a href="http://en.cppreference.com/w/cpp/language/value_category" target="_blank" rel="external">Value categories - cppreference.com</a></li>
+<li><a href="http://en.cppreference.com/w/cpp/utility/forward" target="_blank" rel="external">std::forward</a></li>
+</ul>
+<p><strong>本文抄袭了他们的一些原文，如果作者禁止使用，则请告知，我会第一时间修改。</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/03/C++ 11 右值引用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-关于字符编码的理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/02/关于字符编码的理解/">关于字符编码的理解</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/02/关于字符编码的理解/" class="archive-article-date">
+  	<time datetime="2017-03-02T13:40:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#为什么要写这个东西">为什么要写这个东西</a></li>
+<li><a href="#字符字符集字符编码的联系">字符，字符集，字符编码的联系</a></li>
+<li><a href="#一般处理字符的工作流程">一般处理字符的工作流程</a></li>
+<li><a href="#我碰到的问题">我碰到的问题</a></li>
+<li><a href="#记录一些编码应注意的事项">记录：一些编码应注意的事项</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="为什么要写这个东西"><a href="#为什么要写这个东西" class="headerlink" title="为什么要写这个东西"></a>为什么要写这个东西</h2><p>今天要写的一个小程序用来合并几十个文本文件，然后呢我本以为用C++半小时就可以搞完了，但没想到合并VS工程的xml格式的配置文件总是出现一些方块乱码(长得就像扑克牌的<strong>方块</strong>一样)。<br><del>百撕不得骑姐</del>，于是我准备晚上回来仔细查一查然后写个总结。当然，充实自己的博客也是个<del>主要</del>目的。</p>
+<h2 id="字符，字符集，字符编码的联系"><a href="#字符，字符集，字符编码的联系" class="headerlink" title="字符，字符集，字符编码的联系"></a>字符，字符集，字符编码的联系</h2><p>这三者的定义：</p>
+<blockquote>
+<p>字符（Character）是指计算机中使用的字母、数字、字和符号，包括：1、2、3、A、B、C、~！·#￥%……—*（）——+等等, 是类字形单位或符号的基本信息。</p>
+<p>字符集(Character set)是多个字符的集合，字符集种类较多，每个字符集包含的字符个数不同，常见字符集名称：ASCII字符集、GB2312字符集、BIG5字符集、 GB18030字符集、Unicode字符集等。</p>
+<p>字符编码（英语：Character encoding）也称字集码，是把字符集中的字符编码为指定集合中某一对象（例如：比特模式、自然数序列、8位组或者电脉冲），以便文本在计算机中存储和通过通信网络的传递。常见的例子包括将拉丁字母表编码成摩斯电码和ASCII。</p>
+</blockquote>
+<p>在计算机技术发展的早期，如ASCII（1963年）和EBCDIC（1964年）这样的字符集逐渐成为标准。但这些字符集的局限很快就变得明显，于是人们开发了许多方法来扩展它们。对于支持包括东亚CJK字符家族在内的写作系统的要求能支持更大量的字符，并且需要一种系统而不是临时的方法实现这些字符的编码。</p>
+<p>于是出现了 ANSI，GB2312，GBK，Big5， Unicode（与UCS字符集关系密切），UTF-8，UTF-16，UTF-32，Base64等等。</p>
+<p>更加详细且清楚的解释请移步<a href="https://www.zhihu.com/people/jimnox" target="_blank" rel="external">Jim Liu</a>的<a href="http://jimliu.net/2015/03/07/something-about-encoding-extra/" target="_blank" rel="external">《编码歪传——基础篇》</a>。</p>
+<h2 id="一般处理字符的工作流程"><a href="#一般处理字符的工作流程" class="headerlink" title="一般处理字符的工作流程"></a>一般处理字符的工作流程</h2><p>推荐使用UTF-8来进行字符存储，但由于很多系统或者软件会产生一些使用其他字符编码的文件，比如我经常用的VS 2013的代码文件中的中文注释在UTF-8下都是乱码，这时候需要转换到GBK进行读取才可以正常显示。</p>
+<p>因此，我们进行字符处理的流程需要先判断一下文件使用什么编码，然后将其转换成Unicode，再将其转换成需要的编码（比如把字符显示的数字转换成二进制的数字排在一起）进行存储。</p>
+<p>如何判断一个文件的编码格式：首先判断是否是带BOM的UTF-8格式，如果是，则前三个字节为 <strong>EF BB BF</strong> 。<br>关于BOM：</p>
+<blockquote>
+<p>BOM（Byte-Order Mark，字节序标记）是Unicode码点U+FEFF。它被定义来放在一个UTF-16文件的开头，如果字节序列是FEFF那么这个文件就是大端序，如果字节序列是FFFE那么这个文件就是小端序。UTF-8本身是没有字节序的问题的（因为它是以单个字节为最小单位），但是Windows里面很多编辑器（比如记事本）会多此一举的在UTF-8文件开头加入EF BB FF也就是U+FEFF的UTF-8编码。</p>
+</blockquote>
+<p>如果不是带BOM的UTF-8格式，则需要判断所有的字节是否符合UTF-8的字节规定：</p>
+<ul>
+<li>1字节：0xxxxxxx</li>
+<li>2字节：110xxxxx 10xxxxxx</li>
+<li>3字节：1110xxxx 10xxxxxx 10xxxxxx</li>
+<li>4字节：11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</li>
+</ul>
+<p>如果出现非法字节则不是UTF-8，那读取则依系统情况而定了。同样的，判断其他字符编码也是可以通过寻找非法字符来判断。但即便是没找到非法字符也不一定说明该文件一定是该字符编码。</p>
+<p>对于网络传输来说，最好不同端都约定好默认编码格式。UTF-8兼容ASCII编码，而ASCII是传输英文效率最高的一种，所以一般约定为ASCII编码。</p>
+<h2 id="我碰到的问题"><a href="#我碰到的问题" class="headerlink" title="我碰到的问题"></a>我碰到的问题</h2><p>带BOM格式的UTF-8的读取：无论用C++字符流还是字节流读取文件后，总是有些字符是乱码，原因已经找到，感谢<a href="http://www.zhihu.com/people/jimnox" target="_blank" rel="external">Jim Liu</a>的文章<a href="http://jimliu.net/2015/03/07/something-about-encoding-extra/" target="_blank" rel="external">《编码歪传——番外篇》</a>为我解惑。我读取的有些文件是带BOM标记的，而我讲这些文件的所有字符都存到同一个文件中，就会发现这些BOM是乱码，明天就把这几个字符删掉去。</p>
+<p>我们采用xml配置的软件dll调用接口，一旦用文本文档打开后，再关闭就发现解析错误，之前发现文本文档会添加三个字符，于是删掉时候就可以正常解析了。这个问题原因就是我们的解析代码并没有针对BOM进行处理。也就这样吧，我又没权限修改代码，技术总监<del>是傻逼And顽固不化And异想天开And瞎指挥</del>又没将所有代码开放给我们这些开发人员。sad…</p>
+<h2 id="记录：一些编码应注意的事项"><a href="#记录：一些编码应注意的事项" class="headerlink" title="记录：一些编码应注意的事项"></a>记录：一些编码应注意的事项</h2><p>待补吧……</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Character encoding</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/02/关于字符编码的理解/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-搭建github-io静态博客遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/01/搭建github-io静态博客遇到的问题/">搭建github.io静态博客遇到的问题</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/01/搭建github-io静态博客遇到的问题/" class="archive-article-date">
+  	<time datetime="2017-03-01T13:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#为什么我需要一个博客">为什么我需要一个博客</a></li>
+<li><a href="#搭建githubio博客的原理">搭建Github.io博客的原理</a></li>
+<li><a href="#搭建gihubio博客的工具">搭建Gihub.io博客的工具</a></li>
+<li><a href="#写博文完善自己的博客">写博文完善自己的博客</a></li>
+<li><a href="#我碰到的问题">我碰到的问题</a></li>
+<li><a href="#我的一些想法">我的一些想法</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="为什么我需要一个博客"><a href="#为什么我需要一个博客" class="headerlink" title="为什么我需要一个博客"></a>为什么我需要一个博客</h2><p>很早之前ACM训练时在CSDN上开过一个博客，经常将自己的题解贴到上面去，可惜这个习惯并没有坚持太久(是懒病犯了……)。<br>现在毕业差不多半年了，感觉需要将最近看到的东西以及以后看到的东西总结总结，写写读书笔记，最近看<code>C++</code>感觉记忆力不够用了。</p>
+<p>想去买个VPS，接触过<code>Node.js</code>之后，又想过自己试着写一个，虽然自我感觉很不错(年轻人经常自大……)，但由于本人是写<code>C++</code>的，<br>虽然学会了<code>TypeScript</code>但从来没怎么用过，随着时间(当然是逐渐忘了……)流逝，各种框架一个版本一个版本地更新，真没时间去练习……</p>
+<p>但后来，我觉得不能这么悠闲得生活下去，得提高自己的知识水平才行，说不定出现什么不幸的事件，那只得靠自己了。</p>
+<p>今天刷知乎时，看到<br><a href="https://zhangslob.github.io/2017/02/28/%E6%95%99%E4%BD%A0%E5%85%8D%E8%B4%B9%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%8CHexo-Github/" target="_blank" rel="external">教你免费搭建个人博客，Hexo&amp;Github —— 崔斯特的博客</a><br>，感觉可行啊，那就自己搭一个~~</p>
+<h2 id="搭建Github-io博客的原理"><a href="#搭建Github-io博客的原理" class="headerlink" title="搭建Github.io博客的原理"></a>搭建Github.io博客的原理</h2><p>简单了解了一下，Github的域名分为两个: <code>github.com</code> 和 <code>github.io</code>，<br>不同的域名可以采用不同安全策略，保证托管在Github上的代码不会因为Cookie被利用而遭到破坏；<br>数据做了划分处理，可以放到不同的服务器上进行保存，比较容易进行分流等等。</p>
+<p><code>github.io</code>可以将代码仓库中的静态网页渲染到浏览器上，因此，<br>创建一个<code>xxx.github.io</code>仓库然后在里面存贮博客的静态网页，<br>如此我们就可以使用 <a href="">https://yourname.github.io/</a> 就可以访问自己的博客，浏览文章内容了。</p>
+<h2 id="搭建Gihub-io博客的工具"><a href="#搭建Gihub-io博客的工具" class="headerlink" title="搭建Gihub.io博客的工具"></a>搭建Gihub.io博客的工具</h2><p>这世界上有很多生成静态网页的程序可以用来搭建博客，我用的是 <strong>Hexo</strong> ， 官方网站在<a href="https://hexo.io/" target="_blank" rel="external">这里</a>。<br>这是一个使用<code>Node.js</code>写出来的工具，有这么几个优点：</p>
+<ul>
+<li>超快速度：Node.js 所带来的超快生成速度，让上百个页面在几秒内瞬间完成渲染。</li>
+<li>支持 Markdown：Hexo 支持 GitHub Flavored Markdown 的所有功能，甚至可以整合 Octopress 的大多数插件。</li>
+<li>一键部署：只需一条指令即可部署到 GitHub Pages, Heroku 或其他网站。</li>
+<li>丰富的插件：Hexo 拥有强大的插件系统，安装插件可以让 Hexo 支持 Jade, CoffeeScript。(我相信也一定支持TypeScript)</li>
+</ul>
+<p>这之后，为了让自己的博客变得更好看一些，我使用了主题 <strong>NexT</strong> , 官方网站在<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">这里</a>。<br>这个主题应该是使用人数最多的主题，在github上的star数超乎想象，而且还有完善的中文文档可供阅读。</p>
+<h2 id="写博文完善自己的博客"><a href="#写博文完善自己的博客" class="headerlink" title="写博文完善自己的博客"></a>写博文完善自己的博客</h2><p>Hexo 支持 Markdown，但Markdown至今也没有几个称得上完美的编辑器，我使用的是微软家的 <strong>VSCode</strong> ，<br>VSCode 支持基础的 Markdown 语法，但如果希望支持更多的语法，你需要安装 VSCode 的插件，或者自己造一个。<br>正宗完善的 Markdown 可以支持很多东西，比如流程图，各种各样的表格，LaTeX等，如果用不到或者不想费劲学习，<br>则使用图片就可以了。</p>
+<p>我推荐的 Markdown 语法查询目录，是 SegmentFault 的 <a href="https://segmentfault.com/markdown" target="_blank" rel="external">Markdown语法编辑器指南</a>。<br>这份指南足以满足大部分博客写作的要求了。</p>
+<h2 id="我碰到的问题"><a href="#我碰到的问题" class="headerlink" title="我碰到的问题"></a>我碰到的问题</h2><ul>
+<li>1，Hexo 部署失败，导致部署失败的原因有这几个：<ul>
+<li>网络环境差，导致无法push到github的博客仓库里，多执行几次 <code>&quot;hexo deploy&quot;</code> 命令可能就成功了；</li>
+<li>解析出现错误，这种问题经常是配置文件写错了字母，或者在md文档中用错了Hexo的标签，查看终端输出的信息很容易发现问题的所在；</li>
+<li>git工具未找到，这种问题一种是安装了git，但环境变量没有配置成功，另外一种就是没有安装，这个时候应该回到Hexo的使用文档中查看自己漏掉了哪些步骤。</li>
+</ul>
+</li>
+<li>2，Hexo 解析的网页不显示图片，或者在主页中显示而在单独一篇文章中未显示：<ul>
+<li>这个是由于 Markdown 解析路径的问题，Hexo 的作者们好像并没有到Markdown解析中解决这个问题，虽然他们提出使用 <strong>相对路径引用的标签插件</strong> ， 但我并没有使用成功，我的解决方法是安装了 <code>Node.js</code> 的 <code>hexo-asset-image</code> 模块，可以通过 <code>npm install hexo-asset-image --save</code> 来进行安装和使用。</li>
+</ul>
+</li>
+<li>3，我试图向 <code>xxx.github.io</code> 存放文件，却发现经常被 Hexo 删掉，这个需要注意一下。本打算将 Hexo 程序和博客原文一同放到 <code>xxx.github.io</code>中，看来是不行了，只好新建了一个库。</li>
+<li>4，每次更新之后，最好是用 <code>hexo clean</code> 清理一下，防止发生一些错误。<h2 id="我的一些想法"><a href="#我的一些想法" class="headerlink" title="我的一些想法"></a>我的一些想法</h2></li>
+</ul>
+<p>应该利用空余时间研究下怎么样完善自己博客的功能，比如增加相册(图片应该找个图片云存放)等，写个主题什么的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/01/搭建github-io静态博客遇到的问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-C++ 11 and 14 简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/01/C++ 11 and 14 简介/">C++11/14 简介</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/01/C++ 11 and 14 简介/" class="archive-article-date">
+  	<time datetime="2017-03-01T08:32:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#引言">引言</a></li>
+<li><a href="#c-与-c-的区别">C 与 C++ 的区别</a></li>
+<li><a href="#c-1114-中弃用的特性不再推荐使用">C++ 11/14 中弃用的特性(不再推荐使用)</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>C++ 算是一个用户群体比较大的语言了，从 C++98 到 C++11 经历了长达十年多之久的积累，<br>C++14 则是作为对 C++11 的重要补充和优化，所有这些新标准中扩充的特性，<br>给 C++ 这门语言注入了新的活力。</p>
+<p>那些还在坚持使用<strong>传统</strong> C++ (本教程把 C++98 及其之前的 C++ 特性均称之为传统 C++)<br>而未接触过 C++11/14 的 C++ 程序员在见到诸如 <code>Lambda</code> 表达式这类全新特性时，<br>甚至会流露出『学的不是同一门语言』的惊叹之情。</p>
+<p>C++1x (本教程中指 C++11/14, 甚至 C++17) 为传统 C++ 注入的大量特性使得整个 C++ 变得更加像一门现代化的语言。<br>C++1x 不仅仅增强了 C++ 语言自身的可用性，<br><code>auto</code> 关键字语义的修改使得我们更加有信心来操控极度复杂的模板类型。<br>同时还对语言运行期进行了大量的强化，<br><code>Lambda</code> 表达式的出现让 C++ 具有了『<strong>匿名函数</strong>』的『<strong>闭包</strong>』特性，<br>而这一特性几乎在现代的编程语言（诸如 Python/Swift/… ）中已经司空见惯，<br><strong>右值引用</strong>的出现解决了 C++ 长期以来被人诟病的临时对象效率问题等等。</p>
+<p>C++1x 为自身的标准库增加了非常多的工具和方法，<br>诸如在语言层面上提供了 <code>std::thread</code> 支持了<strong>并发编程</strong>，<br>在不同平台上不再依赖于系统底层的 API，实现了语言层面的跨平台支持；<br><code>std::regex</code>提供了完整的<strong>正则表达式</strong>支持等等。</p>
+<p>C++98 已经被实践证明了是一种非常成功的『<strong>范型</strong>』，<br>而 C++1x 的出现，则进一步推动这种范型，让 C++ 成为系统程序设计和库开发更好的语言。</p>
+<h2 id="C-与-C-的区别"><a href="#C-与-C-的区别" class="headerlink" title="C 与 C++ 的区别"></a>C 与 C++ 的区别</h2><p>在程序设计思想上：</p>
+<ul>
+<li>C是一个结构化语言，它的重点在于算法和数据结构。C程序的设计首要考虑的是如何通过一个过程，<br>对输入（或环境条件）进行运算处理得到输出（或实现过程（事务）控制）。</li>
+<li>C++首要考虑的是如何构造一个对象模型，让这个模型能够契合与之对应的问题域，<br>这样就可以通过获取对象的状态信息得到输出或实现过程（事务）控制。<br>所以C与C++的最大区别在于它们的用于解决问题的思想方法不一样。<br>之所以说C++比C更先进，是因为“<strong>设计</strong>”这个概念已经被融入到C++之中。</li>
+</ul>
+<p>在语法方面上, 下面两张图可以进行比较清晰的对比：</p>
+<p><a href="http://en.cppreference.com/w/c/language" target="_blank" rel="external">http://en.cppreference.com/w/c/language</a></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/C.png" alt="C"></p>
+<p><a href="http://en.cppreference.com/w/cpp/language" target="_blank" rel="external">http://en.cppreference.com/w/cpp/language</a></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/C++.png" alt="C++"></p>
+<p>在标准库方面上，C的标准库是C++的子集：</p>
+<p><strong>C Library</strong></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/Clibarary.png" alt="C libarary"></p>
+<p><strong>C++ Containers</strong></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxContainers.png" alt="C++ Containers.png"></p>
+<p><strong>C++ Atomics and threading library</strong></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxAtomicsandthreadinglibrary.png" alt="C++ Atomics and threading library"></p>
+<p><strong>C++ Miscellaneous headers</strong></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxMiscellaneousheaders.png" alt="C++ Miscellaneous headers"></p>
+<p><strong>C++ Input/Output Stream Library</strong></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxIO.png" alt="C++ Input/Output Stream Library"></p>
+<p><strong>C++ new library in furture</strong></p>
+<p>注：以上图片来自 <a href="http://www.cplusplus.com/reference/" target="_blank" rel="external">C/C++ Reference</a>.</p>
+<h2 id="C-11-14-中弃用的特性-不再推荐使用"><a href="#C-11-14-中弃用的特性-不再推荐使用" class="headerlink" title="C++ 11/14 中弃用的特性(不再推荐使用)"></a>C++ 11/14 中弃用的特性(不再推荐使用)</h2><ul>
+<li><p>如果一个类有<strong>析构函数</strong>，为其<strong>生成拷贝构造函数和拷贝赋值运算符</strong>的特性被弃用了。</p>
+</li>
+<li><p>不再允许字符串字面值常量赋值给一个 <code>char *</code>。如果需要用字符串字面值常量赋值和初始化一个 <code>char *</code>，应该使用 <code>const char *</code> 或者 <code>auto</code>：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">char *str = &quot;hello world!&quot;; // 将出现弃用警告</div></pre></td></tr></table></figure>
+</li>
+<li><p>C++ 98 异常说明、 <code>unexcepted_handler</code>、<code>set_unexpected()</code> 等相关特性被弃用，应该使用 <code>noexcept</code>。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// 下面两个函数声明的异常规格在语义上是相同的，都表示函数不抛出任何异常</div><div class="line">void old_stytle() throw(); // 不推荐使用</div><div class="line">void new_style() noexcept; // 新标准关键字</div></pre></td></tr></table></figure>
+<p>  关于C++ Expection的概念以及使用，在未明确其概念之前，不推荐使用；可以在设计程序结构时禁止使用expection.</p>
+</li>
+<li><p><code>auto_ptr</code> 被弃用，应使用 <code>unique_ptr</code>，这个是属于标准库中对指针功能的增强。</p>
+</li>
+<li><p><code>register</code> 关键字被弃用。该关键字在那个计算速度低下的年代，用于启用寄存器来增加运行速度。</p>
+</li>
+<li><p><code>bool</code> 类型的 <code>++</code> 操作被弃用。(未曾使用过)</p>
+</li>
+<li><p>C 语言风格的类型转换被弃用，应该使用 <code>static_cast</code>、<code>reinterpret_cast</code>、<code>const_cast</code> 来进行类型转换。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int n = 10;</div><div class="line">double x = (double) n; // 不再推荐使用</div><div class="line">double y = static_cast&lt;double&gt;(n); // 推荐使用</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>还有一些其他诸如<strong>参数绑定</strong>（C++11 提供了 <code>std::bind</code> 和 <code>std::function</code>）、<code>export</code> 等特性也均被弃用。<br>前面提到的这些特性如果你从未使用或者听说过，也请不要尝试去了解他们，应该向新标准靠拢，直接学习新特性。<br>毕竟，技术是向前发展的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/01/C++ 11 and 14 简介/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-C++ 11 and 14 特性：新指针与新指针值" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/01/C++ 11 and 14 特性：新指针与新指针值/">C++ 11/14 特性：新指针与新指针值</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/01/C++ 11 and 14 特性：新指针与新指针值/" class="archive-article-date">
+  	<time datetime="2017-03-01T08:31:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#指针类型的强化">指针类型的强化</a></li>
+<li><a href="#空指针值的强化">空指针值的强化</a></li>
+</ul>
+<!-- /TOC -->
+<p>使用指针的目的可以通过引用地址的方式，将某一对象能够送到其他作用域中进行操作。<br>使用智能指针可以在一定程度上减少野指针以及内存泄漏的发生，但与此同时，若使用不当则会出现循环引用导致内存泄漏。<br>使用<code>nullptr</code>可以将指针值与常量值<code>0</code>区分开，从而避免运行时出现函数参数类型匹配不当导致问题出现。</p>
+<h2 id="指针类型的强化"><a href="#指针类型的强化" class="headerlink" title="指针类型的强化"></a>指针类型的强化</h2><p>智能指针（ <code>shared_ptr</code> 、 <code>unique_ptr</code> 、 <code>weak_ptr</code> ）, 废除 <code>auto_ptr</code> 。</p>
+<ul>
+<li><code>shared_ptr</code> 是一个引用计数智能指针，用于共享对象的所有权也就是说它允许多个指针指向同一个对象。</li>
+<li><code>unique_ptr</code> 是“唯一”拥有其所指对象，同一时刻只能有一个unique_ptr指向给定对象，该指针生命周期结束后，会自动调用释放资源。</li>
+<li><code>weak_ptr</code> 是为了配合 <code>shared_ptr</code> 而引入的一种智能指针，<br>  它指向一个由 <code>shared_ptr</code> 管理的对象而不影响所指对象的生命周期，<br>  也就是将一个 <code>weak_ptr</code> 绑定到一个 <code>shared_ptr</code> 不会改变 <code>shared_ptr</code> 的引用计数，常用与破除循环引用。</li>
+</ul>
+<p>智能指针系列在声明的方式上与C指针声明并不相同，而是采用类构造函数式声明；<br>智能指针系列都对 <code>*</code> 和 <code>-&gt;</code> 运算符进行了重载，使用方法与原指针相同。<br>智能指针是基于<strong>引用计数器</strong>实现的，因此还可以读取当前有多少指针引用着对象。</p>
+<p>关于<strong>引用计数器</strong>，可以搜索 <code>Object-C</code> 的<strong>引用计数</strong>进行学习和理解。</p>
+<hr>
+<p><code>shared_ptr</code> 使用概述:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">class Example</div><div class="line">&#123;</div><div class="line">public:</div><div class="line"> Example() : e(1) &#123; cout &lt;&lt; &quot;Example Constructor...&quot; &lt;&lt; endl; &#125;</div><div class="line"> ~Example() &#123; cout &lt;&lt; &quot;Example Destructor...&quot; &lt;&lt; endl; &#125;</div><div class="line"></div><div class="line"> int e;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main() </div><div class="line">&#123;</div><div class="line"> shared_ptr&lt;Example&gt; pInt(new Example());</div><div class="line"> cout &lt;&lt; (*pInt).e &lt;&lt; endl; // cout &lt;&lt; pInt-&gt;e &lt;&lt; endl;</div><div class="line"> cout &lt;&lt; &quot;pInt引用计数: &quot; &lt;&lt; pInt.use_count() &lt;&lt; endl;</div><div class="line"></div><div class="line"> shared_ptr&lt;Example&gt; pInt2 = pInt;</div><div class="line"> cout &lt;&lt; &quot;pInt引用计数: &quot; &lt;&lt; pInt.use_count() &lt;&lt; endl;</div><div class="line"> cout &lt;&lt; &quot;pInt2引用计数: &quot; &lt;&lt; pInt2.use_count() &lt;&lt; endl;</div><div class="line"> return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Output Result:</div><div class="line">Example Constructor...</div><div class="line">pInt: 1</div><div class="line">pInt引用计数: 1</div><div class="line">pInt引用计数: 2</div><div class="line">pInt2引用计数: 2</div><div class="line">Example Destructor...</div></pre></td></tr></table></figure></p>
+<p>如上代码所示， <code>shared_ptr</code> 在进行赋值时会增加对象的引用，且该智能指针用法简洁明了。</p>
+<p><code>shared_ptr</code> 使用场景：C指针声明的地方都可以使用。</p>
+<hr>
+<p><code>unique_ptr</code> 使用概述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">unique_ptr&lt;int&gt; u_i;                        //创建空智能指针</div><div class="line">u_i.reset(new int(3));                      //&quot;绑定”动态对象  </div><div class="line">unique_ptr&lt;int&gt; u_i2(new int(4));           //创建时指定动态对象  </div><div class="line"> </div><div class="line">int *p_i = u_i2.release();                  //释放所有权  </div><div class="line">unique_ptr&lt;string&gt; u_s(new string(&quot;abc&quot;));  </div><div class="line">unique_ptr&lt;string&gt; u_s2 = std::move(u_s);   //所有权转移(通过移动语义)，u_s所有权转移后，变成“空指针”  </div><div class="line">u_s2=nullptr;                               //显式销毁所指对象，同时智能指针变为空指针。与u_s2.reset()等价</div></pre></td></tr></table></figure></p>
+<p><code>unique_ptr</code> 指针本身的生命周期：从 <code>unique_ptr</code> 指针创建时开始，直到离开作用域。<br>离开作用域时，若其指向对象，则将其所指对象销毁(默认使用<code>delete</code>操作符，用户可指定其他操作)。<br>unique_ptr指针与其所指对象的关系：在智能指针生命周期内，可以改变智能指针所指对象，<br>如创建智能指针时通过构造函数指定、通过<code>reset</code>方法重新指定、通过<code>release</code>方法释放所有权、通过<code>std::move</code>移动语义转移所有权。</p>
+<p><code>unique_ptr</code> 使用场景：</p>
+<hr>
+<h2 id="空指针值的强化"><a href="#空指针值的强化" class="headerlink" title="空指针值的强化"></a>空指针值的强化</h2><p><code>nullptr</code> 代替了宏定义 <code>NULL</code>，在某种意义上来说，传统 C++ 会把 <code>NULL</code>、<code>0</code> 视为同一种东西，这取决于编译器如何定义 <code>NULL</code>，<br>有些编译器会将 <code>NULL</code> 定义为 <code>((void*)0)</code>，有些则会直接将其定义为 <code>0</code>。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/01/C++ 11 and 14 特性：新指针与新指针值/">展开全文 >></a>
         </p>
       
 
@@ -272,7 +1177,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
     </nav>
   
 

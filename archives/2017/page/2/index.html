@@ -6,12 +6,12 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://domacles.github.io">
-  <title>Domacles</title>
+  <title>Archives: 2017 | Domacles</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="We can only see a short distance ahead, but we can see plenty there that needs to be done.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Domacles">
-<meta property="og:url" content="https://domacles.github.io/page/9/index.html">
+<meta property="og:url" content="https://domacles.github.io/archives/2017/page/2/index.html">
 <meta property="og:site_name" content="Domacles">
 <meta property="og:description" content="We can only see a short distance ahead, but we can see plenty there that needs to be done.">
 <meta property="og:locale" content="zh-Hans">
@@ -155,47 +155,34 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Processing Programs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
     
-      <header class="article-header">
-        
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/13/Processing Programs/" class="archive-article-date">
+  	<time datetime="2017-03-13T14:29:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-13</time>
+</a>
+        </div>
+    	 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/13/Processing Programs/">Processing Program</a>
+      <a class="archive-article-title" href="/2017/03/13/Processing Programs/">Processing Program</a>
     </h1>
   
 
-        
-        <a href="/2017/03/13/Processing Programs/" class="archive-article-date">
-  	<time datetime="2017-03-13T14:29:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Processing-简介"><a href="#Processing-简介" class="headerlink" title="Processing 简介"></a>Processing 简介</h2><p><strong>Processing</strong>是一种具有革命前瞻性的新兴计算机语言，它的概念是在电子艺术的环境下介绍程序语言，并将电子艺术的概念介绍给程序设计师。它是 <strong>Java</strong> 语言的延伸，并支持许多现有的 Java 语言架构，不过在语法 (<code>syntax</code>) 上简易许多，并具有许多贴心及人性化的设计。<strong>Processing</strong> 可以在 <em>Windows、MAC OS X、MAC OS 9 、Linux</em> 等操作系统上使用。目前最新版本为<strong>Processing 3.3</strong>。以 <strong>Processing</strong> 完成的作品可在个人本机端作用，或以<strong>Java Applets</strong> 的模式外输至网络上发布。</p>
-<p>虽然图形用户界面(<code>GUI</code>)早在二十年前成为主流，但是基础编程语言的教学到今天仍是以命令行接口为主，学习编程语言为什么要那么枯燥呢？人脑天生擅长空间辨识，图形用户界面利用的正是这种优势，加上它能提供各种实时且鲜明的图像式反馈 (<strong>feedback</strong>)，可以大幅缩短学习曲线，并帮助理解抽象逻辑法则。举例来说，计算机屏幕上的一个像素(<strong>pixel</strong>) 就是一个变量值(<strong>the value of a variable</strong>) 的可视化表现。<strong>Processing</strong>将Java的语法简化并将其运算结果“感官化”，让使用者能很快享有声光兼备的交互式多媒体作品。</p>
-<p><strong>Processing</strong>的源代码是开放的，和近来广受欢迎的 Linux 操作系统、Mozilla浏览器、或Perl语言等一样，用户可依照自己的需要自由裁剪出最合适的使用模式。<strong>Processing</strong>的应用非常丰富，而且它们全部遵守开放源代码的规定，这样的设计大幅增加了整个社群的互动性与学习效率。</p>
-<h2 id="无意中找到了这个……"><a href="#无意中找到了这个……" class="headerlink" title="无意中找到了这个……"></a>无意中找到了这个……</h2><p>话说，我在公司里负责三维模型的处理，而我司的<strong>垃圾代码</strong>不仅经常出Bug，还要什么没什么，基本上只有一个简单的<strong>Mesh</strong>数据结构(OpenMesh)，矩阵计算也只支持 4 <em> 4 规模的。而我处理三维模型的点线面需要用到多维矩阵。不仅如此，接口调用复杂，一个想法难以用这套软件快速实现……最主要是没有API文档，没有注释，也不给看函数的实现，给的全是<em>*lib</em></em>文件！！！</p>
-<p>我想写一下<strong>Delaunay三角化算法</strong>的实现也得先从<strong>参数化</strong>开始一步一步实现……</p>
-<p><strong>Processing</strong> 真是及时雨啊。</p>
-<h2 id="这里有一个3D-Delauny-Triangulation算法"><a href="#这里有一个3D-Delauny-Triangulation算法" class="headerlink" title="这里有一个3D Delauny Triangulation算法"></a>这里有一个3D Delauny Triangulation算法</h2><p>来自：<a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">www.openprocessing.org - By Tercel</a>，是一个日本人写的代码，我跑了一下效果如下：</p>
-<p><img src="/2017/03/13/Processing Programs/3d_Delaunay.gif" alt="3d_Delaunay"></p>
-<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
-<li><a href="https://www.openprocessing.org" target="_blank" rel="external">openprocessing</a> 软件的支持</li>
-<li><a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">Tercel</a> 的实现</li>
-<li><a href="https://www.openprocessing.org/sketch/180760" target="_blank" rel="external">jakkubu</a> 的另外一种实现</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -207,43 +194,287 @@
 		</ul>
 	</div>
 
-      
+          
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/13/Processing Programs/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/08/Vulkan 简介/" class="archive-article-date">
+  	<time datetime="2017-03-07T18:18:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-08</time>
+</a>
         </div>
-        
-        
-    </div>
-</aside>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/08/Vulkan 简介/">Vulkan 简介与使用</a>
+    </h1>
+  
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vulkan</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
+          
 
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/05/C++ 11 模版使用/" class="archive-article-date">
+  	<time datetime="2017-03-05T02:37:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/05/C++ 11 模版使用/">C++ 11 模版的使用</a>
+    </h1>
+  
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/03/C++ 11 右值引用/" class="archive-article-date">
+  	<time datetime="2017-03-03T12:34:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-03</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/03/C++ 11 右值引用/">C++ 11 右值引用</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/02/关于字符编码的理解/" class="archive-article-date">
+  	<time datetime="2017-03-02T13:40:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-02</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/02/关于字符编码的理解/">关于字符编码的理解</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Character encoding</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/01/搭建github-io静态博客遇到的问题/" class="archive-article-date">
+  	<time datetime="2017-03-01T13:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/01/搭建github-io静态博客遇到的问题/">搭建github.io静态博客遇到的问题</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/01/C++ 11 and 14 简介/" class="archive-article-date">
+  	<time datetime="2017-03-01T08:32:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/01/C++ 11 and 14 简介/">C++11/14 简介</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/01/C++ 11 and 14 特性：新指针与新指针值/" class="archive-article-date">
+  	<time datetime="2017-03-01T08:31:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/01/C++ 11 and 14 特性：新指针与新指针值/">C++ 11/14 特性：新指针与新指针值</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
   
   
+    </div></section>
+  
+
+    
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/archives/2017/">&laquo; Prev</a><a class="page-number" href="/archives/2017/">1</a><span class="page-number current">2</span>
     </nav>
   
 
@@ -267,9 +498,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
-		isArchive: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

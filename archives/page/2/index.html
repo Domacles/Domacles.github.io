@@ -6,12 +6,12 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://domacles.github.io">
-  <title>Domacles</title>
+  <title>Archives | Domacles</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="We can only see a short distance ahead, but we can see plenty there that needs to be done.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Domacles">
-<meta property="og:url" content="https://domacles.github.io/page/15/index.html">
+<meta property="og:url" content="https://domacles.github.io/archives/page/2/index.html">
 <meta property="og:site_name" content="Domacles">
 <meta property="og:description" content="We can only see a short distance ahead, but we can see plenty there that needs to be done.">
 <meta property="og:locale" content="zh-Hans">
@@ -155,90 +155,110 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-C++ 11 and 14 简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
     
-      <header class="article-header">
-        
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/13/Processing Programs/" class="archive-article-date">
+  	<time datetime="2017-03-13T14:29:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-13</time>
+</a>
+        </div>
+    	 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/01/C++ 11 and 14 简介/">C++11/14 简介</a>
+      <a class="archive-article-title" href="/2017/03/13/Processing Programs/">Processing Program</a>
     </h1>
   
 
-        
-        <a href="/2017/03/01/C++ 11 and 14 简介/" class="archive-article-date">
-  	<time datetime="2017-03-01T08:32:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
-</a>
-        
-      </header>
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CG</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#引言">引言</a></li>
-<li><a href="#c-与-c-的区别">C 与 C++ 的区别</a></li>
-<li><a href="#c-1114-中弃用的特性不再推荐使用">C++ 11/14 中弃用的特性(不再推荐使用)</a></li>
-</ul>
-<!-- /TOC -->
-<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>C++ 算是一个用户群体比较大的语言了，从 C++98 到 C++11 经历了长达十年多之久的积累，<br>C++14 则是作为对 C++11 的重要补充和优化，所有这些新标准中扩充的特性，<br>给 C++ 这门语言注入了新的活力。</p>
-<p>那些还在坚持使用<strong>传统</strong> C++ (本教程把 C++98 及其之前的 C++ 特性均称之为传统 C++)<br>而未接触过 C++11/14 的 C++ 程序员在见到诸如 <code>Lambda</code> 表达式这类全新特性时，<br>甚至会流露出『学的不是同一门语言』的惊叹之情。</p>
-<p>C++1x (本教程中指 C++11/14, 甚至 C++17) 为传统 C++ 注入的大量特性使得整个 C++ 变得更加像一门现代化的语言。<br>C++1x 不仅仅增强了 C++ 语言自身的可用性，<br><code>auto</code> 关键字语义的修改使得我们更加有信心来操控极度复杂的模板类型。<br>同时还对语言运行期进行了大量的强化，<br><code>Lambda</code> 表达式的出现让 C++ 具有了『<strong>匿名函数</strong>』的『<strong>闭包</strong>』特性，<br>而这一特性几乎在现代的编程语言（诸如 Python/Swift/… ）中已经司空见惯，<br><strong>右值引用</strong>的出现解决了 C++ 长期以来被人诟病的临时对象效率问题等等。</p>
-<p>C++1x 为自身的标准库增加了非常多的工具和方法，<br>诸如在语言层面上提供了 <code>std::thread</code> 支持了<strong>并发编程</strong>，<br>在不同平台上不再依赖于系统底层的 API，实现了语言层面的跨平台支持；<br><code>std::regex</code>提供了完整的<strong>正则表达式</strong>支持等等。</p>
-<p>C++98 已经被实践证明了是一种非常成功的『<strong>范型</strong>』，<br>而 C++1x 的出现，则进一步推动这种范型，让 C++ 成为系统程序设计和库开发更好的语言。</p>
-<h2 id="C-与-C-的区别"><a href="#C-与-C-的区别" class="headerlink" title="C 与 C++ 的区别"></a>C 与 C++ 的区别</h2><p>在程序设计思想上：</p>
-<ul>
-<li>C是一个结构化语言，它的重点在于算法和数据结构。C程序的设计首要考虑的是如何通过一个过程，<br>对输入（或环境条件）进行运算处理得到输出（或实现过程（事务）控制）。</li>
-<li>C++首要考虑的是如何构造一个对象模型，让这个模型能够契合与之对应的问题域，<br>这样就可以通过获取对象的状态信息得到输出或实现过程（事务）控制。<br>所以C与C++的最大区别在于它们的用于解决问题的思想方法不一样。<br>之所以说C++比C更先进，是因为“<strong>设计</strong>”这个概念已经被融入到C++之中。</li>
-</ul>
-<p>在语法方面上, 下面两张图可以进行比较清晰的对比：</p>
-<p><a href="http://en.cppreference.com/w/c/language" target="_blank" rel="external">http://en.cppreference.com/w/c/language</a></p>
-<p><img src="/2017/03/01/C++ 11 and 14 简介/C.png" alt="C"></p>
-<p><a href="http://en.cppreference.com/w/cpp/language" target="_blank" rel="external">http://en.cppreference.com/w/cpp/language</a></p>
-<p><img src="/2017/03/01/C++ 11 and 14 简介/C++.png" alt="C++"></p>
-<p>在标准库方面上，C的标准库是C++的子集：</p>
-<p><strong>C Library</strong></p>
-<p><img src="/2017/03/01/C++ 11 and 14 简介/Clibarary.png" alt="C libarary"></p>
-<p><strong>C++ Containers</strong></p>
-<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxContainers.png" alt="C++ Containers.png"></p>
-<p><strong>C++ Atomics and threading library</strong></p>
-<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxAtomicsandthreadinglibrary.png" alt="C++ Atomics and threading library"></p>
-<p><strong>C++ Miscellaneous headers</strong></p>
-<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxMiscellaneousheaders.png" alt="C++ Miscellaneous headers"></p>
-<p><strong>C++ Input/Output Stream Library</strong></p>
-<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxIO.png" alt="C++ Input/Output Stream Library"></p>
-<p><strong>C++ new library in furture</strong></p>
-<p>注：以上图片来自 <a href="http://www.cplusplus.com/reference/" target="_blank" rel="external">C/C++ Reference</a>.</p>
-<h2 id="C-11-14-中弃用的特性-不再推荐使用"><a href="#C-11-14-中弃用的特性-不再推荐使用" class="headerlink" title="C++ 11/14 中弃用的特性(不再推荐使用)"></a>C++ 11/14 中弃用的特性(不再推荐使用)</h2><ul>
-<li><p>如果一个类有<strong>析构函数</strong>，为其<strong>生成拷贝构造函数和拷贝赋值运算符</strong>的特性被弃用了。</p>
-</li>
-<li><p>不再允许字符串字面值常量赋值给一个 <code>char *</code>。如果需要用字符串字面值常量赋值和初始化一个 <code>char *</code>，应该使用 <code>const char *</code> 或者 <code>auto</code>：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">char *str = &quot;hello world!&quot;; // 将出现弃用警告</div></pre></td></tr></table></figure>
-</li>
-<li><p>C++ 98 异常说明、 <code>unexcepted_handler</code>、<code>set_unexpected()</code> 等相关特性被弃用，应该使用 <code>noexcept</code>。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// 下面两个函数声明的异常规格在语义上是相同的，都表示函数不抛出任何异常</div><div class="line">void old_stytle() throw(); // 不推荐使用</div><div class="line">void new_style() noexcept; // 新标准关键字</div></pre></td></tr></table></figure>
-<p>  关于C++ Expection的概念以及使用，在未明确其概念之前，不推荐使用；可以在设计程序结构时禁止使用expection.</p>
-</li>
-<li><p><code>auto_ptr</code> 被弃用，应使用 <code>unique_ptr</code>，这个是属于标准库中对指针功能的增强。</p>
-</li>
-<li><p><code>register</code> 关键字被弃用。该关键字在那个计算速度低下的年代，用于启用寄存器来增加运行速度。</p>
-</li>
-<li><p><code>bool</code> 类型的 <code>++</code> 操作被弃用。(未曾使用过)</p>
-</li>
-<li><p>C 语言风格的类型转换被弃用，应该使用 <code>static_cast</code>、<code>reinterpret_cast</code>、<code>const_cast</code> 来进行类型转换。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int n = 10;</div><div class="line">double x = (double) n; // 不再推荐使用</div><div class="line">double y = static_cast&lt;double&gt;(n); // 推荐使用</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>还有一些其他诸如<strong>参数绑定</strong>（C++11 提供了 <code>std::bind</code> 和 <code>std::function</code>）、<code>export</code> 等特性也均被弃用。<br>前面提到的这些特性如果你从未使用或者听说过，也请不要尝试去了解他们，应该向新标准靠拢，直接学习新特性。<br>毕竟，技术是向前发展的。</p>
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/08/Vulkan 简介/" class="archive-article-date">
+  	<time datetime="2017-03-07T18:18:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-08</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/08/Vulkan 简介/">Vulkan 简介与使用</a>
+    </h1>
+  
 
-      
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vulkan</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/05/C++ 11 模版使用/" class="archive-article-date">
+  	<time datetime="2017-03-05T02:37:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/05/C++ 11 模版使用/">C++ 11 模版的使用</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -250,43 +270,211 @@
 		</ul>
 	</div>
 
-      
+          
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/01/C++ 11 and 14 简介/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/03/C++ 11 右值引用/" class="archive-article-date">
+  	<time datetime="2017-03-03T12:34:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-03</time>
+</a>
         </div>
-        
-        
-    </div>
-</aside>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/03/C++ 11 右值引用/">C++ 11 右值引用</a>
+    </h1>
+  
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
+          
 
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/02/关于字符编码的理解/" class="archive-article-date">
+  	<time datetime="2017-03-02T13:40:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-02</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/02/关于字符编码的理解/">关于字符编码的理解</a>
+    </h1>
+  
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Character encoding</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/01/搭建github-io静态博客遇到的问题/" class="archive-article-date">
+  	<time datetime="2017-03-01T13:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/01/搭建github-io静态博客遇到的问题/">搭建github.io静态博客遇到的问题</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/01/C++ 11 and 14 简介/" class="archive-article-date">
+  	<time datetime="2017-03-01T08:32:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/01/C++ 11 and 14 简介/">C++11/14 简介</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/01/C++ 11 and 14 特性：新指针与新指针值/" class="archive-article-date">
+  	<time datetime="2017-03-01T08:31:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/01/C++ 11 and 14 特性：新指针与新指针值/">C++ 11/14 特性：新指针与新指针值</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
   
   
+    </div></section>
+  
+
+    
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/14/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/16/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
     </nav>
   
 
@@ -310,9 +498,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
-		isArchive: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
