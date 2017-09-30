@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="null" class="profilepic">
-			<img src="/image/avatar.png" class="js-avatar">
+			<img src="/images/avatar.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="null">Domacles</a></h1>
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/image/avatar.png" class="js-avatar">
+				<img src="/images/avatar.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Domacles</h1>
@@ -155,27 +155,69 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Some-Functional-Programs-for-My-Life" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Vulkan Samples Tutorial 7" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/26/Some-Functional-Programs-for-My-Life/">Some Functional Programs for My Life</a>
+      <a class="article-title" href="/2017/04/27/Vulkan Samples Tutorial 7/">Vulkan Samples Tutorial 7</a>
     </h1>
   
 
         
-        <a href="/2017/06/26/Some-Functional-Programs-for-My-Life/" class="archive-article-date">
-  	<time datetime="2017-06-26T02:01:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-26</time>
+        <a href="/2017/04/27/Vulkan Samples Tutorial 7/" class="archive-article-date">
+  	<time datetime="2017-04-27T05:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-bilibili-list-loop-player-plug-in-for-Chrome"><a href="#1-bilibili-list-loop-player-plug-in-for-Chrome" class="headerlink" title="1. bilibili list-loop player plug-in for Chrome"></a>1. bilibili list-loop player plug-in for Chrome</h2><h2 id="2-html5-player-service-used-Web-server-at-home"><a href="#2-html5-player-service-used-Web-server-at-home" class="headerlink" title="2. html5 player service used Web server at home"></a>2. html5 player service used Web server at home</h2><h2 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h2>
+        <!-- TOC -->
+<ul>
+<li><a href="#create-a-graphics-pipeline">Create a Graphics Pipeline</a><ul>
+<li><a href="#dynamic-state">Dynamic State</a></li>
+<li><a href="#pipeline-vertex-input-state">Pipeline Vertex Input State</a></li>
+<li><a href="#pipeline-vertex-input-assembly-state">Pipeline Vertex Input Assembly State</a></li>
+<li><a href="#pipeline-rasterization-state">Pipeline Rasterization State</a></li>
+<li><a href="#pipeline-color-blend-state">Pipeline Color Blend State</a></li>
+<li><a href="#pipeline-viewport-state">Pipeline Viewport State</a></li>
+<li><a href="#pipeline-depth-stencil-state">Pipeline Depth Stencil State</a></li>
+<li><a href="#pipeline-multisample-state">Pipeline Multisample State</a></li>
+<li><a href="#pulling-it-all-together---create-graphics-pipeline">Pulling It All Together - Create Graphics Pipeline</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h2 id="Create-a-Graphics-Pipeline"><a href="#Create-a-Graphics-Pipeline" class="headerlink" title="Create a Graphics Pipeline"></a>Create a Graphics Pipeline</h2><p>本章节代码在<code>14-init_pipeline.cpp</code>文件中。</p>
+<p>我们将更进一步把所有之前进行的步骤放到一起去画立方体。接下来，我们通过设置图形管线（graphics pipeline）来设置渲染的GPU。</p>
+<p>图形管线由着色器阶段、管线布局、渲染通道和固定功能的管线阶段。在以前的章节中定义了着色器阶段和管线布局。在此，将设置余下的固定功能的管线阶段。包括填充一些创建管线的”create info”数据结构。在将图像片元(fragments)放到帧缓存之前，这里完成的大部分工作是设置预片段(per-fragment)操作。简图如下：</p>
+<p><img src="/2017/04/27/Vulkan Samples Tutorial 7/GraphicsPipeline.png" alt="GraphicsPipeline"></p>
+<p>下一步将设置管线状态对象，即上图中右下角的灰色框。最后一步是连接其它对象指向左上角的紫色管线框，为了完成图形管线的定义。</p>
+<h3 id="Dynamic-State"><a href="#Dynamic-State" class="headerlink" title="Dynamic State"></a>Dynamic State</h3><p>在命令缓冲区运行期间，动态管线状态(Dynamic State)是能被命令缓冲区改变的。预先通知哪些状态是动态状态对驱动器可能有用，因为它可能会为命令缓存的执行创建GPU对象。</p>
+<p>样例提供了一个在命令缓存执行期间会改变状态的状态列表。在此，代码以创建动态状态列表开始，开始时这些动状态都是disabled。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">VkDynamicState dynamicStateEnables[VK_DYNAMIC_STATE_RANGE_SIZE];</div><div class="line">VkPipelineDynamicStateCreateInfo dynamicState = &#123;&#125;;</div><div class="line">memset(dynamicStateEnables, 0, sizeof dynamicStateEnables);</div><div class="line">dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;</div><div class="line">dynamicState.pNext = NULL;</div><div class="line">dynamicState.pDynamicStates = dynamicStateEnables;</div><div class="line">dynamicState.dynamicStateCount = 0;</div></pre></td></tr></table></figure></p>
+<p>样例表明样例将使用命令缓存动态地改变一些状态，所以，当设置视区（viewport）和剪切（scissors）矩形时，样例会改变<code>dynamicStateEnables</code>数组。代码通过修改<code>dynamicStateEnables</code>来保持清楚地设置viewport和scissors。</p>
+<h3 id="Pipeline-Vertex-Input-State"><a href="#Pipeline-Vertex-Input-State" class="headerlink" title="Pipeline Vertex Input State"></a>Pipeline Vertex Input State</h3><p>当创建vertex buffer时，我们已经对vertex输入状态进行了初始化，因为它在创建时就直接完成了。输入状态包括顶点数据的格式和管理。可以回顾vertexbuffer样例去查看<code>vi_binding</code>和<code>vi_attribs</code>变量是如何设置的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">VkPipelineVertexInputStateCreateInfo vi;</div><div class="line">vi.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;</div><div class="line">vi.pNext = NULL;</div><div class="line">vi.flags = 0;</div><div class="line">vi.vertexBindingDescriptionCount = 1;</div><div class="line">vi.pVertexBindingDescriptions = &amp;info.vi_binding;</div><div class="line">vi.vertexAttributeDescriptionCount = 2;</div><div class="line">vi.pVertexAttributeDescriptions = info.vi_attribs;</div></pre></td></tr></table></figure></p>
+<h3 id="Pipeline-Vertex-Input-Assembly-State"><a href="#Pipeline-Vertex-Input-Assembly-State" class="headerlink" title="Pipeline Vertex Input Assembly State"></a>Pipeline Vertex Input Assembly State</h3><p>输入组件的状态（input assembly state）主要是什么时候声明顶点如何从我们想要画的几何图形中得到。例如，顶点可能形成三角带（triangle strip）和三角扇（triangle fan）。这里，我们仅仅用三角形列表，每三个点描述一个三角形。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">VkPipelineInputAssemblyStateCreateInfo ia;</div><div class="line">ia.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;</div><div class="line">ia.pNext = NULL;</div><div class="line">ia.flags = 0;</div><div class="line">ia.primitiveRestartEnable = VK_FALSE;</div><div class="line">ia.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;</div></pre></td></tr></table></figure></p>
+<h3 id="Pipeline-Rasterization-State"><a href="#Pipeline-Rasterization-State" class="headerlink" title="Pipeline Rasterization State"></a>Pipeline Rasterization State</h3><p>在GPU中，下面的数据结构设置了光栅化(rasterization)操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">VkPipelineRasterizationStateCreateInfo rs;</div><div class="line">rs.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;</div><div class="line">rs.pNext = NULL;</div><div class="line">rs.flags = 0;</div><div class="line">rs.polygonMode = VK_POLYGON_MODE_FILL;</div><div class="line">rs.cullMode = VK_CULL_MODE_BACK_BIT;</div><div class="line">rs.frontFace = VK_FRONT_FACE_CLOCKWISE;</div><div class="line">rs.depthClampEnable = VK_TRUE;</div><div class="line">rs.rasterizerDiscardEnable = VK_FALSE;</div><div class="line">rs.depthBiasEnable = VK_FALSE;</div><div class="line">rs.depthBiasConstantFactor = 0;</div><div class="line">rs.depthBiasClamp = 0;</div><div class="line">rs.depthBiasSlopeFactor = 0;</div><div class="line">rs.lineWidth = 1.0f;</div></pre></td></tr></table></figure></p>
+<p>用常见值设置这些字段。我们可以通过GL函数<code>glFrontFace()</code>的来识别<code>frontFace</code>成员。</p>
+<h3 id="Pipeline-Color-Blend-State"><a href="#Pipeline-Color-Blend-State" class="headerlink" title="Pipeline Color Blend State"></a>Pipeline Color Blend State</h3><p>绑定是另一个<code>end of the fixed pipe</code>操作，即在目的地设置像素的简单替换。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">VkPipelineColorBlendStateCreateInfo cb;</div><div class="line">cb.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;</div><div class="line">cb.pNext = NULL;</div><div class="line">cb.flags = 0;</div><div class="line">VkPipelineColorBlendAttachmentState att_state[1];</div><div class="line">att_state[0].colorWriteMask = 0xf;</div><div class="line">att_state[0].blendEnable = VK_FALSE;</div><div class="line">att_state[0].alphaBlendOp = VK_BLEND_OP_ADD;</div><div class="line">att_state[0].colorBlendOp = VK_BLEND_OP_ADD;</div><div class="line">att_state[0].srcColorBlendFactor = VK_BLEND_FACTOR_ZERO;</div><div class="line">att_state[0].dstColorBlendFactor = VK_BLEND_FACTOR_ZERO;</div><div class="line">att_state[0].srcAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;</div><div class="line">att_state[0].dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;</div><div class="line">cb.attachmentCount = 1;</div><div class="line">cb.pAttachments = att_state;</div><div class="line">cb.logicOpEnable = VK_FALSE;</div><div class="line">cb.logicOp = VK_LOGIC_OP_NO_OP;</div><div class="line">cb.blendConstants[0] = 1.0f;</div><div class="line">cb.blendConstants[1] = 1.0f;</div><div class="line">cb.blendConstants[2] = 1.0f;</div><div class="line">cb.blendConstants[3] = 1.0f;</div></pre></td></tr></table></figure></p>
+<p>注意，在每个附件基础(per-attachment basis)上，我们都提供了一些配置信息的。在管线中，每一个颜色附件需要一个<code>VkPipelineColorBlendAttachmentState</code>。在这种情况下，这里只有一个颜色附件。</p>
+<p><code>colorWriteMask</code>从R, G, B(, A)四个类型中选择出支持写（writing）的组件（components）。这里，可以选择这4个组件。</p>
+<p>我们禁用了<code>blendEnable</code>，表示剩下的<code>att_state[0]</code>中的设置与绑定(blending)并不是至关紧要的。</p>
+<p>我们也可以禁用pixel-writing逻辑操作，因为，这个样例仅仅在写像素到帧缓存时做了一个简单的替换。</p>
+<p>绑定常量用于一些”blend factors”(如，<code>VK_BLEND_FACTOR_CONSTANT_COLOR</code>)，或仅是用于设置一些东西使其合理，但在这个样例没有使用到。</p>
+<h3 id="Pipeline-Viewport-State"><a href="#Pipeline-Viewport-State" class="headerlink" title="Pipeline Viewport State"></a>Pipeline Viewport State</h3><p>draw_cube样例在命令缓存中用命令设置视口(viewport)和裁剪(scissors)矩形。下面的代码告诉驱动哪些viewport和scissors状态是动态的，并忽略<code>pViewPorts</code>和<code>pScissors</code>成员。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkPipelineViewportStateCreateInfo vp = &#123;&#125;;</div><div class="line">vp.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;</div><div class="line">vp.pNext = NULL;</div><div class="line">vp.flags = 0;</div><div class="line">vp.viewportCount = 1;</div><div class="line">dynamicStateEnables[dynamicState.dynamicStateCount++] = VK_DYNAMIC_STATE_VIEWPORT;</div><div class="line">vp.scissorCount = 1;</div><div class="line">dynamicStateEnables[dynamicState.dynamicStateCount++] = VK_DYNAMIC_STATE_SCISSOR;</div><div class="line">vp.pScissors = NULL;</div><div class="line">vp.pViewports = NULL;</div></pre></td></tr></table></figure></p>
+<h3 id="Pipeline-Depth-Stencil-State"><a href="#Pipeline-Depth-Stencil-State" class="headerlink" title="Pipeline Depth Stencil State"></a>Pipeline Depth Stencil State</h3><p>紧接着，通过建立共用配置和禁用模版操作(stencil operations)来完成后端固定功能( fixed-function)的初始化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">VkPipelineDepthStencilStateCreateInfo ds;</div><div class="line">ds.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;</div><div class="line">ds.pNext = NULL;</div><div class="line">ds.flags = 0;</div><div class="line">ds.depthTestEnable = VK_TRUE;</div><div class="line">ds.depthWriteEnable = VK_TRUE;</div><div class="line">ds.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;</div><div class="line">ds.depthBoundsTestEnable = VK_FALSE;</div><div class="line">ds.minDepthBounds = 0;</div><div class="line">ds.maxDepthBounds = 0;</div><div class="line">ds.stencilTestEnable = VK_FALSE;</div><div class="line">ds.back.failOp = VK_STENCIL_OP_KEEP;</div><div class="line">ds.back.passOp = VK_STENCIL_OP_KEEP;</div><div class="line">ds.back.compareOp = VK_COMPARE_OP_ALWAYS;</div><div class="line">ds.back.compareMask = 0;</div><div class="line">ds.back.reference = 0;</div><div class="line">ds.back.depthFailOp = VK_STENCIL_OP_KEEP;</div><div class="line">ds.back.writeMask = 0;</div><div class="line">ds.front = ds.back;</div></pre></td></tr></table></figure></p>
+<p>因为我们想使用深度缓存，所以开启了深度缓存writing和testing。此外，一般使用<code>VK_COMPARE_OP_LESS_OR_EQUAL</code>设置深度缓存比较操作。最后，我们禁用了模板（stencil）操作，由于这个样例并不需要它。</p>
+<h3 id="Pipeline-Multisample-State"><a href="#Pipeline-Multisample-State" class="headerlink" title="Pipeline Multisample State"></a>Pipeline Multisample State</h3><p>这个例子我们不打算做任何精细的多采样，所以通过建立无多采样来完成管线设置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkPipelineMultisampleStateCreateInfo ms;</div><div class="line">ms.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;</div><div class="line">ms.pNext = NULL;</div><div class="line">ms.flags = 0;</div><div class="line">ms.pSampleMask = NULL;</div><div class="line">ms.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;</div><div class="line">ms.sampleShadingEnable = VK_FALSE;</div><div class="line">ms.alphaToCoverageEnable = VK_FALSE;</div><div class="line">ms.alphaToOneEnable = VK_FALSE;</div><div class="line">ms.minSampleShading = 0.0;</div></pre></td></tr></table></figure></p>
+<h3 id="Pulling-It-All-Together-Create-Graphics-Pipeline"><a href="#Pulling-It-All-Together-Create-Graphics-Pipeline" class="headerlink" title="Pulling It All Together - Create Graphics Pipeline"></a>Pulling It All Together - Create Graphics Pipeline</h3><p>最后，我们综合所有需要的信息来创建管线。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">VkGraphicsPipelineCreateInfo pipeline;</div><div class="line">pipeline.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;</div><div class="line">pipeline.pNext = NULL;</div><div class="line">pipeline.layout = info.pipeline_layout;</div><div class="line">pipeline.basePipelineHandle = VK_NULL_HANDLE;</div><div class="line">pipeline.basePipelineIndex = 0;</div><div class="line">pipeline.flags = 0;</div><div class="line">pipeline.pVertexInputState = &amp;vi;</div><div class="line">pipeline.pInputAssemblyState = &amp;ia;</div><div class="line">pipeline.pRasterizationState = &amp;rs;</div><div class="line">pipeline.pColorBlendState = &amp;cb;</div><div class="line">pipeline.pTessellationState = NULL;</div><div class="line">pipeline.pMultisampleState = &amp;ms;</div><div class="line">pipeline.pDynamicState = &amp;dynamicState;</div><div class="line">pipeline.pViewportState = &amp;vp;</div><div class="line">pipeline.pDepthStencilState = &amp;ds;</div><div class="line">pipeline.pStages = info.shaderStages;</div><div class="line">pipeline.stageCount = 2;</div><div class="line">pipeline.renderPass = info.render_pass;</div><div class="line">pipeline.subpass = 0;</div><div class="line"></div><div class="line">res = vkCreateGraphicsPipelines(info.device, NULL, 1,</div><div class="line">                                &amp;pipeline, NULL, &amp;info.pipeline);</div></pre></td></tr></table></figure></p>
+<p><code>info.pipeline_layout</code>、<code>info.shaderStages</code>和<code>and info.render_pass</code>成员已在以前的章节初始化。这个结构中的余下成员在本章节设置。</p>
+<hr>
+<p>本篇<strong>Vulkan Samples Tutorial</strong>原文是<strong>LUNAEXCHANGE</strong>中的<a href="https://vulkan.lunarg.com/doc/sdk/1.0.42.1/windows/tutorial/html/index.html" target="_blank" rel="external">Vulkan Tutorial</a>的译文。<br>并非逐字逐句翻译，如有错误之处请告知。O(∩_∩)O谢谢~~</p>
+
       
 
       
@@ -188,7 +230,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">programs</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vulkan</a>
         		</li>
       		
 		</ul>
@@ -198,7 +240,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/06/26/Some-Functional-Programs-for-My-Life/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/27/Vulkan Samples Tutorial 7/">展开全文 >></a>
         </p>
       
 
@@ -230,7 +272,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 

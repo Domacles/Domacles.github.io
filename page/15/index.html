@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="null" class="profilepic">
-			<img src="/image/avatar.png" class="js-avatar">
+			<img src="/images/avatar.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="null">Domacles</a></h1>
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/image/avatar.png" class="js-avatar">
+				<img src="/images/avatar.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Domacles</h1>
@@ -155,20 +155,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-关于字符编码的理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-C++ 11 and 14 简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/02/关于字符编码的理解/">关于字符编码的理解</a>
+      <a class="article-title" href="/2017/03/01/C++ 11 and 14 简介/">C++11/14 简介</a>
     </h1>
   
 
         
-        <a href="/2017/03/02/关于字符编码的理解/" class="archive-article-date">
-  	<time datetime="2017-03-02T13:40:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-02</time>
+        <a href="/2017/03/01/C++ 11 and 14 简介/" class="archive-article-date">
+  	<time datetime="2017-03-01T08:32:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
 </a>
         
       </header>
@@ -177,41 +177,60 @@
       
         <!-- TOC -->
 <ul>
-<li><a href="#为什么要写这个东西">为什么要写这个东西</a></li>
-<li><a href="#字符字符集字符编码的联系">字符，字符集，字符编码的联系</a></li>
-<li><a href="#一般处理字符的工作流程">一般处理字符的工作流程</a></li>
-<li><a href="#我碰到的问题">我碰到的问题</a></li>
-<li><a href="#记录一些编码应注意的事项">记录：一些编码应注意的事项</a></li>
+<li><a href="#引言">引言</a></li>
+<li><a href="#c-与-c-的区别">C 与 C++ 的区别</a></li>
+<li><a href="#c-1114-中弃用的特性不再推荐使用">C++ 11/14 中弃用的特性(不再推荐使用)</a></li>
 </ul>
 <!-- /TOC -->
-<h2 id="为什么要写这个东西"><a href="#为什么要写这个东西" class="headerlink" title="为什么要写这个东西"></a>为什么要写这个东西</h2><p>今天要写的一个小程序用来合并几十个文本文件，然后呢我本以为用C++半小时就可以搞完了，但没想到合并VS工程的xml格式的配置文件总是出现一些方块乱码(长得就像扑克牌的<strong>方块</strong>一样)。<br><del>百撕不得骑姐</del>，于是我准备晚上回来仔细查一查然后写个总结。当然，充实自己的博客也是个<del>主要</del>目的。</p>
-<h2 id="字符，字符集，字符编码的联系"><a href="#字符，字符集，字符编码的联系" class="headerlink" title="字符，字符集，字符编码的联系"></a>字符，字符集，字符编码的联系</h2><p>这三者的定义：</p>
-<blockquote>
-<p>字符（Character）是指计算机中使用的字母、数字、字和符号，包括：1、2、3、A、B、C、~！·#￥%……—*（）——+等等, 是类字形单位或符号的基本信息。</p>
-<p>字符集(Character set)是多个字符的集合，字符集种类较多，每个字符集包含的字符个数不同，常见字符集名称：ASCII字符集、GB2312字符集、BIG5字符集、 GB18030字符集、Unicode字符集等。</p>
-<p>字符编码（英语：Character encoding）也称字集码，是把字符集中的字符编码为指定集合中某一对象（例如：比特模式、自然数序列、8位组或者电脉冲），以便文本在计算机中存储和通过通信网络的传递。常见的例子包括将拉丁字母表编码成摩斯电码和ASCII。</p>
-</blockquote>
-<p>在计算机技术发展的早期，如ASCII（1963年）和EBCDIC（1964年）这样的字符集逐渐成为标准。但这些字符集的局限很快就变得明显，于是人们开发了许多方法来扩展它们。对于支持包括东亚CJK字符家族在内的写作系统的要求能支持更大量的字符，并且需要一种系统而不是临时的方法实现这些字符的编码。</p>
-<p>于是出现了 ANSI，GB2312，GBK，Big5， Unicode（与UCS字符集关系密切），UTF-8，UTF-16，UTF-32，Base64等等。</p>
-<p>更加详细且清楚的解释请移步<a href="https://www.zhihu.com/people/jimnox" target="_blank" rel="external">Jim Liu</a>的<a href="http://jimliu.net/2015/03/07/something-about-encoding-extra/" target="_blank" rel="external">《编码歪传——基础篇》</a>。</p>
-<h2 id="一般处理字符的工作流程"><a href="#一般处理字符的工作流程" class="headerlink" title="一般处理字符的工作流程"></a>一般处理字符的工作流程</h2><p>推荐使用UTF-8来进行字符存储，但由于很多系统或者软件会产生一些使用其他字符编码的文件，比如我经常用的VS 2013的代码文件中的中文注释在UTF-8下都是乱码，这时候需要转换到GBK进行读取才可以正常显示。</p>
-<p>因此，我们进行字符处理的流程需要先判断一下文件使用什么编码，然后将其转换成Unicode，再将其转换成需要的编码（比如把字符显示的数字转换成二进制的数字排在一起）进行存储。</p>
-<p>如何判断一个文件的编码格式：首先判断是否是带BOM的UTF-8格式，如果是，则前三个字节为 <strong>EF BB BF</strong> 。<br>关于BOM：</p>
-<blockquote>
-<p>BOM（Byte-Order Mark，字节序标记）是Unicode码点U+FEFF。它被定义来放在一个UTF-16文件的开头，如果字节序列是FEFF那么这个文件就是大端序，如果字节序列是FFFE那么这个文件就是小端序。UTF-8本身是没有字节序的问题的（因为它是以单个字节为最小单位），但是Windows里面很多编辑器（比如记事本）会多此一举的在UTF-8文件开头加入EF BB FF也就是U+FEFF的UTF-8编码。</p>
-</blockquote>
-<p>如果不是带BOM的UTF-8格式，则需要判断所有的字节是否符合UTF-8的字节规定：</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>C++ 算是一个用户群体比较大的语言了，从 C++98 到 C++11 经历了长达十年多之久的积累，<br>C++14 则是作为对 C++11 的重要补充和优化，所有这些新标准中扩充的特性，<br>给 C++ 这门语言注入了新的活力。</p>
+<p>那些还在坚持使用<strong>传统</strong> C++ (本教程把 C++98 及其之前的 C++ 特性均称之为传统 C++)<br>而未接触过 C++11/14 的 C++ 程序员在见到诸如 <code>Lambda</code> 表达式这类全新特性时，<br>甚至会流露出『学的不是同一门语言』的惊叹之情。</p>
+<p>C++1x (本教程中指 C++11/14, 甚至 C++17) 为传统 C++ 注入的大量特性使得整个 C++ 变得更加像一门现代化的语言。<br>C++1x 不仅仅增强了 C++ 语言自身的可用性，<br><code>auto</code> 关键字语义的修改使得我们更加有信心来操控极度复杂的模板类型。<br>同时还对语言运行期进行了大量的强化，<br><code>Lambda</code> 表达式的出现让 C++ 具有了『<strong>匿名函数</strong>』的『<strong>闭包</strong>』特性，<br>而这一特性几乎在现代的编程语言（诸如 Python/Swift/… ）中已经司空见惯，<br><strong>右值引用</strong>的出现解决了 C++ 长期以来被人诟病的临时对象效率问题等等。</p>
+<p>C++1x 为自身的标准库增加了非常多的工具和方法，<br>诸如在语言层面上提供了 <code>std::thread</code> 支持了<strong>并发编程</strong>，<br>在不同平台上不再依赖于系统底层的 API，实现了语言层面的跨平台支持；<br><code>std::regex</code>提供了完整的<strong>正则表达式</strong>支持等等。</p>
+<p>C++98 已经被实践证明了是一种非常成功的『<strong>范型</strong>』，<br>而 C++1x 的出现，则进一步推动这种范型，让 C++ 成为系统程序设计和库开发更好的语言。</p>
+<h2 id="C-与-C-的区别"><a href="#C-与-C-的区别" class="headerlink" title="C 与 C++ 的区别"></a>C 与 C++ 的区别</h2><p>在程序设计思想上：</p>
 <ul>
-<li>1字节：0xxxxxxx</li>
-<li>2字节：110xxxxx 10xxxxxx</li>
-<li>3字节：1110xxxx 10xxxxxx 10xxxxxx</li>
-<li>4字节：11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</li>
+<li>C是一个结构化语言，它的重点在于算法和数据结构。C程序的设计首要考虑的是如何通过一个过程，<br>对输入（或环境条件）进行运算处理得到输出（或实现过程（事务）控制）。</li>
+<li>C++首要考虑的是如何构造一个对象模型，让这个模型能够契合与之对应的问题域，<br>这样就可以通过获取对象的状态信息得到输出或实现过程（事务）控制。<br>所以C与C++的最大区别在于它们的用于解决问题的思想方法不一样。<br>之所以说C++比C更先进，是因为“<strong>设计</strong>”这个概念已经被融入到C++之中。</li>
 </ul>
-<p>如果出现非法字节则不是UTF-8，那读取则依系统情况而定了。同样的，判断其他字符编码也是可以通过寻找非法字符来判断。但即便是没找到非法字符也不一定说明该文件一定是该字符编码。</p>
-<p>对于网络传输来说，最好不同端都约定好默认编码格式。UTF-8兼容ASCII编码，而ASCII是传输英文效率最高的一种，所以一般约定为ASCII编码。</p>
-<h2 id="我碰到的问题"><a href="#我碰到的问题" class="headerlink" title="我碰到的问题"></a>我碰到的问题</h2><p>带BOM格式的UTF-8的读取：无论用C++字符流还是字节流读取文件后，总是有些字符是乱码，原因已经找到，感谢<a href="http://www.zhihu.com/people/jimnox" target="_blank" rel="external">Jim Liu</a>的文章<a href="http://jimliu.net/2015/03/07/something-about-encoding-extra/" target="_blank" rel="external">《编码歪传——番外篇》</a>为我解惑。我读取的有些文件是带BOM标记的，而我讲这些文件的所有字符都存到同一个文件中，就会发现这些BOM是乱码，明天就把这几个字符删掉去。</p>
-<p>我们采用xml配置的软件dll调用接口，一旦用文本文档打开后，再关闭就发现解析错误，之前发现文本文档会添加三个字符，于是删掉时候就可以正常解析了。这个问题原因就是我们的解析代码并没有针对BOM进行处理。也就这样吧，我又没权限修改代码，技术总监<del>是傻逼And顽固不化And异想天开And瞎指挥</del>又没将所有代码开放给我们这些开发人员。sad…</p>
-<h2 id="记录：一些编码应注意的事项"><a href="#记录：一些编码应注意的事项" class="headerlink" title="记录：一些编码应注意的事项"></a>记录：一些编码应注意的事项</h2><p>待补吧……</p>
+<p>在语法方面上, 下面两张图可以进行比较清晰的对比：</p>
+<p><a href="http://en.cppreference.com/w/c/language" target="_blank" rel="external">http://en.cppreference.com/w/c/language</a></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/C.png" alt="C"></p>
+<p><a href="http://en.cppreference.com/w/cpp/language" target="_blank" rel="external">http://en.cppreference.com/w/cpp/language</a></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/C++.png" alt="C++"></p>
+<p>在标准库方面上，C的标准库是C++的子集：</p>
+<p><strong>C Library</strong></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/Clibarary.png" alt="C libarary"></p>
+<p><strong>C++ Containers</strong></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxContainers.png" alt="C++ Containers.png"></p>
+<p><strong>C++ Atomics and threading library</strong></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxAtomicsandthreadinglibrary.png" alt="C++ Atomics and threading library"></p>
+<p><strong>C++ Miscellaneous headers</strong></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxMiscellaneousheaders.png" alt="C++ Miscellaneous headers"></p>
+<p><strong>C++ Input/Output Stream Library</strong></p>
+<p><img src="/2017/03/01/C++ 11 and 14 简介/CxxIO.png" alt="C++ Input/Output Stream Library"></p>
+<p><strong>C++ new library in furture</strong></p>
+<p>注：以上图片来自 <a href="http://www.cplusplus.com/reference/" target="_blank" rel="external">C/C++ Reference</a>.</p>
+<h2 id="C-11-14-中弃用的特性-不再推荐使用"><a href="#C-11-14-中弃用的特性-不再推荐使用" class="headerlink" title="C++ 11/14 中弃用的特性(不再推荐使用)"></a>C++ 11/14 中弃用的特性(不再推荐使用)</h2><ul>
+<li><p>如果一个类有<strong>析构函数</strong>，为其<strong>生成拷贝构造函数和拷贝赋值运算符</strong>的特性被弃用了。</p>
+</li>
+<li><p>不再允许字符串字面值常量赋值给一个 <code>char *</code>。如果需要用字符串字面值常量赋值和初始化一个 <code>char *</code>，应该使用 <code>const char *</code> 或者 <code>auto</code>：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">char *str = &quot;hello world!&quot;; // 将出现弃用警告</div></pre></td></tr></table></figure>
+</li>
+<li><p>C++ 98 异常说明、 <code>unexcepted_handler</code>、<code>set_unexpected()</code> 等相关特性被弃用，应该使用 <code>noexcept</code>。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// 下面两个函数声明的异常规格在语义上是相同的，都表示函数不抛出任何异常</div><div class="line">void old_stytle() throw(); // 不推荐使用</div><div class="line">void new_style() noexcept; // 新标准关键字</div></pre></td></tr></table></figure>
+<p>  关于C++ Expection的概念以及使用，在未明确其概念之前，不推荐使用；可以在设计程序结构时禁止使用expection.</p>
+</li>
+<li><p><code>auto_ptr</code> 被弃用，应使用 <code>unique_ptr</code>，这个是属于标准库中对指针功能的增强。</p>
+</li>
+<li><p><code>register</code> 关键字被弃用。该关键字在那个计算速度低下的年代，用于启用寄存器来增加运行速度。</p>
+</li>
+<li><p><code>bool</code> 类型的 <code>++</code> 操作被弃用。(未曾使用过)</p>
+</li>
+<li><p>C 语言风格的类型转换被弃用，应该使用 <code>static_cast</code>、<code>reinterpret_cast</code>、<code>const_cast</code> 来进行类型转换。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int n = 10;</div><div class="line">double x = (double) n; // 不再推荐使用</div><div class="line">double y = static_cast&lt;double&gt;(n); // 推荐使用</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>还有一些其他诸如<strong>参数绑定</strong>（C++11 提供了 <code>std::bind</code> 和 <code>std::function</code>）、<code>export</code> 等特性也均被弃用。<br>前面提到的这些特性如果你从未使用或者听说过，也请不要尝试去了解他们，应该向新标准靠拢，直接学习新特性。<br>毕竟，技术是向前发展的。</p>
 
       
 
@@ -225,7 +244,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Character encoding</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
         		</li>
       		
 		</ul>
@@ -235,7 +254,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/02/关于字符编码的理解/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/01/C++ 11 and 14 简介/">展开全文 >></a>
         </p>
       
 
@@ -267,7 +286,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/14/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/16/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/14/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/16/">Next &raquo;</a>
     </nav>
   
 

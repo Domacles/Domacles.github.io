@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="null" class="profilepic">
-			<img src="/image/avatar.png" class="js-avatar">
+			<img src="/images/avatar.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="null">Domacles</a></h1>
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/image/avatar.png" class="js-avatar">
+				<img src="/images/avatar.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Domacles</h1>
@@ -155,20 +155,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Vulkan Samples Tutorial 6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Vulkan Samples Tutorial 4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/26/Vulkan Samples Tutorial 6/">Vulkan Samples Tutorial 6</a>
+      <a class="article-title" href="/2017/04/24/Vulkan Samples Tutorial 4/">Vulkan Samples Tutorial 4</a>
     </h1>
   
 
         
-        <a href="/2017/04/26/Vulkan Samples Tutorial 6/" class="archive-article-date">
-  	<time datetime="2017-04-26T06:26:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-26</time>
+        <a href="/2017/04/24/Vulkan Samples Tutorial 4/" class="archive-article-date">
+  	<time datetime="2017-04-24T03:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-24</time>
 </a>
         
       </header>
@@ -177,64 +177,67 @@
       
         <!-- TOC -->
 <ul>
-<li><a href="#shaders">Shaders</a><ul>
-<li><a href="#compiling-glsl-shaders-into-spir-v">Compiling GLSL Shaders into SPIR-V</a></li>
-<li><a href="#creating-vulkan-shader-modules">Creating Vulkan Shader Modules</a></li>
+<li><a href="#descriptor-set-layouts-and-pipeline-layouts">Descriptor Set Layouts and Pipeline Layouts</a><ul>
+<li><a href="#descriptors-and-descriptor-sets">Descriptors and Descriptor Sets</a></li>
+<li><a href="#descriptor-set-layouts">Descriptor Set Layouts</a></li>
+<li><a href="#pipeline-layouts">Pipeline Layouts</a></li>
+<li><a href="#shader-referencing-of-descriptors">Shader Referencing of Descriptors</a></li>
 </ul>
 </li>
-<li><a href="#create-the-framebuffers">Create the Framebuffers</a><ul>
-<li><a href="#the-vulkan-framebuffer">The vulkan Framebuffer</a></li>
-</ul>
-</li>
-<li><a href="#create-a-vertex-buffer">Create a Vertex Buffer</a><ul>
-<li><a href="#creating-the-vertex-buffer-object">Creating the Vertex Buffer Object</a></li>
-<li><a href="#allocating-the-vertex-buffer-memory">Allocating the Vertex Buffer Memory</a></li>
-<li><a href="#store-the-vertex-data-in-the-buffer">Store the Vertex Data in the Buffer</a></li>
-<li><a href="#describing-the-input-vertex-data">Describing the Input Vertex Data</a></li>
-<li><a href="#binding-the-vertex-buffer-to-a-render-pass">Binding the Vertex Buffer to a Render Pass</a></li>
+<li><a href="#create-a-descriptor-set">Create a Descriptor Set</a><ul>
+<li><a href="#descriptor-pool">Descriptor Pool</a></li>
+<li><a href="#allocate-a-descriptor-set-from-the-pool">Allocate a Descriptor Set from the Pool</a></li>
+<li><a href="#update-the-descriptor-set">Update the Descriptor Set</a></li>
 </ul>
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="Shaders"><a href="#Shaders" class="headerlink" title="Shaders"></a>Shaders</h2><p>本章节代码在<code>11-init_shaders.cpp</code>文件中。</p>
-<h3 id="Compiling-GLSL-Shaders-into-SPIR-V"><a href="#Compiling-GLSL-Shaders-into-SPIR-V" class="headerlink" title="Compiling GLSL Shaders into SPIR-V"></a>Compiling GLSL Shaders into SPIR-V</h3><p>Vulkan中底层着色器（shader）使用的代码是<code>SPIR-V</code>。样例程序调用了一个函数工具，使用着色器编译器将GLSL转换了成SPIR-V：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLSLtoSPV(VK_SHADER_STAGE_VERTEX_BIT, vertShaderText, vtx_spv);</div></pre></td></tr></table></figure></p>
-<p>着色器源代码在<code>vertShaderText</code>变量中，编译SPIR-V得到的返回值在<code>vtx_spv</code>中，它是一个<code>unsigned int</code>的vector，适合于存储SPIR-V代码。</p>
-<p>从样例代码中可以找到顶点着色器的着色源码，注意，样例同时也提供了片段着色器（fragment shader）源码，他们的编译方法和过程类似。</p>
-<p>同时，我们应当注意到，代码中给出的着色器代码都是简单的着色器。顶点着色器只是简单地把颜色传递到输出，并且用MVP矩阵（MVP可以参考以前的章节）变换位置。片段着色器甚至更简单，仅仅传递颜色至输出。</p>
-<p>在这个简单的样例中，有两个着色阶段：顶点着色阶段和片段着色阶段，顺序存储在<code>info.shaderStages</code>中。</p>
-<h3 id="Creating-Vulkan-Shader-Modules"><a href="#Creating-Vulkan-Shader-Modules" class="headerlink" title="Creating Vulkan Shader Modules"></a>Creating Vulkan Shader Modules</h3><p>在Vulkan中，通过创建<code>VkShaderModule</code>来经过编译的着色器代码，并且存储在结构体<code>VkPipelineShaderStageCreateInfo</code>中，这个结构体在后面的另一个样例中用到，作为创建整个图形管线的一部分。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">VkShaderModuleCreateInfo moduleCreateInfo;</div><div class="line">moduleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;</div><div class="line">moduleCreateInfo.pNext = NULL;</div><div class="line">moduleCreateInfo.flags = 0;</div><div class="line">moduleCreateInfo.codeSize = vtx_spv.size() * sizeof(unsigned int);</div><div class="line">moduleCreateInfo.pCode = vtx_spv.data();</div><div class="line">res = vkCreateShaderModule(info.device, &amp;moduleCreateInfo, NULL,</div><div class="line">                           &amp;info.shaderStages[0].module);</div></pre></td></tr></table></figure></p>
-<p>注意，从GLSL转换到的SPIR-V代码是用来创建着色器模块(shader module)。用同样的过程为片段着色器创建<code>vkShaderModule</code>，并将它存储在<code>info.shaderStages[1].module</code>中。</p>
-<p>与此同时，也可以完成一些着色器管线阶段(pipeline shader stage)中附加的creation info的初始化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">info.shaderStages[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;</div><div class="line">info.shaderStages[0].pNext = NULL;</div><div class="line">info.shaderStages[0].pSpecializationInfo = NULL;</div><div class="line">info.shaderStages[0].flags = 0;</div><div class="line">info.shaderStages[0].stage = VK_SHADER_STAGE_VERTEX_BIT;</div><div class="line">info.shaderStages[0].pName = &quot;main&quot;;</div></pre></td></tr></table></figure></p>
-<p>现在，着色器可以运行了。</p>
+<h2 id="Descriptor-Set-Layouts-and-Pipeline-Layouts"><a href="#Descriptor-Set-Layouts-and-Pipeline-Layouts" class="headerlink" title="Descriptor Set Layouts and Pipeline Layouts"></a>Descriptor Set Layouts and Pipeline Layouts</h2><p>本章节代码在<code>08-init_pipeline_layout.cpp</code>中。</p>
+<p>在之前的样例中，我们创建了Uniform Buffer，但我们还没有让shader来使用它。我们使用<strong>Descriptor</strong>来完成这一工作。</p>
+<h3 id="Descriptors-and-Descriptor-Sets"><a href="#Descriptors-and-Descriptor-Sets" class="headerlink" title="Descriptors and Descriptor Sets"></a>Descriptors and Descriptor Sets</h3><p>本段讲解什么是Descriptor，Descriptor是一种不透明的特殊着色器变量，作为一种间接的方式，着色器用它来存取缓冲区数据和图像资源。我们可以认为它是资源的指针(pointer)。Vulkan API中，支持在绘制操作过程中更改这些变量，如此着色器才能够为每次绘制使用不同的资源。</p>
+<p>本样例作为一个简单的样例，我们只用了1个Uniform Buffer，但也有可能我们会创建两个Uniform Buffer，每一个都存放着不同的MVP矩阵，从而能够绘制不同场景。如果我们有两个Uniform Buffer，我们可以很轻松地改变Descriptor的指向，来切换MVP矩阵的使用。</p>
+<p>Descriptor Set表示：该集合中的Descriptor指向的是同类型的资源，这些资源是使用相同的<strong>Layout Binding</strong>。</p>
+<p>在本样例中我们没有用到<strong>材质</strong>(texture)，但可能我们会创建一个由两个Descriptor组成的集合，每个Descriptor引用着不同的材质，通过使用这个Descriptor Set，让这两种材质在绘制的过程中始终可用。命令缓冲区中存储的命令可以通过指定材质的索引来选择材质来使用。</p>
+<blockquote>
+<p>注意，在本章节这里，我们并没有实际创建分类Descriptor Set，我们在本章节主要做的是“描述(describing)”Descriptor Set的配置属性。</p>
+</blockquote>
+<p>为了能够设置Descriptor Set，我们需要使用Descriptor Set Layout。</p>
+<h3 id="Descriptor-Set-Layouts"><a href="#Descriptor-Set-Layouts" class="headerlink" title="Descriptor Set Layouts"></a>Descriptor Set Layouts</h3><p>Descriptor Set Layout用于设置集合中的内容。我们需要为每一个Descriptor集合绑定一个layout，就像下面这段代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">VkDescriptorSetLayoutBinding layout_binding = &#123;&#125;;</div><div class="line">layout_binding.binding = 0;</div><div class="line">layout_binding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;</div><div class="line">layout_binding.descriptorCount = 1;</div><div class="line">layout_binding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;</div><div class="line">layout_binding.pImmutableSamplers = NULL;</div></pre></td></tr></table></figure></p>
+<p>上面的代码我们实现了下面四个方面：</p>
+<ul>
+<li>创建了一个Descriptor集合，并绑定到了0这个对象上，即将<code>binding</code>设置为0。</li>
+<li>该Descriptor集合指向的是一个Uniform Buffer，即将<code>descriptorType</code>指定为我们需要的类型。</li>
+<li>在这个Descriptor集合中，只有一个Descriptor对象，数量在<code>descriptorCount</code>上设置的。</li>
+<li>最后，<code>stageFlags</code>指明了该Descriptor集合在顶点着色器执行阶段有效。</li>
+</ul>
+<p>在绑定Descriptor对象之后，紧接着我们需要创建Descriptor Set Layout对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#define NUM_DESCRIPTOR_SETS 1</div><div class="line">VkDescriptorSetLayoutCreateInfo descriptor_layout = &#123;&#125;;</div><div class="line">descriptor_layout.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;</div><div class="line">descriptor_layout.pNext = NULL;</div><div class="line">descriptor_layout.bindingCount = 1;</div><div class="line">descriptor_layout.pBindings = &amp;layout_binding;</div><div class="line">info.desc_layout.resize(NUM_DESCRIPTOR_SETS);</div><div class="line">res = vkCreateDescriptorSetLayout(info.device, &amp;descriptor_layout, NULL,</div><div class="line">                                  info.desc_layout.data());</div></pre></td></tr></table></figure></p>
+<h3 id="Pipeline-Layouts"><a href="#Pipeline-Layouts" class="headerlink" title="Pipeline Layouts"></a>Pipeline Layouts</h3><p>Pipeline Layout包含了一系列的Descriptor Set Layout。在定义Descriptor Set之后，我们就要完成Pipeline Layout的CreateInfo的填充了，在创建Pipeline Layout之后，就会创建我们之前定义的Descriptor了。</p>
+<p>创建Pipeline Layout的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkPipelineLayoutCreateInfo pPipelineLayoutCreateInfo = &#123;&#125;;</div><div class="line">pPipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;</div><div class="line">pPipelineLayoutCreateInfo.pNext = NULL;</div><div class="line">pPipelineLayoutCreateInfo.pushConstantRangeCount = 0;</div><div class="line">pPipelineLayoutCreateInfo.pPushConstantRanges = NULL;</div><div class="line">pPipelineLayoutCreateInfo.setLayoutCount = NUM_DESCRIPTOR_SETS;</div><div class="line">pPipelineLayoutCreateInfo.pSetLayouts = info.desc_layout.data();</div><div class="line"></div><div class="line">res = vkCreatePipelineLayout(info.device, &amp;pPipelineLayoutCreateInfo, NULL,</div><div class="line">                             &amp;info.pipeline_layout);</div></pre></td></tr></table></figure></p>
+<p>完成上面的工作后，在接下来章节的内容，我们就可以用Pipeline Layout来创建<strong>图形管线</strong>（graphics pipeline）了。</p>
+<h3 id="Shader-Referencing-of-Descriptors"><a href="#Shader-Referencing-of-Descriptors" class="headerlink" title="Shader Referencing of Descriptors"></a>Shader Referencing of Descriptors</h3><p>在着色器语言中，明确引用Descriptors是很有用的一个做法。</p>
+<p>举个例子，在GLSL中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layout (set=M, binding=N) uniform sampler2D variableNameArray[I];</div></pre></td></tr></table></figure></p>
+<p>这一句告诉我们：</p>
+<ul>
+<li>M表示<code>pSetLayouts</code>管线成员中的第M个Descriptor Set Layout。</li>
+<li>N表示M的<code>pBingings</code>的第N个Descriptor Set。</li>
+<li>I表示Descriptor Set数组化的下标。</li>
+</ul>
+<p>在顶点着色器中使用Uniform Buffer的Layout的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">layout (std140, binding = 0) uniform bufferVals &#123;</div><div class="line">    mat4 mvp;</div><div class="line">&#125; myBufferVals;</div></pre></td></tr></table></figure></p>
+<p>这行代码表示Uniform Buffer中的内容映射到了<code>myBufferVals</code>结构体中；<code>set=M</code>没有指定，这里会默认M为0。<code>std140</code>是一个Uniform数据块打包的协议标准，你可以引用它，来将更多的数据塞到一个Uniform数据块中。如果你希望得到关于这个标准更多的信息，则点击<a href="https://www.opengl.org/registry/specs/ARB/uniform_buffer_object.txt" target="_blank" rel="external">这里</a>来获取更多的信息。</p>
 <hr>
-<h2 id="Create-the-Framebuffers"><a href="#Create-the-Framebuffers" class="headerlink" title="Create the Framebuffers"></a>Create the Framebuffers</h2><p>本章节代码在<code>12-init_frame_buffers.cpp</code>文件中。</p>
-<h3 id="The-vulkan-Framebuffer"><a href="#The-vulkan-Framebuffer" class="headerlink" title="The vulkan Framebuffer"></a>The vulkan Framebuffer</h3><p>帧缓冲（Framebuffers）是一种被渲染通道对象使用的内存附件集合。这些内存附件的例子包括前面创建的例子中的颜色图像缓存和深度缓存。渲染时，帧缓存提供了渲染通道需要的附件。</p>
-<p>在前面的交换链（swapchain）样例中，我们创建一个交换链，它为在交换链中的每一“帧”(frame)提供一个颜色图像附件。在深度缓存样例中，我们也创建了一个深度图象附件，它被每一帧中每一个图像附件重复使用。</p>
-<p>在渲染通道(render pass)样例中，我们创建了一个描述附件性质的渲染通道，但是事实上我们并没有将实际资源（即images）与渲染通道连接起来。帧缓存本质上将实际的附件与渲染通道联系起来。</p>
-<p>举个例子，如果swapchain有两帧，那么需要创建两个帧缓存。第一个帧缓存包括第一个颜色图像缓存，它可以在swapchain例子中用<code>vkGetSwapchainImagesKHR()</code>获取到。在depthbuffer例子中，第一个帧缓存也包括我们创建的单个深度缓存。第二个帧缓存包括第二个颜色图像缓存和在第一个帧缓存中使用的同一个深度缓存。</p>
-<p><img src="/2017/04/26/Vulkan Samples Tutorial 6/FrameBuffers.png" alt="FrameBuffers"></p>
-<p>看样例代码，我们开始时声明了一个包括两个附件的数组，预初始化第二个附件给深度缓存，这是因为它会被所有的帧缓存使用。随后我们填充第一个附件。注意，”view”对象的作用是引用这个图像，由于视图对象(view)包括用来描述缓存的格式和用法的附加元数据(metadata)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">VkImageView attachments[2];</div><div class="line">attachments[1] = info.depth.view;</div></pre></td></tr></table></figure></p>
-<p>接下来，填充create info结构:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">VkFramebufferCreateInfo fb_info = &#123;&#125;;</div><div class="line">fb_info.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;</div><div class="line">fb_info.pNext = NULL;</div><div class="line">fb_info.renderPass = info.render_pass;</div><div class="line">fb_info.attachmentCount = 2;</div><div class="line">fb_info.pAttachments = attachments;</div><div class="line">fb_info.width = info.width;</div><div class="line">fb_info.height = info.height;</div><div class="line">fb_info.layers = 1;</div></pre></td></tr></table></figure></p>
-<p>样例支持运行时确定的swapchain数量，所以动态地分配帧缓存处理的数组array。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">info.framebuffers = (VkFramebuffer *)malloc(info.swapchainImageCount *</div><div class="line">                                            sizeof(VkFramebuffer));</div></pre></td></tr></table></figure></p>
-<p>对每一个帧缓存，设置第一个附件给swapchain中每个各自的颜色图像缓存，设置第二个附件给相同的深度缓存，所以被所有帧缓存共享。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for (int i = 0; i &lt; info.swapchainImageCount; i++) &#123;</div><div class="line">    attachments[0] = info.buffers[i].view;</div><div class="line">    res = vkCreateFramebuffer(info.device, &amp;fb_info, NULL, &amp;info.framebuffers[i]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>注意，在renderpass样例中，我们定义的相同的渲染通道也与每一个帧缓存相联系。</p>
-<hr>
-<h2 id="Create-a-Vertex-Buffer"><a href="#Create-a-Vertex-Buffer" class="headerlink" title="Create a Vertex Buffer"></a>Create a Vertex Buffer</h2><p>本章节代码在<code>13-init_vertex_buffer.cpp</code>文件中。</p>
-<p>顶点缓存（vertex buffer）是可见的CPU和可见的GPU缓存，包括描述渲染对象的几何结构的顶点数据（vertex data）。总之，顶点数据由数据的位置（x,y,z）和选择的颜色（color）、法线（normal）或其它的信息组成。像其它的3D APIs，在画图操作中，这里的方法是用顶点数据填充缓存，并把它传给GPU。</p>
-<h3 id="Creating-the-Vertex-Buffer-Object"><a href="#Creating-the-Vertex-Buffer-Object" class="headerlink" title="Creating the Vertex Buffer Object"></a>Creating the Vertex Buffer Object</h3><p>创建vertex buffer与创建uniform buffer几乎一致，就像在uniform sample中一样，以创建一个缓存对象开始。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkBufferCreateInfo buf_info = &#123;&#125;;</div><div class="line">buf_info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;</div><div class="line">buf_info.pNext = NULL;</div><div class="line">buf_info.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;</div><div class="line">buf_info.size = sizeof(g_vb_solid_face_colors_Data);</div><div class="line">buf_info.queueFamilyIndexCount = 0;</div><div class="line">buf_info.pQueueFamilyIndices = NULL;</div><div class="line">buf_info.sharingMode = VK_SHARING_MODE_EXCLUSIVE;</div><div class="line">buf_info.flags = 0;</div><div class="line">res = vkCreateBuffer(info.device, &amp;buf_info, NULL, &amp;info.vertex_buffer.buf);</div></pre></td></tr></table></figure></p>
-<p>创建uniform buffer对象与vertex buffer对象实际上唯一不同是<code>usage</code>参数的设置。</p>
-<p>立方体数据（<code>g_vb_solid_face_colors_Data</code>）由定义了12个三角形的36个顶点构成，立方体的6个面中，每一个面包括2个三角形。每一个三角形都有一个面的颜色。从<code>cube_data.h</code>中可以看到真实的数据。</p>
-<h3 id="Allocating-the-Vertex-Buffer-Memory"><a href="#Allocating-the-Vertex-Buffer-Memory" class="headerlink" title="Allocating the Vertex Buffer Memory"></a>Allocating the Vertex Buffer Memory</h3><p>此外，分配vertex buffer的步骤与分配uniform buffer的步骤相似。首先，查询获取内存的requirements，它包括考虑机器的限制条件，如对齐（alignment）。从样例中的代码中可以看到这个过程与uniform样例非常相似。</p>
-<h3 id="Store-the-Vertex-Data-in-the-Buffer"><a href="#Store-the-Vertex-Data-in-the-Buffer" class="headerlink" title="Store the Vertex Data in the Buffer"></a>Store the Vertex Data in the Buffer</h3><p>一旦vertex buffer的内存分配完，然后进行内存映射操作、使用顶点数据进行初始化、之后进行解除映射操作(在之前使用uniform buffer时，解释过为何要在使用之后立即解除映射)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">uint8_t *pData;</div><div class="line">res = vkMapMemory(info.device, info.vertex_buffer.mem, 0,</div><div class="line">                  mem_reqs.size, 0, (void **)&amp;pData);</div><div class="line"></div><div class="line">memcpy(pData, g_vb_solid_face_colors_Data,</div><div class="line">       sizeof(g_vb_solid_face_colors_Data));</div><div class="line"></div><div class="line">vkUnmapMemory(info.device, info.vertex_buffer.mem);</div></pre></td></tr></table></figure></p>
-<p>最后一步，将内存绑定到缓存对象上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">res = vkBindBufferMemory(info.device, info.vertex_buffer.buf,</div><div class="line">                         info.vertex_buffer.mem, 0);</div></pre></td></tr></table></figure></p>
-<h3 id="Describing-the-Input-Vertex-Data"><a href="#Describing-the-Input-Vertex-Data" class="headerlink" title="Describing the Input Vertex Data"></a>Describing the Input Vertex Data</h3><p>样例中的顶点数据如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">struct Vertex &#123;</div><div class="line">    float posX, posY, posZ, posW; // Position data</div><div class="line">    float r, g, b, a;             // Color</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>我们需要创建一个顶点输入的绑定来为GPU描述数据的组织形式。虽然是在这里进行<code>vi_binding</code>和<code>vi_attribs</code>成员的设置，但他们将在后面的样例中作为创建图形管线的一部分。注意看西面顶点数据的格式，这是个很好的参考样例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">info.vi_binding.binding = 0;</div><div class="line">info.vi_binding.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;</div><div class="line">info.vi_binding.stride = sizeof(g_vb_solid_face_colors_Data[0]);</div><div class="line"></div><div class="line">info.vi_attribs[0].binding = 0;</div><div class="line">info.vi_attribs[0].location = 0;</div><div class="line">info.vi_attribs[0].format = VK_FORMAT_R32G32B32A32_SFLOAT;</div><div class="line">info.vi_attribs[0].offset = 0;</div><div class="line">info.vi_attribs[1].binding = 0;</div><div class="line">info.vi_attribs[1].location = 1;</div><div class="line">info.vi_attribs[1].format = VK_FORMAT_R32G32B32A32_SFLOAT;</div><div class="line">info.vi_attribs[1].offset = 16;</div></pre></td></tr></table></figure></p>
-<p><code>stride</code>表示一个顶点数据的大小，也可以表示成获取下一个顶点数据需要的字节长度。</p>
-<p><code>binding</code>和<code>location</code>成员表示他们在GLSL着色器源码中各自的值。可以在shader样例中回顾shader源码。</p>
-<p>尽管我们让<code>vi_attribs[0]</code>表示顶点位置数据的信息，但在<code>info.vi_attribs[0]</code>中，实际上是<code>format</code>属性用4个字节颜色格式(即<code>VK_FORMAT_R32G32B32A32_SFLOAT</code>)来为GPU描述数据格式的。那<code>vi_attribs[1]</code>很自然地使用来表示颜色数据，所以我们可以看到<code>info.vi_attribs[1].format</code>的颜色格式设置。</p>
-<p><code>offset</code>成员表示顶点数据中每个属性的偏移量(在OpenGL中也有这个概念，即第一个顶点数据是从0字节开始的，第一个颜色数据是从16字节开始的，然后根据它们的<code>format</code>来计算下一个数据的位置)。</p>
-<h3 id="Binding-the-Vertex-Buffer-to-a-Render-Pass"><a href="#Binding-the-Vertex-Buffer-to-a-Render-Pass" class="headerlink" title="Binding the Vertex Buffer to a Render Pass"></a>Binding the Vertex Buffer to a Render Pass</h3><p>由于后面样例可以看到，我们可以掠过render pass中的大部分代码。然后找到绑定vertex buffer到render pass的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vkCmdBeginRenderPass(info.cmd, &amp;rp_begin, VK_SUBPASS_CONTENTS_INLINE);</div><div class="line"></div><div class="line">vkCmdBindVertexBuffers(info.cmd, 0,             /* Start Binding */</div><div class="line">                       1,                       /* Binding Count */</div><div class="line">                       &amp;info.vertex_buffer.buf, /* pBuffers */</div><div class="line">                       offsets);                /* pOffsets */</div><div class="line"></div><div class="line">vkCmdEndRenderPass(info.cmd);</div></pre></td></tr></table></figure></p>
-<p>注意，在渲染通道中，只能用一个render pass链接vertex buffer；也就是，当记录命令缓冲区时，在<code>vkCmdBeginRenderPass</code>和<code>vkCmdEndRenderPass</code>之间的代码进行额。当画图时，必须告诉GPU用什么顶点缓存。</p>
+<h2 id="Create-a-Descriptor-Set"><a href="#Create-a-Descriptor-Set" class="headerlink" title="Create a Descriptor Set"></a>Create a Descriptor Set</h2><p>本章节的代码在<code>09-init_descriptor_set.cpp</code>文件中。</p>
+<p>回想一下上一章的内容，我们定义了descriptor set layout，但并没有立即创建descriptor set。descriptor set是用于告诉GPU如何组织Uniform BUffer的数据的。现在，我们就需要开始创建和初始化descriptor set。</p>
+<h3 id="Descriptor-Pool"><a href="#Descriptor-Pool" class="headerlink" title="Descriptor Pool"></a>Descriptor Pool</h3><p>就像命令缓冲区(Command Buffer)一样，descriptor set是从缓冲池(pool)中分配的。所以，我们第一步就是创建这个<strong>Descriptor Pool</strong>。因为我们样例只需要为一个uniform buffer创建一个descriptor set，可以使用下面的代码直接来搞：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">VkDescriptorPoolSize type_count[1];</div><div class="line">type_count[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;</div><div class="line">type_count[0].descriptorCount = 1;</div><div class="line"></div><div class="line">VkDescriptorPoolCreateInfo descriptor_pool = &#123;&#125;;</div><div class="line">descriptor_pool.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;</div><div class="line">descriptor_pool.pNext = NULL;</div><div class="line">descriptor_pool.maxSets = 1;</div><div class="line">descriptor_pool.poolSizeCount = 1;</div><div class="line">descriptor_pool.pPoolSizes = type_count;</div><div class="line"></div><div class="line">res = vkCreateDescriptorPool(info.device, &amp;descriptor_pool, NULL,</div><div class="line">                             &amp;info.desc_pool);</div></pre></td></tr></table></figure></p>
+<h3 id="Allocate-a-Descriptor-Set-from-the-Pool"><a href="#Allocate-a-Descriptor-Set-from-the-Pool" class="headerlink" title="Allocate a Descriptor Set from the Pool"></a>Allocate a Descriptor Set from the Pool</h3><p>然后，我们需要从缓冲池中创建一个descriptor set。注意，这里我们需要提供在之前章节创建的descriptor set layout，这个layout描述了该descriptor set应当如何来创建。</p>
+<p>下面是从缓冲池中创建descriptor set的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">VkDescriptorSetAllocateInfo alloc_info[1];</div><div class="line">alloc_info[0].sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;</div><div class="line">alloc_info[0].pNext = NULL;</div><div class="line">alloc_info[0].descriptorPool = info.desc_pool;</div><div class="line">alloc_info[0].descriptorSetCount = NUM_DESCRIPTOR_SETS;</div><div class="line">alloc_info[0].pSetLayouts = info.desc_layout.data();</div><div class="line">info.desc_set.resize(NUM_DESCRIPTOR_SETS);</div><div class="line">res = vkAllocateDescriptorSets(info.device, alloc_info, info.desc_set.data());</div></pre></td></tr></table></figure></p>
+<h3 id="Update-the-Descriptor-Set"><a href="#Update-the-Descriptor-Set" class="headerlink" title="Update the Descriptor Set"></a>Update the Descriptor Set</h3><p><del>注意，事实上，我们还不能够随时随地使用uniform buffer的句柄来操作其中的数据。</del></p>
+<p>在函数<code>init_uniform_buffer()</code>中，我们可以看到uniform buffer信息被存储到一个叫做<code>info.uniform_data.buffer_info</code>的VkDescriptorBufferInfo结构体对象中，该结构体对象在函数中被初始化。</p>
+<p><code>info.uniform_data.buffer_info</code>的结构体：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">typedef struct VkDescriptorBufferInfo &#123;</div><div class="line">    VkBuffer        buffer;</div><div class="line">    VkDeviceSize    offset;</div><div class="line">    VkDeviceSize    range;</div><div class="line">&#125; VkDescriptorBufferInfo;</div></pre></td></tr></table></figure></p>
+<p><code>buffer</code>成员包含着uniform buffer的句柄。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">VkWriteDescriptorSet writes[1];</div><div class="line">writes[0] = &#123;&#125;;</div><div class="line">writes[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;</div><div class="line">writes[0].pNext = NULL;</div><div class="line">writes[0].dstSet = info.desc_set[0];</div><div class="line">writes[0].descriptorCount = 1;</div><div class="line">writes[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;</div><div class="line">writes[0].pBufferInfo = &amp;info.uniform_data.buffer_info;</div><div class="line">writes[0].dstArrayElement = 0;</div><div class="line">writes[0].dstBinding = 0;</div><div class="line"></div><div class="line">vkUpdateDescriptorSets(info.device, 1, writes, 0, NULL);</div></pre></td></tr></table></figure>
+<p>上面的步骤，实质上是将<code>VkDescriptorBufferInfo</code>复制到descriptor上，如同device内存一样。</p>
+<p>info的buffer——info包含着uniform buffer的句柄，也有uniform buffer中数据的地址偏移(offset)和大小(size)。在本样例中，因为uniform buffer只包含这MVP转换矩阵，所以这里uniform data的数据偏移为0，数据大小为MVP矩阵的大小。</p>
+<p>descriptor的二进制实现细节可能对于不同设备有所不同，且对于我们是不透明的。这就是为什么我们要使用Vulkan驱动中的函数来操作descriptor对象，而不是自己直接通过内存映射和内存读写的原因。</p>
 <hr>
 <p>本篇<strong>Vulkan Samples Tutorial</strong>原文是<strong>LUNAEXCHANGE</strong>中的<a href="https://vulkan.lunarg.com/doc/sdk/1.0.42.1/windows/tutorial/html/index.html" target="_blank" rel="external">Vulkan Tutorial</a>的译文。<br>并非逐字逐句翻译，如有错误之处请告知。O(∩_∩)O谢谢~~</p>
 
@@ -260,7 +263,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/26/Vulkan Samples Tutorial 6/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/24/Vulkan Samples Tutorial 4/">展开全文 >></a>
         </p>
       
 
@@ -292,7 +295,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 

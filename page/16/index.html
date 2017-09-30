@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="null" class="profilepic">
-			<img src="/image/avatar.png" class="js-avatar">
+			<img src="/images/avatar.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="null">Domacles</a></h1>
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/image/avatar.png" class="js-avatar">
+				<img src="/images/avatar.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Domacles</h1>
@@ -155,20 +155,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-搭建github-io静态博客遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-C++ 11 and 14 特性：新指针与新指针值" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/01/搭建github-io静态博客遇到的问题/">搭建github.io静态博客遇到的问题</a>
+      <a class="article-title" href="/2017/03/01/C++ 11 and 14 特性：新指针与新指针值/">C++ 11/14 特性：新指针与新指针值</a>
     </h1>
   
 
         
-        <a href="/2017/03/01/搭建github-io静态博客遇到的问题/" class="archive-article-date">
-  	<time datetime="2017-03-01T13:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+        <a href="/2017/03/01/C++ 11 and 14 特性：新指针与新指针值/" class="archive-article-date">
+  	<time datetime="2017-03-01T08:31:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
 </a>
         
       </header>
@@ -177,45 +177,29 @@
       
         <!-- TOC -->
 <ul>
-<li><a href="#为什么我需要一个博客">为什么我需要一个博客</a></li>
-<li><a href="#搭建githubio博客的原理">搭建Github.io博客的原理</a></li>
-<li><a href="#搭建gihubio博客的工具">搭建Gihub.io博客的工具</a></li>
-<li><a href="#写博文完善自己的博客">写博文完善自己的博客</a></li>
-<li><a href="#我碰到的问题">我碰到的问题</a></li>
-<li><a href="#我的一些想法">我的一些想法</a></li>
+<li><a href="#指针类型的强化">指针类型的强化</a></li>
+<li><a href="#空指针值的强化">空指针值的强化</a></li>
 </ul>
 <!-- /TOC -->
-<h2 id="为什么我需要一个博客"><a href="#为什么我需要一个博客" class="headerlink" title="为什么我需要一个博客"></a>为什么我需要一个博客</h2><p>很早之前ACM训练时在CSDN上开过一个博客，经常将自己的题解贴到上面去，可惜这个习惯并没有坚持太久(是懒病犯了……)。<br>现在毕业差不多半年了，感觉需要将最近看到的东西以及以后看到的东西总结总结，写写读书笔记，最近看<code>C++</code>感觉记忆力不够用了。</p>
-<p>想去买个VPS，接触过<code>Node.js</code>之后，又想过自己试着写一个，虽然自我感觉很不错(年轻人经常自大……)，但由于本人是写<code>C++</code>的，<br>虽然学会了<code>TypeScript</code>但从来没怎么用过，随着时间(当然是逐渐忘了……)流逝，各种框架一个版本一个版本地更新，真没时间去练习……</p>
-<p>但后来，我觉得不能这么悠闲得生活下去，得提高自己的知识水平才行，说不定出现什么不幸的事件，那只得靠自己了。</p>
-<p>今天刷知乎时，看到<br><a href="https://zhangslob.github.io/2017/02/28/%E6%95%99%E4%BD%A0%E5%85%8D%E8%B4%B9%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%8CHexo-Github/" target="_blank" rel="external">教你免费搭建个人博客，Hexo&amp;Github —— 崔斯特的博客</a><br>，感觉可行啊，那就自己搭一个~~</p>
-<h2 id="搭建Github-io博客的原理"><a href="#搭建Github-io博客的原理" class="headerlink" title="搭建Github.io博客的原理"></a>搭建Github.io博客的原理</h2><p>简单了解了一下，Github的域名分为两个: <code>github.com</code> 和 <code>github.io</code>，<br>不同的域名可以采用不同安全策略，保证托管在Github上的代码不会因为Cookie被利用而遭到破坏；<br>数据做了划分处理，可以放到不同的服务器上进行保存，比较容易进行分流等等。</p>
-<p><code>github.io</code>可以将代码仓库中的静态网页渲染到浏览器上，因此，<br>创建一个<code>xxx.github.io</code>仓库然后在里面存贮博客的静态网页，<br>如此我们就可以使用 <a href="">https://yourname.github.io/</a> 就可以访问自己的博客，浏览文章内容了。</p>
-<h2 id="搭建Gihub-io博客的工具"><a href="#搭建Gihub-io博客的工具" class="headerlink" title="搭建Gihub.io博客的工具"></a>搭建Gihub.io博客的工具</h2><p>这世界上有很多生成静态网页的程序可以用来搭建博客，我用的是 <strong>Hexo</strong> ， 官方网站在<a href="https://hexo.io/" target="_blank" rel="external">这里</a>。<br>这是一个使用<code>Node.js</code>写出来的工具，有这么几个优点：</p>
+<p>使用指针的目的可以通过引用地址的方式，将某一对象能够送到其他作用域中进行操作。<br>使用智能指针可以在一定程度上减少野指针以及内存泄漏的发生，但与此同时，若使用不当则会出现循环引用导致内存泄漏。<br>使用<code>nullptr</code>可以将指针值与常量值<code>0</code>区分开，从而避免运行时出现函数参数类型匹配不当导致问题出现。</p>
+<h2 id="指针类型的强化"><a href="#指针类型的强化" class="headerlink" title="指针类型的强化"></a>指针类型的强化</h2><p>智能指针（ <code>shared_ptr</code> 、 <code>unique_ptr</code> 、 <code>weak_ptr</code> ）, 废除 <code>auto_ptr</code> 。</p>
 <ul>
-<li>超快速度：Node.js 所带来的超快生成速度，让上百个页面在几秒内瞬间完成渲染。</li>
-<li>支持 Markdown：Hexo 支持 GitHub Flavored Markdown 的所有功能，甚至可以整合 Octopress 的大多数插件。</li>
-<li>一键部署：只需一条指令即可部署到 GitHub Pages, Heroku 或其他网站。</li>
-<li>丰富的插件：Hexo 拥有强大的插件系统，安装插件可以让 Hexo 支持 Jade, CoffeeScript。(我相信也一定支持TypeScript)</li>
+<li><code>shared_ptr</code> 是一个引用计数智能指针，用于共享对象的所有权也就是说它允许多个指针指向同一个对象。</li>
+<li><code>unique_ptr</code> 是“唯一”拥有其所指对象，同一时刻只能有一个unique_ptr指向给定对象，该指针生命周期结束后，会自动调用释放资源。</li>
+<li><code>weak_ptr</code> 是为了配合 <code>shared_ptr</code> 而引入的一种智能指针，<br>  它指向一个由 <code>shared_ptr</code> 管理的对象而不影响所指对象的生命周期，<br>  也就是将一个 <code>weak_ptr</code> 绑定到一个 <code>shared_ptr</code> 不会改变 <code>shared_ptr</code> 的引用计数，常用与破除循环引用。</li>
 </ul>
-<p>这之后，为了让自己的博客变得更好看一些，我使用了主题 <strong>NexT</strong> , 官方网站在<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">这里</a>。<br>这个主题应该是使用人数最多的主题，在github上的star数超乎想象，而且还有完善的中文文档可供阅读。</p>
-<h2 id="写博文完善自己的博客"><a href="#写博文完善自己的博客" class="headerlink" title="写博文完善自己的博客"></a>写博文完善自己的博客</h2><p>Hexo 支持 Markdown，但Markdown至今也没有几个称得上完美的编辑器，我使用的是微软家的 <strong>VSCode</strong> ，<br>VSCode 支持基础的 Markdown 语法，但如果希望支持更多的语法，你需要安装 VSCode 的插件，或者自己造一个。<br>正宗完善的 Markdown 可以支持很多东西，比如流程图，各种各样的表格，LaTeX等，如果用不到或者不想费劲学习，<br>则使用图片就可以了。</p>
-<p>我推荐的 Markdown 语法查询目录，是 SegmentFault 的 <a href="https://segmentfault.com/markdown" target="_blank" rel="external">Markdown语法编辑器指南</a>。<br>这份指南足以满足大部分博客写作的要求了。</p>
-<h2 id="我碰到的问题"><a href="#我碰到的问题" class="headerlink" title="我碰到的问题"></a>我碰到的问题</h2><ul>
-<li>1，Hexo 部署失败，导致部署失败的原因有这几个：<ul>
-<li>网络环境差，导致无法push到github的博客仓库里，多执行几次 <code>&quot;hexo deploy&quot;</code> 命令可能就成功了；</li>
-<li>解析出现错误，这种问题经常是配置文件写错了字母，或者在md文档中用错了Hexo的标签，查看终端输出的信息很容易发现问题的所在；</li>
-<li>git工具未找到，这种问题一种是安装了git，但环境变量没有配置成功，另外一种就是没有安装，这个时候应该回到Hexo的使用文档中查看自己漏掉了哪些步骤。</li>
-</ul>
-</li>
-<li>2，Hexo 解析的网页不显示图片，或者在主页中显示而在单独一篇文章中未显示：<ul>
-<li>这个是由于 Markdown 解析路径的问题，Hexo 的作者们好像并没有到Markdown解析中解决这个问题，虽然他们提出使用 <strong>相对路径引用的标签插件</strong> ， 但我并没有使用成功，我的解决方法是安装了 <code>Node.js</code> 的 <code>hexo-asset-image</code> 模块，可以通过 <code>npm install hexo-asset-image --save</code> 来进行安装和使用。</li>
-</ul>
-</li>
-<li>3，我试图向 <code>xxx.github.io</code> 存放文件，却发现经常被 Hexo 删掉，这个需要注意一下。本打算将 Hexo 程序和博客原文一同放到 <code>xxx.github.io</code>中，看来是不行了，只好新建了一个库。</li>
-<li>4，每次更新之后，最好是用 <code>hexo clean</code> 清理一下，防止发生一些错误。<h2 id="我的一些想法"><a href="#我的一些想法" class="headerlink" title="我的一些想法"></a>我的一些想法</h2></li>
-</ul>
-<p>应该利用空余时间研究下怎么样完善自己博客的功能，比如增加相册(图片应该找个图片云存放)等，写个主题什么的。</p>
+<p>智能指针系列在声明的方式上与C指针声明并不相同，而是采用类构造函数式声明；<br>智能指针系列都对 <code>*</code> 和 <code>-&gt;</code> 运算符进行了重载，使用方法与原指针相同。<br>智能指针是基于<strong>引用计数器</strong>实现的，因此还可以读取当前有多少指针引用着对象。</p>
+<p>关于<strong>引用计数器</strong>，可以搜索 <code>Object-C</code> 的<strong>引用计数</strong>进行学习和理解。</p>
+<hr>
+<p><code>shared_ptr</code> 使用概述:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">class Example</div><div class="line">&#123;</div><div class="line">public:</div><div class="line"> Example() : e(1) &#123; cout &lt;&lt; &quot;Example Constructor...&quot; &lt;&lt; endl; &#125;</div><div class="line"> ~Example() &#123; cout &lt;&lt; &quot;Example Destructor...&quot; &lt;&lt; endl; &#125;</div><div class="line"></div><div class="line"> int e;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main() </div><div class="line">&#123;</div><div class="line"> shared_ptr&lt;Example&gt; pInt(new Example());</div><div class="line"> cout &lt;&lt; (*pInt).e &lt;&lt; endl; // cout &lt;&lt; pInt-&gt;e &lt;&lt; endl;</div><div class="line"> cout &lt;&lt; &quot;pInt引用计数: &quot; &lt;&lt; pInt.use_count() &lt;&lt; endl;</div><div class="line"></div><div class="line"> shared_ptr&lt;Example&gt; pInt2 = pInt;</div><div class="line"> cout &lt;&lt; &quot;pInt引用计数: &quot; &lt;&lt; pInt.use_count() &lt;&lt; endl;</div><div class="line"> cout &lt;&lt; &quot;pInt2引用计数: &quot; &lt;&lt; pInt2.use_count() &lt;&lt; endl;</div><div class="line"> return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Output Result:</div><div class="line">Example Constructor...</div><div class="line">pInt: 1</div><div class="line">pInt引用计数: 1</div><div class="line">pInt引用计数: 2</div><div class="line">pInt2引用计数: 2</div><div class="line">Example Destructor...</div></pre></td></tr></table></figure></p>
+<p>如上代码所示， <code>shared_ptr</code> 在进行赋值时会增加对象的引用，且该智能指针用法简洁明了。</p>
+<p><code>shared_ptr</code> 使用场景：C指针声明的地方都可以使用。</p>
+<hr>
+<p><code>unique_ptr</code> 使用概述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">unique_ptr&lt;int&gt; u_i;                        //创建空智能指针</div><div class="line">u_i.reset(new int(3));                      //&quot;绑定”动态对象  </div><div class="line">unique_ptr&lt;int&gt; u_i2(new int(4));           //创建时指定动态对象  </div><div class="line"> </div><div class="line">int *p_i = u_i2.release();                  //释放所有权  </div><div class="line">unique_ptr&lt;string&gt; u_s(new string(&quot;abc&quot;));  </div><div class="line">unique_ptr&lt;string&gt; u_s2 = std::move(u_s);   //所有权转移(通过移动语义)，u_s所有权转移后，变成“空指针”  </div><div class="line">u_s2=nullptr;                               //显式销毁所指对象，同时智能指针变为空指针。与u_s2.reset()等价</div></pre></td></tr></table></figure></p>
+<p><code>unique_ptr</code> 指针本身的生命周期：从 <code>unique_ptr</code> 指针创建时开始，直到离开作用域。<br>离开作用域时，若其指向对象，则将其所指对象销毁(默认使用<code>delete</code>操作符，用户可指定其他操作)。<br>unique_ptr指针与其所指对象的关系：在智能指针生命周期内，可以改变智能指针所指对象，<br>如创建智能指针时通过构造函数指定、通过<code>reset</code>方法重新指定、通过<code>release</code>方法释放所有权、通过<code>std::move</code>移动语义转移所有权。</p>
+<p><code>unique_ptr</code> 使用场景：</p>
+<hr>
+<h2 id="空指针值的强化"><a href="#空指针值的强化" class="headerlink" title="空指针值的强化"></a>空指针值的强化</h2><p><code>nullptr</code> 代替了宏定义 <code>NULL</code>，在某种意义上来说，传统 C++ 会把 <code>NULL</code>、<code>0</code> 视为同一种东西，这取决于编译器如何定义 <code>NULL</code>，<br>有些编译器会将 <code>NULL</code> 定义为 <code>((void*)0)</code>，有些则会直接将其定义为 <code>0</code>。</p>
 
       
 
@@ -229,7 +213,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
         		</li>
       		
 		</ul>
@@ -239,7 +223,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/01/搭建github-io静态博客遇到的问题/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/01/C++ 11 and 14 特性：新指针与新指针值/">展开全文 >></a>
         </p>
       
 
@@ -271,7 +255,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/15/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/17/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/15/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span>
     </nav>
   
 

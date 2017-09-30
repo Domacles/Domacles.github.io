@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="null" class="profilepic">
-			<img src="/image/avatar.png" class="js-avatar">
+			<img src="/images/avatar.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="null">Domacles</a></h1>
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/image/avatar.png" class="js-avatar">
+				<img src="/images/avatar.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Domacles</h1>
@@ -155,30 +155,91 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-碰撞检测技术概要" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Vulkan Samples Tutorial 8" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/03/碰撞检测技术概要/">碰撞检测技术概要</a>
+      <a class="article-title" href="/2017/04/28/Vulkan Samples Tutorial 8/">Vulkan Samples Tutorial 8</a>
     </h1>
   
 
         
-        <a href="/2017/07/03/碰撞检测技术概要/" class="archive-article-date">
-  	<time datetime="2017-07-03T06:36:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-03</time>
+        <a href="/2017/04/28/Vulkan Samples Tutorial 8/" class="archive-article-date">
+  	<time datetime="2017-04-27T19:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>碰撞检测在计算机图形、游戏开发、虚拟现实以及仿真工程上的一个基础问题。</p>
-<p>potentially colliding set(PCS)<br>potentially visible set (PVS)</p>
-<p>对于多个移动物体的一般场景，碰撞检测执行分两个阶段：<br>1.错略阶段，用于减少不必要的计算；<br>2.精细阶段，用于针对上一阶段的每对碰撞对象的碰撞检测。</p>
-<p>假设场景中有n个对象，分别为O1，O2，O3，……，On。我们假定每个对象都是一系列三角形的集合。</p>
+        <!-- TOC -->
+<ul>
+<li><a href="#draw-cube">Draw Cube</a><ul>
+<li><a href="#waiting-for-a-swapchain-buffer">Waiting for a Swapchain Buffer</a></li>
+<li><a href="#beginning-the-render-pass">Beginning the Render Pass</a></li>
+<li><a href="#bind-the-pipeline">Bind the Pipeline</a></li>
+<li><a href="#bind-the-descriptor-sets">Bind the Descriptor Sets</a></li>
+<li><a href="#bind-the-vertex-buffer">Bind the Vertex Buffer</a></li>
+<li><a href="#set-the-viewport-and-scissors-rectangle">Set the Viewport and Scissors Rectangle</a></li>
+<li><a href="#draw-the-vertices">Draw the Vertices</a></li>
+<li><a href="#transitioning-the-swapchain-image-for-presenting">Transitioning the Swapchain Image for Presenting</a><ul>
+<li><a href="#memory-barrier-approach">Memory barrier approach</a></li>
+</ul>
+</li>
+<li><a href="#submit-the-command-buffer">Submit the Command Buffer</a></li>
+<li><a href="#wait-for-command-buffer-to-complete">Wait for Command Buffer to Complete</a></li>
+<li><a href="#present-the-swapchain-buffer-to-display">Present the Swapchain Buffer to Display</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h2 id="Draw-Cube"><a href="#Draw-Cube" class="headerlink" title="Draw Cube"></a>Draw Cube</h2><p>本章节代码在<code>15-draw_cube.cpp</code>文件中。</p>
+<p>我们已经完成绝大部分工作了，这里是我们需要做的最后一步，将Vlukan图像画到屏幕上。</p>
+<h3 id="Waiting-for-a-Swapchain-Buffer"><a href="#Waiting-for-a-Swapchain-Buffer" class="headerlink" title="Waiting for a Swapchain Buffer"></a>Waiting for a Swapchain Buffer</h3><p>开始画图之前，样例程序需要渲染一个目标swapchain图像作为底色。用函数<code>vkAcquireNextImageKHR()</code>获取swapchain列表的一个索引，这样就能知道用哪一个framebuffer作为渲染目标。这也是下一个可用于渲染的图像。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">res = vkCreateSemaphore(info.device, &amp;imageAcquiredSemaphoreCreateInfo,</div><div class="line">                        NULL, &amp;imageAcquiredSemaphore);</div><div class="line"></div><div class="line">// Get the index of the next available swapchain image:</div><div class="line">res = vkAcquireNextImageKHR(info.device, info.swap_chain, UINT64_MAX,</div><div class="line">                            imageAcquiredSemaphore, VK_NULL_HANDLE,</div><div class="line">                            &amp;info.current_buffer);</div></pre></td></tr></table></figure></p>
+<p>第一帧，可能不需要使用信号（semaphore），因为swapchain中的所有图像都可用。在随后要正要提交的GPU命令之前，确保图像可用仍然是好的实现方案。如果图像采样在多帧中都有所改变，比如动画，那就很有必要等待硬件完成图像渲染，以便再次使用该图像的swapchain。</p>
+<p>注意，本样例不需要等待其他东西的完成。我们仅仅创建信号，并且将它和图像联系起来，以便用这个信号推迟命令缓存的提交，直到图像准备好进行渲染。</p>
+<h3 id="Beginning-the-Render-Pass"><a href="#Beginning-the-Render-Pass" class="headerlink" title="Beginning the Render Pass"></a>Beginning the Render Pass</h3><p>在以前的章节，我们已经定义了渲染通道，所以在命令缓存中，我们可以直接通过设置一个开启渲染通道的命令来启用渲染通道：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">VkRenderPassBeginInfo rp_begin;</div><div class="line">rp_begin.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;</div><div class="line">rp_begin.pNext = NULL;</div><div class="line">rp_begin.renderPass = info.render_pass;</div><div class="line">rp_begin.framebuffer = info.framebuffers[info.current_buffer];</div><div class="line">rp_begin.renderArea.offset.x = 0;</div><div class="line">rp_begin.renderArea.offset.y = 0;</div><div class="line">rp_begin.renderArea.extent.width = info.width;</div><div class="line">rp_begin.renderArea.extent.height = info.height;</div><div class="line">rp_begin.clearValueCount = 2;</div><div class="line">rp_begin.pClearValues = clear_values;</div><div class="line">vkCmdBeginRenderPass(info.cmd, &amp;rp_begin, VK_SUBPASS_CONTENTS_INLINE);</div></pre></td></tr></table></figure></p>
+<p>在上面这段代码中:</p>
+<p>注意，我们已经创建了一个命令缓存，并且，在本样例前面的地方通过调用<code>init_command_buffer()</code>和<code>execute_begin_command()</code>将命令缓冲区设置成了记录模式(recording mode)。</p>
+<p>我们提供了之前定义的渲染通道和用<code>vkAcquireNextImageKHR()</code>返回的索引选择的framebuffer。</p>
+<p>clear值来作为初始化值是用来设置背景颜色为深灰色，并且深度缓存的clear值设为深度缓存的“far”(<code>clear_values</code>)值。</p>
+<p><code>info.render_pass</code>中剩下的需要的信息在以前已经设置好，然后我们只需要直接将它们插入到命令缓存，开始渲染通道。</p>
+<h3 id="Bind-the-Pipeline"><a href="#Bind-the-Pipeline" class="headerlink" title="Bind the Pipeline"></a>Bind the Pipeline</h3><p>下一步绑定管线到命令缓存：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vkCmdBindPipeline(info.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, info.pipeline);</div></pre></td></tr></table></figure></p>
+<p>在前面章节中我们定义了管线并绑定，而在这里绑定它到<code>info.cmd</code>，告诉GPU怎样渲染后面的图元（graphics primitives）。</p>
+<p><code>VK_PIPELINE_BIND_POINT_GRAPHICS</code>告诉GPU这是图形管线，而不是计算管线。</p>
+<p>注意，这个指令是一个命令缓存指令，而在单个命令缓存中，程序可能定义许多图形管线，并且在他们之间转换。</p>
+<h3 id="Bind-the-Descriptor-Sets"><a href="#Bind-the-Descriptor-Sets" class="headerlink" title="Bind the Descriptor Sets"></a>Bind the Descriptor Sets</h3><p>我们已经定义的描述符集描述了着色程序怎样期望发现它的输入数据，例如MVP变换。这里是给GPU的信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vkCmdBindDescriptorSets(info.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS,</div><div class="line">                        info.pipeline_layout, 0, 1,</div><div class="line">                        info.desc_set.data(), 0, NULL);</div></pre></td></tr></table></figure></p>
+<p>注意，在命令缓存中，如果我们想要改变着色器程序怎样找到数据，我们可以绑定不同的描述符。例如，我们想要在命令缓存中间改变转换，我们可以用一个不同的描述符来指向一个不同的MVP转换。</p>
+<h3 id="Bind-the-Vertex-Buffer"><a href="#Bind-the-Vertex-Buffer" class="headerlink" title="Bind the Vertex Buffer"></a>Bind the Vertex Buffer</h3><p>我们在vertex_buffer样例中创建一个vertex buffer，并用顶点数据填充。这里，告诉GPU怎样找到它：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vkCmdBindDescriptorSets(info.cmd, VK_PIPELINE_BIND_POINT_GRAPHICS,</div><div class="line">                        info.pipeline_layout, 0, 1,</div><div class="line">                        info.desc_set.data(), 0, NULL);</div></pre></td></tr></table></figure></p>
+<p>这个命令绑定顶点缓存（vertex buffer）或缓存区（buffers）到命令缓存。我们只能绑定一个缓存，但是，可以用它来绑定多次。</p>
+<h3 id="Set-the-Viewport-and-Scissors-Rectangle"><a href="#Set-the-Viewport-and-Scissors-Rectangle" class="headerlink" title="Set the Viewport and Scissors Rectangle"></a>Set the Viewport and Scissors Rectangle</h3><p>前面我们指明视口（viewport）和剪切（scissors）是动态的状态，意味着可以用命令缓存指令（a command buffer command）设置它们。所以，我们在这里需要设置它们。下面是<code>init_viewports()</code>中设置视区的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">info.viewport.height = (float)info.height;</div><div class="line">info.viewport.width = (float)info.width;</div><div class="line">info.viewport.minDepth = (float)0.0f;</div><div class="line">info.viewport.maxDepth = (float)1.0f;</div><div class="line">info.viewport.x = 0;</div><div class="line">info.viewport.y = 0;</div><div class="line">vkCmdSetViewport(info.cmd, 0, NUM_VIEWPORTS, &amp;info.viewport);</div></pre></td></tr></table></figure></p>
+<p>设置剪切矩形（scissors rectangle）的代码类似。</p>
+<p>由于许多应用程序可能在运行时改变窗口的大小，所以使上面的<code>viewport</code>为动态(dynamic)的变量最合适。当窗口大小改变时，这样就避免了重建管线的做法。</p>
+<h3 id="Draw-the-Vertices"><a href="#Draw-the-Vertices" class="headerlink" title="Draw the Vertices"></a>Draw the Vertices</h3><p>最后，给GPU发送一个绘制命令，将顶点送到管线中完成渲染通道。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vkCmdDraw(info.cmd, 12 * 3, 1, 0, 0);</div><div class="line">vkCmdEndRenderPass(info.cmd);</div></pre></td></tr></table></figure></p>
+<p>其中，<code>vkCmdDraw</code>命令告诉GPU绘制一次36个顶点的图形。现在你已经设置好了画一系列独立的三角形的管线的最初部分，即GPU会绘制12个三角形。</p>
+<p> <code>vkCmdEndRenderPass</code>命令表示渲染通道的结束，但是命令缓冲区仍然“开着(open)”并且样例也没有结束命令的发送。</p>
+<h3 id="Transitioning-the-Swapchain-Image-for-Presenting"><a href="#Transitioning-the-Swapchain-Image-for-Presenting" class="headerlink" title="Transitioning the Swapchain Image for Presenting"></a>Transitioning the Swapchain Image for Presenting</h3><p>当GPU进行渲染时，目标交换链(swapchain)的图像布局格式是<code>VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL</code>，是一种最适合GPU渲染的布局格式。在之前的章节中，我们定义渲染通道时，将这个布局格式设置到了子通道的定义中。但这种布局格式对于显示硬件扫描的图像输出到显示设备来说并不是最好的布局格式。比如，用于渲染的优化的GPU内存布局是平铺的(“tiled”)，如同之前在渲染通道章节所讲的那样。但显示硬件会为输出选择线性内存布局。使用<code>VK_IMAGE_LAYOUT_PRESENT_SRC_KHR</code>布局可以指定将要被显示的图像。</p>
+<p>在渲染通道章节中，你已经了解过布局转换，在这里我们通过指定在颜色图像附件(color image attachment)定义中的属性<code>finalLayout</code>为<code>VK_IMAGE_LAYOUT_PRESENT_SRC_KHR</code>来转换格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkAttachmentDescription attachments[2];</div><div class="line">attachments[0].format = info.format;</div><div class="line">attachments[0].samples = NUM_SAMPLES;</div><div class="line">attachments[0].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;</div><div class="line">attachments[0].storeOp = VK_ATTACHMENT_STORE_OP_STORE;</div><div class="line">attachments[0].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;</div><div class="line">attachments[0].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;</div><div class="line">attachments[0].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;</div><div class="line">attachments[0].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;</div><div class="line">attachments[0].flags = 0;</div></pre></td></tr></table></figure></p>
+<h4 id="Memory-barrier-approach"><a href="#Memory-barrier-approach" class="headerlink" title="Memory barrier approach"></a>Memory barrier approach</h4><p>注意，内存屏障(Memory Barrier)方法是另外一种用于完成布局转换的方法，该方法是通过发送另外一个内存屏障命令到内存缓冲中。这种替代方法在某些情况下是有用的，比如那些没有使用渲染通道的命令提交。我们可以在<code>copy_blit_image</code>中找到一个适用场景。虽然在本样例中并没有用到，但在统一文件夹下的其他样例中可以看到。</p>
+<p>在本样例中，我们使用了一个渲染通道，但如果我们设置颜色附件的<code>finalLayout</code>属性值为渲染通道样例中的创建的渲染通道的<code>initialLayout</code>属性的值，那我们仍然可以使用内存屏障方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">attachments[0].initialLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;</div><div class="line">attachments[0].finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;</div></pre></td></tr></table></figure></p>
+<p>这就需要我们使用另外一个管线内存平常来完成布局转换，方法与<code>set_image_layout()</code>完成布局转换的过程有很多相类似的地方：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">VkImageMemoryBarrier prePresentBarrier = &#123;&#125;;</div><div class="line">prePresentBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;</div><div class="line">prePresentBarrier.pNext = NULL;</div><div class="line">prePresentBarrier.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;</div><div class="line">prePresentBarrier.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;</div><div class="line">prePresentBarrier.oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;</div><div class="line">prePresentBarrier.newLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;</div><div class="line">prePresentBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;</div><div class="line">prePresentBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;</div><div class="line">prePresentBarrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;</div><div class="line">prePresentBarrier.subresourceRange.baseMipLevel = 0;</div><div class="line">prePresentBarrier.subresourceRange.levelCount = 1;</div><div class="line">prePresentBarrier.subresourceRange.baseArrayLayer = 0;</div><div class="line">prePresentBarrier.subresourceRange.layerCount = 1;</div><div class="line">prePresentBarrier.image = info.buffers[info.current_buffer].image;</div><div class="line">vkCmdPipelineBarrier(info.cmd, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,</div><div class="line">                     VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT, 0, 0, NULL, 0,</div><div class="line">                     NULL, 1, &amp;prePresentBarrier);</div></pre></td></tr></table></figure></p>
+<p>上面的代码并没有在本样例中出现，但可以在<code>copy_blit_image</code>样例中找到。</p>
+<p>一旦该命令在渲染通道结束后执行，那图像缓冲就做好了显示的准备了。当然，对于深度缓冲图像布局格式并不需要进行转换。</p>
+<h3 id="Submit-the-Command-Buffer"><a href="#Submit-the-Command-Buffer" class="headerlink" title="Submit the Command Buffer"></a>Submit the Command Buffer</h3><p>要时刻明确，现在还没有发送给GPU任何一条命令(都在命令缓冲区中)。现在使用下面的调用，表示完成命令记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">res = vkEndCommandBuffer(info.cmd);</div></pre></td></tr></table></figure></p>
+<p>我们需要创建一个监视围栏(fence)用于报告GPU何时完成任务。我们需要指定GPU何时完成任务，这样才能避免太早开始下一次呈现显示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">VkFenceCreateInfo fenceInfo;</div><div class="line">VkFence drawFence;</div><div class="line">fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;</div><div class="line">fenceInfo.pNext = NULL;</div><div class="line">fenceInfo.flags = 0;</div><div class="line">vkCreateFence(info.device, &amp;fenceInfo, NULL, &amp;drawFence);</div></pre></td></tr></table></figure></p>
+<p>现在，我们可以提交命令缓冲区了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">const VkCommandBuffer cmd_bufs[] = &#123;info.cmd&#125;;</div><div class="line">VkPipelineStageFlags pipe_stage_flags =</div><div class="line">    VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;</div><div class="line">VkSubmitInfo submit_info[1] = &#123;&#125;;</div><div class="line">submit_info[0].pNext = NULL;</div><div class="line">submit_info[0].sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;</div><div class="line">submit_info[0].waitSemaphoreCount = 1;</div><div class="line">submit_info[0].pWaitSemaphores = &amp;imageAcquiredSemaphore;</div><div class="line">submit_info[0].pWaitDstStageMask = &amp;pipe_stage_flags;</div><div class="line">submit_info[0].commandBufferCount = 1;</div><div class="line">submit_info[0].pCommandBuffers = cmd_bufs;</div><div class="line">submit_info[0].signalSemaphoreCount = 0;</div><div class="line">submit_info[0].pSignalSemaphores = NULL;</div><div class="line">res = vkQueueSubmit(info.queue, 1, submit_info, drawFence);</div></pre></td></tr></table></figure></p>
+<p><code>VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT</code>表示该命令在管线最后阶段完成执行。</p>
+<p><code>imageAcquiredSemaphore</code>是图像绘制之前完成准备的等待信号，如本章节前面所讲。它让驱动得知何时交换链图像是可用的。然后再将命令提交到GPU。当GPU执行完命令时，GPU会给围栏<code>drawFence</code>发送绘制完成的信号。</p>
+<h3 id="Wait-for-Command-Buffer-to-Complete"><a href="#Wait-for-Command-Buffer-to-Complete" class="headerlink" title="Wait for Command Buffer to Complete"></a>Wait for Command Buffer to Complete</h3><p><code>vkWaitForFences()</code>用于等待命令缓冲区中命令执行完成。当命令会花很长时间才能完成，该函数应当在一个循环中去调用它。但本样例中比较简单，并没有使用这种做法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">do &#123;</div><div class="line">    res = vkWaitForFences(info.device, 1, &amp;drawFence, VK_TRUE, FENCE_TIMEOUT);</div><div class="line">&#125; while (res == VK_TIMEOUT);</div></pre></td></tr></table></figure></p>
+<p>此时，我们就知道了交换链图像缓冲区已经做好了显示的准备。</p>
+<h3 id="Present-the-Swapchain-Buffer-to-Display"><a href="#Present-the-Swapchain-Buffer-to-Display" class="headerlink" title="Present the Swapchain Buffer to Display"></a>Present the Swapchain Buffer to Display</h3><p>接下来就可以直接将交换链图像显示出来：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkPresentInfoKHR present;</div><div class="line">present.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;</div><div class="line">present.pNext = NULL;</div><div class="line">present.swapchainCount = 1;</div><div class="line">present.pSwapchains = &amp;info.swap_chain;</div><div class="line">present.pImageIndices = &amp;info.current_buffer;</div><div class="line">present.pWaitSemaphores = NULL;</div><div class="line">present.waitSemaphoreCount = 0;</div><div class="line">present.pResults = NULL;</div><div class="line">res = vkQueuePresentKHR(info.queue, &amp;present);</div></pre></td></tr></table></figure></p>
+<p>现在，我们可以看到显示器出现一个画有立方体的窗口了。</p>
+<p><img src="/2017/04/28/Vulkan Samples Tutorial 8/drawcube.png" alt="drawcube"></p>
+<hr>
+<p>本篇<strong>Vulkan Samples Tutorial</strong>原文是<strong>LUNAEXCHANGE</strong>中的<a href="https://vulkan.lunarg.com/doc/sdk/1.0.42.1/windows/tutorial/html/index.html" target="_blank" rel="external">Vulkan Tutorial</a>的译文。<br>并非逐字逐句翻译，如有错误之处请告知。O(∩_∩)O谢谢~~</p>
 
       
 
@@ -192,7 +253,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CG, Collision Detection</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vulkan</a>
         		</li>
       		
 		</ul>
@@ -202,7 +263,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/03/碰撞检测技术概要/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/28/Vulkan Samples Tutorial 8/">展开全文 >></a>
         </p>
       
 
@@ -234,7 +295,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 

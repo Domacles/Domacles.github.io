@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="null" class="profilepic">
-			<img src="/image/avatar.png" class="js-avatar">
+			<img src="/images/avatar.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="null">Domacles</a></h1>
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/image/avatar.png" class="js-avatar">
+				<img src="/images/avatar.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Domacles</h1>
@@ -155,20 +155,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Vulkan Samples Tutorial 4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Vulkan Samples Tutorial 2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/24/Vulkan Samples Tutorial 4/">Vulkan Samples Tutorial 4</a>
+      <a class="article-title" href="/2017/04/07/Vulkan Samples Tutorial 2/">Vulkan Samples Tutorial 2</a>
     </h1>
   
 
         
-        <a href="/2017/04/24/Vulkan Samples Tutorial 4/" class="archive-article-date">
-  	<time datetime="2017-04-24T03:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-24</time>
+        <a href="/2017/04/07/Vulkan Samples Tutorial 2/" class="archive-article-date">
+  	<time datetime="2017-04-07T02:18:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-07</time>
 </a>
         
       </header>
@@ -177,67 +177,80 @@
       
         <!-- TOC -->
 <ul>
-<li><a href="#descriptor-set-layouts-and-pipeline-layouts">Descriptor Set Layouts and Pipeline Layouts</a><ul>
-<li><a href="#descriptors-and-descriptor-sets">Descriptors and Descriptor Sets</a></li>
-<li><a href="#descriptor-set-layouts">Descriptor Set Layouts</a></li>
-<li><a href="#pipeline-layouts">Pipeline Layouts</a></li>
-<li><a href="#shader-referencing-of-descriptors">Shader Referencing of Descriptors</a></li>
-</ul>
-</li>
-<li><a href="#create-a-descriptor-set">Create a Descriptor Set</a><ul>
-<li><a href="#descriptor-pool">Descriptor Pool</a></li>
-<li><a href="#allocate-a-descriptor-set-from-the-pool">Allocate a Descriptor Set from the Pool</a></li>
-<li><a href="#update-the-descriptor-set">Update the Descriptor Set</a></li>
+<li><a href="#swapchain">Swapchain</a><ul>
+<li><a href="#vulkan-and-the-windowing-system">Vulkan and the Windowing System</a></li>
+<li><a href="#revisiting-instance-and-device-extensions">Revisiting Instance and Device Extensions</a></li>
+<li><a href="#queue-family-and-present">Queue Family and Present</a></li>
+<li><a href="#swapchain-create-info">Swapchain Create Info</a></li>
+<li><a href="#different-queue-families-for-graphics-and-present">Different Queue Families for Graphics and Present</a></li>
+<li><a href="#create-swapchain">Create Swapchain</a></li>
+<li><a href="#create-image-views">Create Image Views</a></li>
 </ul>
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="Descriptor-Set-Layouts-and-Pipeline-Layouts"><a href="#Descriptor-Set-Layouts-and-Pipeline-Layouts" class="headerlink" title="Descriptor Set Layouts and Pipeline Layouts"></a>Descriptor Set Layouts and Pipeline Layouts</h2><p>本章节代码在<code>08-init_pipeline_layout.cpp</code>中。</p>
-<p>在之前的样例中，我们创建了Uniform Buffer，但我们还没有让shader来使用它。我们使用<strong>Descriptor</strong>来完成这一工作。</p>
-<h3 id="Descriptors-and-Descriptor-Sets"><a href="#Descriptors-and-Descriptor-Sets" class="headerlink" title="Descriptors and Descriptor Sets"></a>Descriptors and Descriptor Sets</h3><p>本段讲解什么是Descriptor，Descriptor是一种不透明的特殊着色器变量，作为一种间接的方式，着色器用它来存取缓冲区数据和图像资源。我们可以认为它是资源的指针(pointer)。Vulkan API中，支持在绘制操作过程中更改这些变量，如此着色器才能够为每次绘制使用不同的资源。</p>
-<p>本样例作为一个简单的样例，我们只用了1个Uniform Buffer，但也有可能我们会创建两个Uniform Buffer，每一个都存放着不同的MVP矩阵，从而能够绘制不同场景。如果我们有两个Uniform Buffer，我们可以很轻松地改变Descriptor的指向，来切换MVP矩阵的使用。</p>
-<p>Descriptor Set表示：该集合中的Descriptor指向的是同类型的资源，这些资源是使用相同的<strong>Layout Binding</strong>。</p>
-<p>在本样例中我们没有用到<strong>材质</strong>(texture)，但可能我们会创建一个由两个Descriptor组成的集合，每个Descriptor引用着不同的材质，通过使用这个Descriptor Set，让这两种材质在绘制的过程中始终可用。命令缓冲区中存储的命令可以通过指定材质的索引来选择材质来使用。</p>
+<h2 id="Swapchain"><a href="#Swapchain" class="headerlink" title="Swapchain"></a>Swapchain</h2><p>本章节的代码在文件 <code>05-init_swapchain.cpp</code> 中。</p>
+<p><strong>Swapchain</strong> 即帧缓存机制，它是使用了一系列的帧缓存区用来保证帧刷新率稳定的技术。帧缓存区通常放在显卡内存中，但也可以放在内存中。Swapchain 需要通过图形API开启并使用，未使用 Swapchain 会导致刷新不一致等问题。每个 swap chain 至少有两个缓冲区，一个作为屏幕显示缓冲区，另外一个作为后台缓冲区。两个缓冲区一般被称为 <strong>presentation</strong> 和 <strong>swapping</strong> 。</p>
+<p>本小节讲述了如何创建<strong>swapchain</strong>。首先需要做的就是创建用来渲染的图形缓冲区(image buffers)。<br><img src="/2017/04/07/Vulkan Samples Tutorial 2/Swapchain.png" alt="Swapchain"></p>
 <blockquote>
-<p>注意，在本章节这里，我们并没有实际创建分类Descriptor Set，我们在本章节主要做的是“描述(describing)”Descriptor Set的配置属性。</p>
+<p>上图展示了Swapchain与其他各部分之间的联系，图中的其他部分与下面所讲的内容关系也十分密切，需要注意。</p>
 </blockquote>
-<p>为了能够设置Descriptor Set，我们需要使用Descriptor Set Layout。</p>
-<h3 id="Descriptor-Set-Layouts"><a href="#Descriptor-Set-Layouts" class="headerlink" title="Descriptor Set Layouts"></a>Descriptor Set Layouts</h3><p>Descriptor Set Layout用于设置集合中的内容。我们需要为每一个Descriptor集合绑定一个layout，就像下面这段代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">VkDescriptorSetLayoutBinding layout_binding = &#123;&#125;;</div><div class="line">layout_binding.binding = 0;</div><div class="line">layout_binding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;</div><div class="line">layout_binding.descriptorCount = 1;</div><div class="line">layout_binding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;</div><div class="line">layout_binding.pImmutableSamplers = NULL;</div></pre></td></tr></table></figure></p>
-<p>上面的代码我们实现了下面四个方面：</p>
+<h3 id="Vulkan-and-the-Windowing-System"><a href="#Vulkan-and-the-Windowing-System" class="headerlink" title="Vulkan and the Windowing System"></a>Vulkan and the Windowing System</h3><p>与其他的图形API相似的是，Vulkan将有关于窗口系统的API与图形核心API分离开了。在Vulkan中，窗口系统的细节是通过 <strong>WSI</strong> 扩展(Window System Integration extensions)呈献给开发者的。我们可以从Vulkan的设计规范中找到与WSI相关的扩展的文档。在<a href="https://vulkan.lunarg.com/" target="_blank" rel="external">LunarG LunarXchange website</a>和<a href="https://www.khronos.org/registry/vulkan/" target="_blank" rel="external">Khronos Vulkan Registry</a>这两个地方可以找到Vulkan API规范和发布的扩展的使用规范。</p>
+<p>WSI扩展包含了对多种平台的支持。使用WSI扩展是通过定义下面几个宏定义来实现的：</p>
 <ul>
-<li>创建了一个Descriptor集合，并绑定到了0这个对象上，即将<code>binding</code>设置为0。</li>
-<li>该Descriptor集合指向的是一个Uniform Buffer，即将<code>descriptorType</code>指定为我们需要的类型。</li>
-<li>在这个Descriptor集合中，只有一个Descriptor对象，数量在<code>descriptorCount</code>上设置的。</li>
-<li>最后，<code>stageFlags</code>指明了该Descriptor集合在顶点着色器执行阶段有效。</li>
+<li>VK_USE_PLATFORM_ANDROID_KHR - Android</li>
+<li>VK_USE_PLATFORM_MIR_KHR - Mir</li>
+<li>VK_USE_PLATFORM_WAYLAND_KHR - Wayland</li>
+<li>VK_USE_PLATFORM_WIN32_KHR - Microsoft Windows</li>
+<li>VK_USE_PLATFORM_XCB_KHR - X Window System, using the XCB library (Apples)</li>
+<li>VK_USE_PLATFORM_XLIB_KHR - X Window System, using the Xlib library (Apples)<br><strong>KHR</strong> 命名后缀表示扩展是按照 <strong>Khronos</strong> 组织的规范实现的。</li>
 </ul>
-<p>在绑定Descriptor对象之后，紧接着我们需要创建Descriptor Set Layout对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#define NUM_DESCRIPTOR_SETS 1</div><div class="line">VkDescriptorSetLayoutCreateInfo descriptor_layout = &#123;&#125;;</div><div class="line">descriptor_layout.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;</div><div class="line">descriptor_layout.pNext = NULL;</div><div class="line">descriptor_layout.bindingCount = 1;</div><div class="line">descriptor_layout.pBindings = &amp;layout_binding;</div><div class="line">info.desc_layout.resize(NUM_DESCRIPTOR_SETS);</div><div class="line">res = vkCreateDescriptorSetLayout(info.device, &amp;descriptor_layout, NULL,</div><div class="line">                                  info.desc_layout.data());</div></pre></td></tr></table></figure></p>
-<h3 id="Pipeline-Layouts"><a href="#Pipeline-Layouts" class="headerlink" title="Pipeline Layouts"></a>Pipeline Layouts</h3><p>Pipeline Layout包含了一系列的Descriptor Set Layout。在定义Descriptor Set之后，我们就要完成Pipeline Layout的CreateInfo的填充了，在创建Pipeline Layout之后，就会创建我们之前定义的Descriptor了。</p>
-<p>创建Pipeline Layout的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkPipelineLayoutCreateInfo pPipelineLayoutCreateInfo = &#123;&#125;;</div><div class="line">pPipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;</div><div class="line">pPipelineLayoutCreateInfo.pNext = NULL;</div><div class="line">pPipelineLayoutCreateInfo.pushConstantRangeCount = 0;</div><div class="line">pPipelineLayoutCreateInfo.pPushConstantRanges = NULL;</div><div class="line">pPipelineLayoutCreateInfo.setLayoutCount = NUM_DESCRIPTOR_SETS;</div><div class="line">pPipelineLayoutCreateInfo.pSetLayouts = info.desc_layout.data();</div><div class="line"></div><div class="line">res = vkCreatePipelineLayout(info.device, &amp;pPipelineLayoutCreateInfo, NULL,</div><div class="line">                             &amp;info.pipeline_layout);</div></pre></td></tr></table></figure></p>
-<p>完成上面的工作后，在接下来章节的内容，我们就可以用Pipeline Layout来创建<strong>图形管线</strong>（graphics pipeline）了。</p>
-<h3 id="Shader-Referencing-of-Descriptors"><a href="#Shader-Referencing-of-Descriptors" class="headerlink" title="Shader Referencing of Descriptors"></a>Shader Referencing of Descriptors</h3><p>在着色器语言中，明确引用Descriptors是很有用的一个做法。</p>
-<p>举个例子，在GLSL中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layout (set=M, binding=N) uniform sampler2D variableNameArray[I];</div></pre></td></tr></table></figure></p>
-<p>这一句告诉我们：</p>
+<p>Surface Abstraction</p>
+<p>Vulkan 使用 <code>VkSurfaceKHR</code> 对象来作为本地平台显示层或者窗口的抽象化对象。该对象是在<strong>VK_KHR_surface</strong>扩展中定义的。WSI扩展的作用是创建，操纵或者销毁显示层对象(surface objects)。</p>
+<h3 id="Revisiting-Instance-and-Device-Extensions"><a href="#Revisiting-Instance-and-Device-Extensions" class="headerlink" title="Revisiting Instance and Device Extensions"></a>Revisiting Instance and Device Extensions</h3><p>在前面的几个章节中，我们推迟了扩展的设置，现在需要我们回顾之前 Instance 和 Device 的扩展设置，从而能够让我们学会如何启动WSI扩展。</p>
+<p>Instance Extensions</p>
+<p>使用WSI扩展的首要步骤是，启动表示层扩展(surface extension)。查看本章样例中使用的<code>init_instance_extension_names()</code>函数的实现代码，我们发现样例是将<code>VK_KHR_SURFACE_EXTENSION_NAME</code>添加到Instance扩展列表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">void init_instance_extension_names(struct sample_info &amp;info) &#123;</div><div class="line">    info.instance_extension_names.push_back(VK_KHR_SURFACE_EXTENSION_NAME);</div><div class="line">#ifdef __ANDROID__</div><div class="line">    info.instance_extension_names.push_back(VK_KHR_ANDROID_SURFACE_EXTENSION_NAME);</div><div class="line">#elif defined(_WIN32)</div><div class="line">    info.instance_extension_names.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);</div><div class="line">#else</div><div class="line">    info.instance_extension_names.push_back(VK_KHR_XCB_SURFACE_EXTENSION_NAME);</div><div class="line">#endif</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>该函数不仅添加了通用Surface扩展，还针对其他平台添加对应的扩展。比如，针对Win32平台会将<code>VK_KHR_WIN32_SURFACE_EXTENSION_NAME</code>添加到Instance扩展列表中。</p>
+<p>这些扩展将会在Instance创建时加载，加载的实现代码可以在<code>init_instance()</code>中进行查看。</p>
+<blockquote>
+<p>注意：在<code>init_instance()</code>中我们看到<code>instance_extension_names</code>列表是通过传指针数组将内容的地址设置到<code>ppEnabledExtensionNames</code>上的。</p>
+</blockquote>
+<p>Device Extensions</p>
+<p>Swapchain 是一个图像缓存的列表，GPU向其中输入图像，该列表的图像会被呈现到显示输出设备。每当GPU向其中写入图像数据，device-level 扩展就会开始处理 Swapchain。所以，在进行 device 初始化之前需要指定device扩展，在<code>init_device_extension_names()</code>函数中，我们看到使用的device扩展是<code>VK_KHR_SWAPCHAIN_EXTENSION_NAME</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">void init_device_extension_names(struct sample_info &amp;info) &#123;</div><div class="line">    info.device_extension_names.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这些扩展将在创建Device时进行加载，加载的实现代码可以在<code>init_device()</code>中进行查看，与<code>init_instance()</code>类似。</p>
+<p>Instance &amp; Device Extensions recap：</p>
 <ul>
-<li>M表示<code>pSetLayouts</code>管线成员中的第M个Descriptor Set Layout。</li>
-<li>N表示M的<code>pBingings</code>的第N个Descriptor Set。</li>
-<li>I表示Descriptor Set数组化的下标。</li>
+<li>本节样例使用 <code>init_instance_extension_names()</code> 函数来加载常用的surface扩展，并将平台相关的对应扩展也加到了instance扩展列表中了。</li>
+<li>本节样例使用 <code>init_device_extension_names()</code> 函数来加载一个Swapchain设备扩展。</li>
 </ul>
-<p>在顶点着色器中使用Uniform Buffer的Layout的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">layout (std140, binding = 0) uniform bufferVals &#123;</div><div class="line">    mat4 mvp;</div><div class="line">&#125; myBufferVals;</div></pre></td></tr></table></figure></p>
-<p>这行代码表示Uniform Buffer中的内容映射到了<code>myBufferVals</code>结构体中；<code>set=M</code>没有指定，这里会默认M为0。<code>std140</code>是一个Uniform数据块打包的协议标准，你可以引用它，来将更多的数据塞到一个Uniform数据块中。如果你希望得到关于这个标准更多的信息，则点击<a href="https://www.opengl.org/registry/specs/ARB/uniform_buffer_object.txt" target="_blank" rel="external">这里</a>来获取更多的信息。</p>
-<hr>
-<h2 id="Create-a-Descriptor-Set"><a href="#Create-a-Descriptor-Set" class="headerlink" title="Create a Descriptor Set"></a>Create a Descriptor Set</h2><p>本章节的代码在<code>09-init_descriptor_set.cpp</code>文件中。</p>
-<p>回想一下上一章的内容，我们定义了descriptor set layout，但并没有立即创建descriptor set。descriptor set是用于告诉GPU如何组织Uniform BUffer的数据的。现在，我们就需要开始创建和初始化descriptor set。</p>
-<h3 id="Descriptor-Pool"><a href="#Descriptor-Pool" class="headerlink" title="Descriptor Pool"></a>Descriptor Pool</h3><p>就像命令缓冲区(Command Buffer)一样，descriptor set是从缓冲池(pool)中分配的。所以，我们第一步就是创建这个<strong>Descriptor Pool</strong>。因为我们样例只需要为一个uniform buffer创建一个descriptor set，可以使用下面的代码直接来搞：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">VkDescriptorPoolSize type_count[1];</div><div class="line">type_count[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;</div><div class="line">type_count[0].descriptorCount = 1;</div><div class="line"></div><div class="line">VkDescriptorPoolCreateInfo descriptor_pool = &#123;&#125;;</div><div class="line">descriptor_pool.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;</div><div class="line">descriptor_pool.pNext = NULL;</div><div class="line">descriptor_pool.maxSets = 1;</div><div class="line">descriptor_pool.poolSizeCount = 1;</div><div class="line">descriptor_pool.pPoolSizes = type_count;</div><div class="line"></div><div class="line">res = vkCreateDescriptorPool(info.device, &amp;descriptor_pool, NULL,</div><div class="line">                             &amp;info.desc_pool);</div></pre></td></tr></table></figure></p>
-<h3 id="Allocate-a-Descriptor-Set-from-the-Pool"><a href="#Allocate-a-Descriptor-Set-from-the-Pool" class="headerlink" title="Allocate a Descriptor Set from the Pool"></a>Allocate a Descriptor Set from the Pool</h3><p>然后，我们需要从缓冲池中创建一个descriptor set。注意，这里我们需要提供在之前章节创建的descriptor set layout，这个layout描述了该descriptor set应当如何来创建。</p>
-<p>下面是从缓冲池中创建descriptor set的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">VkDescriptorSetAllocateInfo alloc_info[1];</div><div class="line">alloc_info[0].sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;</div><div class="line">alloc_info[0].pNext = NULL;</div><div class="line">alloc_info[0].descriptorPool = info.desc_pool;</div><div class="line">alloc_info[0].descriptorSetCount = NUM_DESCRIPTOR_SETS;</div><div class="line">alloc_info[0].pSetLayouts = info.desc_layout.data();</div><div class="line">info.desc_set.resize(NUM_DESCRIPTOR_SETS);</div><div class="line">res = vkAllocateDescriptorSets(info.device, alloc_info, info.desc_set.data());</div></pre></td></tr></table></figure></p>
-<h3 id="Update-the-Descriptor-Set"><a href="#Update-the-Descriptor-Set" class="headerlink" title="Update the Descriptor Set"></a>Update the Descriptor Set</h3><p><del>注意，事实上，我们还不能够随时随地使用uniform buffer的句柄来操作其中的数据。</del></p>
-<p>在函数<code>init_uniform_buffer()</code>中，我们可以看到uniform buffer信息被存储到一个叫做<code>info.uniform_data.buffer_info</code>的VkDescriptorBufferInfo结构体对象中，该结构体对象在函数中被初始化。</p>
-<p><code>info.uniform_data.buffer_info</code>的结构体：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">typedef struct VkDescriptorBufferInfo &#123;</div><div class="line">    VkBuffer        buffer;</div><div class="line">    VkDeviceSize    offset;</div><div class="line">    VkDeviceSize    range;</div><div class="line">&#125; VkDescriptorBufferInfo;</div></pre></td></tr></table></figure></p>
-<p><code>buffer</code>成员包含着uniform buffer的句柄。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">VkWriteDescriptorSet writes[1];</div><div class="line">writes[0] = &#123;&#125;;</div><div class="line">writes[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;</div><div class="line">writes[0].pNext = NULL;</div><div class="line">writes[0].dstSet = info.desc_set[0];</div><div class="line">writes[0].descriptorCount = 1;</div><div class="line">writes[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;</div><div class="line">writes[0].pBufferInfo = &amp;info.uniform_data.buffer_info;</div><div class="line">writes[0].dstArrayElement = 0;</div><div class="line">writes[0].dstBinding = 0;</div><div class="line"></div><div class="line">vkUpdateDescriptorSets(info.device, 1, writes, 0, NULL);</div></pre></td></tr></table></figure>
-<p>上面的步骤，实质上是将<code>VkDescriptorBufferInfo</code>复制到descriptor上，如同device内存一样。</p>
-<p>info的buffer——info包含着uniform buffer的句柄，也有uniform buffer中数据的地址偏移(offset)和大小(size)。在本样例中，因为uniform buffer只包含这MVP转换矩阵，所以这里uniform data的数据偏移为0，数据大小为MVP矩阵的大小。</p>
-<p>descriptor的二进制实现细节可能对于不同设备有所不同，且对于我们是不透明的。这就是为什么我们要使用Vulkan驱动中的函数来操作descriptor对象，而不是自己直接通过内存映射和内存读写的原因。</p>
+<h3 id="Queue-Family-and-Present"><a href="#Queue-Family-and-Present" class="headerlink" title="Queue Family and Present"></a>Queue Family and Present</h3><p><strong>Present</strong> 操作，就是使一个Swapchain图像缓冲放到物理显示设备上的操作。当我们的应用程序需要显示图像，那就需要向某一个GPU设备队列发送一个<strong>呈现</strong>(Present)请求（具体方法是调用<code>vkQueuePresentKHR()</code>实现的）但接受请求的GPU队列需要能够支持present请求，或者支持graphics和present请求。下面的代码就展示了如何找到一个支持graphics和present操作的GPU队列：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">// Iterate over each queue to learn whether it supports presenting:</div><div class="line">VkBool32 *pSupportsPresent =</div><div class="line">    (VkBool32 *)malloc(info.queue_family_count * sizeof(VkBool32));</div><div class="line">for (uint32_t i = 0; i &lt; info.queue_family_count; i++) &#123;</div><div class="line">    vkGetPhysicalDeviceSurfaceSupportKHR(info.gpus[0], i, info.surface,</div><div class="line">                                         &amp;pSupportsPresent[i]);</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Search for a graphics and a present queue in the array of queue</div><div class="line">// families, try to find one that supports both</div><div class="line">info.graphics_queue_family_index = UINT32_MAX;</div><div class="line">info.present_queue_family_index = UINT32_MAX;</div><div class="line">for (uint32_t i = 0; i &lt; info.queue_family_count; ++i) &#123;</div><div class="line">    if ((info.queue_props[i].queueFlags &amp; VK_QUEUE_GRAPHICS_BIT) != 0) &#123;</div><div class="line">        if (info.graphics_queue_family_index == UINT32_MAX)</div><div class="line">            info.graphics_queue_family_index = i;</div><div class="line"></div><div class="line">        if (pSupportsPresent[i] == VK_TRUE) &#123;</div><div class="line">            info.graphics_queue_family_index = i;</div><div class="line">            info.present_queue_family_index = i;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">if (info.present_queue_family_index == UINT32_MAX) &#123;</div><div class="line">    // If didn&apos;t find a queue that supports both graphics and present, then</div><div class="line">    // find a separate present queue.</div><div class="line">    for (size_t i = 0; i &lt; info.queue_family_count; ++i)</div><div class="line">        if (pSupportsPresent[i] == VK_TRUE) &#123;</div><div class="line">            info.present_queue_family_index = i;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">&#125;</div><div class="line">free(pSupportsPresent);</div><div class="line"></div><div class="line">// Generate error if could not find queues that support graphics</div><div class="line">    // and present</div><div class="line">    if (info.graphics_queue_family_index == UINT32_MAX ||</div><div class="line">        info.present_queue_family_index == UINT32_MAX) &#123;</div><div class="line">        std::cout &lt;&lt; &quot;Could not find a queues for graphics and &quot;</div><div class="line">                     &quot;present\n&quot;;</div><div class="line">        exit(-1);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>上面这份代码，再次使用在这之前便已获取的变量<code>info.queue_family_count</code>，通过调用<code>vkGetPhysicalDeviceSurfaceSupportKHR()</code>函数来获取每一个queue family的是否支持surface的标志。然后遍历所有的queue family，来寻找同时支持present和graphics的GPU队列族。最后，如果发现没有找到同时支持present和graphics的GPU队列族，则去寻找一个支持present的GPU队列族，将present和graphics功能分到两个GPU queue family上。接下来的代码，会从<code>graphics_queue_family_index</code>获取执行图形命令的队列编号，从<code>present_queue_family_index</code>获取执行呈现操作的队列编号。</p>
+<p><code>free()</code>上面的if语句实际上有些多余，但这里如此写是为了针对没有都支持graphics和present的GPU队列的情况做说明的。</p>
+<p>最后，如果发现graphics或者present功能找不齐，该代码会结束运行。</p>
+<h3 id="Swapchain-Create-Info"><a href="#Swapchain-Create-Info" class="headerlink" title="Swapchain Create Info"></a>Swapchain Create Info</h3><p>接下来更多的内容是设置Swapchain的Create Info结构体：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">typedef struct VkSwapchainCreateInfoKHR &#123;</div><div class="line">    VkStructureType                  sType;</div><div class="line">    const void*                      pNext;</div><div class="line">    VkSwapchainCreateFlagsKHR        flags;</div><div class="line">    VkSurfaceKHR                     surface;</div><div class="line">    uint32_t                         minImageCount;</div><div class="line">    VkFormat                         imageFormat;</div><div class="line">    VkColorSpaceKHR                  imageColorSpace;</div><div class="line">    VkExtent2D                       imageExtent;</div><div class="line">    uint32_t                         imageArrayLayers;</div><div class="line">    VkImageUsageFlags                imageUsage;</div><div class="line">    VkSharingMode                    imageSharingMode;</div><div class="line">    uint32_t                         queueFamilyIndexCount;</div><div class="line">    const uint32_t*                  pQueueFamilyIndices;</div><div class="line">    VkSurfaceTransformFlagBitsKHR    preTransform;</div><div class="line">    VkCompositeAlphaFlagBitsKHR      compositeAlpha;</div><div class="line">    VkPresentModeKHR                 presentMode;</div><div class="line">    VkBool32                         clipped;</div><div class="line">    VkSwapchainKHR                   oldSwapchain;</div><div class="line">&#125; VkSwapchainCreateInfoKHR;</div></pre></td></tr></table></figure></p>
+<p>下面的几段文章，讲述了创建设置Swapchain前后的全部过程。</p>
+<p>Creating a Surface</p>
+<p>要在instance和device中使用WSI扩展，首先需要创建一个<code>VkSurface</code>对象，然后才能用它来进行Swapchain的创建。在<code>05-init_swapchain.cpp</code>文件的<code>main</code>函数开始的地方，我们可以看到针对本地平台的Surface的创建过程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#ifdef _WIN32</div><div class="line">    VkWin32SurfaceCreateInfoKHR createInfo = &#123;&#125;;</div><div class="line">    createInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;</div><div class="line">    createInfo.pNext = NULL;</div><div class="line">    createInfo.hinstance = info.connection;</div><div class="line">    createInfo.hwnd = info.window;</div><div class="line">    res = vkCreateWin32SurfaceKHR(info.inst, &amp;createInfo, NULL, &amp;info.surface);</div><div class="line">#endif</div></pre></td></tr></table></figure></p>
+<p>本段代码中的<code>info.connection</code>和<code>info.window</code>分别在<code>init_connection()</code>和<code>init_window()</code>函数中针对本地平台进行了创建和初始化。在Vulkan中，通过<code>vkCreateWin32SurfaceKHR()</code>函数创建的VkSurfaceKHR Surface对象表示一个用于处理平台窗口的对象。</p>
+<blockquote>
+<p>注意：<code>init_connection()</code>和<code>init_window()</code>是平台相关的，这两个函数为我们连接显示设备创建窗口程序屏蔽了很多细节。</p>
+</blockquote>
+<p>接下来我们需要将创建的<code>info.surface</code>对象设置到Swapchain Create Info结构体中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">VkSwapchainCreateInfoKHR swapchain_ci = &#123;&#125;;</div><div class="line">swapchain_ci.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;</div><div class="line">swapchain_ci.pNext = NULL;</div><div class="line">swapchain_ci.surface = info.surface;</div></pre></td></tr></table></figure></p>
+<p>Device Surface Formats</p>
+<p>当你创建Swapchain时，你需要指定surface的格式(Formats)。<strong>Format</strong> 在这里表示<code>VkFormat</code>枚举器中描述的像素格式，比如：<code>VK_FORMAT_B8G8R8A8_UNORM</code>格式就是一种Device SUrface Format。</p>
+<p>本章节接下来的一段代码就是获取一个<code>VkSurfaceFormatKHR</code>结构体列表，该列表保存着显示设备支持的<code>VkFormat</code>格式以及其他信息。本样例代码不关心用什么格式，于是便采用了第一个可用格式作为将要使用的格式。</p>
+<p>然后，我们在本章节代码的后面部分可以看到<code>VkFormat</code>被设置到Swapchain create info结构体中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">swapchain_ci.imageFormat = info.format;</div></pre></td></tr></table></figure></p>
+<p>Surface Capabilities</p>
+<p>获取到Formats之后，我们需要获取到Surface Capabilities和Present Modes来填充Swapchain的create info结构体，在本章节代码中，我们看到调用了<code>vkGetPhysicalDeviceSurfaceCapabilitiesKHR()</code>和 <code>vkGetPhysicalDeviceSurfacePresentModesKHR()</code>两个函数分别获取Surface Capabilities和Present Modes，之后的部分我们可以看到这两个对象中的信息被设置到了Swapchain create info结构体中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">uint32_t desiredNumberOfSwapChainImages = surfCapabilities.minImageCount;</div><div class="line"></div><div class="line">swapchain_ci.minImageCount = desiredNumberOfSwapChainImages;</div><div class="line">swapchain_ci.imageExtent.width = swapChainExtent.width;</div><div class="line">swapchain_ci.imageExtent.height = swapChainExtent.height;</div><div class="line">swapchain_ci.preTransform = preTransform;</div><div class="line">swapchain_ci.presentMode = swapchainPresentMode;</div></pre></td></tr></table></figure></p>
+<p><code>minImageCount</code>属性，用于设置缓冲区使用策略：双缓冲区、三缓冲区等。本章节代码中是从使用<code>vkGetPhysicalDeviceSurfaceCapabilitiesKHR()</code>函数获取到到的<code>surfCapabilities</code>对象中查到Device支持的图像缓冲区的最小个数。</p>
+<h3 id="Different-Queue-Families-for-Graphics-and-Present"><a href="#Different-Queue-Families-for-Graphics-and-Present" class="headerlink" title="Different Queue Families for Graphics and Present"></a>Different Queue Families for Graphics and Present</h3><p>在本章之前的代码中，我们找到了有graphics和present功能的GPU队列，如果他们并不是同一个队列，我们需要做一些其他设置，让它们能够共享图像缓冲：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">swapchain_ci.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;</div><div class="line">swapchain_ci.queueFamilyIndexCount = 0;</div><div class="line">swapchain_ci.pQueueFamilyIndices = NULL;</div><div class="line">uint32_t queueFamilyIndices[2] = &#123;</div><div class="line">    (uint32_t)info.graphics_queue_family_index,</div><div class="line">    (uint32_t)info.present_queue_family_index&#125;;</div><div class="line">if (info.graphics_queue_family_index != info.present_queue_family_index) &#123;</div><div class="line">    // If the graphics and present queues are from different queue families,</div><div class="line">    // we either have to explicitly transfer ownership of images between the</div><div class="line">    // queues, or we have to create the swapchain with imageSharingMode</div><div class="line">    // as VK_SHARING_MODE_CONCURRENT</div><div class="line">    swapchain_ci.imageSharingMode = VK_SHARING_MODE_CONCURRENT;</div><div class="line">    swapchain_ci.queueFamilyIndexCount = 2;</div><div class="line">    swapchain_ci.pQueueFamilyIndices = queueFamilyIndices;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面的代码是创建Swapchain常用的做法。本章节其余代码是设置Swapchain Create Info结构体的其他属性，可以参考用于将来自己的程序实现。</p>
+<h3 id="Create-Swapchain"><a href="#Create-Swapchain" class="headerlink" title="Create Swapchain"></a>Create Swapchain</h3><p>在Swapchain Create Info结构体设置完成后，我们使用下面这一句代码创建Swapchain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">res = vkCreateSwapchainKHR(info.device, &amp;swapchain_ci, NULL, &amp;info.swap_chain);</div></pre></td></tr></table></figure></p>
+<p><code>vkCreateSwapchainKHR()</code>函数创建了许多图像缓冲区用于建立Swapchain。</p>
+<p>在程序进行时，我们可能需要获取每个Swapchain上的图像缓冲区，我们应该用下面这段符合之前获取格式的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">res = vkGetSwapchainImagesKHR(info.device, info.swap_chain,</div><div class="line">                                  &amp;info.swapchainImageCount, NULL);</div><div class="line">    assert(res == VK_SUCCESS);</div><div class="line"></div><div class="line">    VkImage *swapchainImages =</div><div class="line">        (VkImage *)malloc(info.swapchainImageCount * sizeof(VkImage));</div><div class="line">    assert(swapchainImages);</div><div class="line">    res = vkGetSwapchainImagesKHR(info.device, info.swap_chain,</div><div class="line">                                  &amp;info.swapchainImageCount, swapchainImages);</div><div class="line">    assert(res == VK_SUCCESS);</div></pre></td></tr></table></figure></p>
+<p>来获取Swapchain Images的列表，然后向其中输入数据，在之后通知GPU渲染他们。</p>
+<h3 id="Create-Image-Views"><a href="#Create-Image-Views" class="headerlink" title="Create Image Views"></a>Create Image Views</h3><p><code>VkImageView</code>中存储着图像数据的信息，如：图像内存的排列格式，用于1D，2D还是3D，也用于记录图像的格式，颜色组成的顺序以及插件的信息。在本章节代码中，我们可以看到最后的<code>for</code>循环中使用<code>vkCreateImageView</code>创建了针对于每个Swapchain的image缓冲区的view缓冲区，存于info中。</p>
+<p>在创建完image view之后，算是完成了创建Swapchain的过程，在后面的章节中我们将使用info中的iamge view。</p>
 <hr>
 <p>本篇<strong>Vulkan Samples Tutorial</strong>原文是<strong>LUNAEXCHANGE</strong>中的<a href="https://vulkan.lunarg.com/doc/sdk/1.0.42.1/windows/tutorial/html/index.html" target="_blank" rel="external">Vulkan Tutorial</a>的译文。<br>并非逐字逐句翻译，如有错误之处请告知。O(∩_∩)O谢谢~~</p>
 
@@ -263,7 +276,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/24/Vulkan Samples Tutorial 4/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/07/Vulkan Samples Tutorial 2/">展开全文 >></a>
         </p>
       
 
@@ -295,7 +308,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
     </nav>
   
 

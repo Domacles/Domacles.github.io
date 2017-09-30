@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="null" class="profilepic">
-			<img src="/image/avatar.png" class="js-avatar">
+			<img src="/images/avatar.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="null">Domacles</a></h1>
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/image/avatar.png" class="js-avatar">
+				<img src="/images/avatar.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Domacles</h1>
@@ -155,20 +155,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Vulkan Samples Tutorial 5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Vulkan Samples Tutorial 3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/25/Vulkan Samples Tutorial 5/">Vulkan Samples Tutorial 5</a>
+      <a class="article-title" href="/2017/04/11/Vulkan Samples Tutorial 3/">Vulkan Samples Tutorial 3</a>
     </h1>
   
 
         
-        <a href="/2017/04/25/Vulkan Samples Tutorial 5/" class="archive-article-date">
-  	<time datetime="2017-04-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-25</time>
+        <a href="/2017/04/11/Vulkan Samples Tutorial 3/" class="archive-article-date">
+  	<time datetime="2017-04-10T16:12:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-11</time>
 </a>
         
       </header>
@@ -177,63 +177,59 @@
       
         <!-- TOC -->
 <ul>
-<li><a href="#create-a-render-pass">Create a Render Pass</a><ul>
-<li><a href="#image-layout-transition">Image Layout Transition</a></li>
-<li><a href="#create-the-render-pass">Create the Render Pass</a></li>
+<li><a href="#depth-buffer">Depth Buffer</a><ul>
+<li><a href="#create-a-depth-buffer">Create a Depth Buffer</a></li>
+<li><a href="#create-the-depth-buffer-image-object">Create the Depth Buffer Image Object</a></li>
+<li><a href="#allocate-the-memory-for-the-depth-buffer">Allocate the Memory for the Depth Buffer</a></li>
+<li><a href="#bind-the-memory-to-the-depth-buffer">Bind the Memory to the Depth Buffer</a></li>
+<li><a href="#create-the-image-view">Create the Image View</a></li>
+</ul>
+</li>
+<li><a href="#uniform-buffer">Uniform Buffer</a><ul>
+<li><a href="#create-a-uniform-buffer">Create a Uniform Buffer</a></li>
+<li><a href="#setting-up-the-uniform-data">Setting up the Uniform Data</a></li>
+<li><a href="#creating-the-uniform-buffer-object">Creating the Uniform Buffer Object</a></li>
+<li><a href="#allocating-the-uniform-buffer-memory">Allocating the Uniform Buffer Memory</a></li>
+<li><a href="#mapping-and-setting-the-uniform-buffer-memory">Mapping and Setting the Uniform Buffer Memory</a></li>
 </ul>
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="Create-a-Render-Pass"><a href="#Create-a-Render-Pass" class="headerlink" title="Create a Render Pass"></a>Create a Render Pass</h2><p>本章节代码在<code>10-init_render_pass.cpp</code>文件中。</p>
-<p><strong>渲染通道(Render Pass)</strong>指的是：指定的附件集合(collection of attachments)、子通道(subpasses)、渲染过程用到的依赖(dependencies)这一些概念的渲染操作范畴。1个渲染通道至少包含1个子通道。传递给驱动的信息，可以使驱动了解程序希望什么时候开始渲染以及渲染什么东西，还可以让驱动提供渲染操作的硬件优化急速。</p>
-<p>我们通过使用<code>vkCreateRenderPass()</code>来定义渲染通道，然后使用<code>vkCmdBeginRenderPass()</code>和<code>vkCmdEndRenderPass()</code>向命令缓冲区插入一个渲染通道实例。</p>
-<p>在本章节内容中，我们只是定义并创建渲染通道，但直到本章节代码结束都没有将它插入到命令缓冲区中。</p>
-<p>在本章节样例中，渲染通道附件(render pass attachments)用到了颜色附件(color attachment)，就是从Swapchian获得的图像，还用到了深度/模版附件(depth/stencil attachment)，附件使用的深度缓冲区是在之前创建的。</p>
-<p>图像附件必须在使用时准备好，这样它们才能够被添加到渲染通道实例上用于在命令缓冲区中执行。准备的过程包括图像布局(Image Layouts)从初始未定义阶段转换到在渲染通道优化阶段的过程。我们将会在本章节了解在创建渲染通道之前，图像布局的转换过程。</p>
-<h3 id="Image-Layout-Transition"><a href="#Image-Layout-Transition" class="headerlink" title="Image Layout Transition"></a>Image Layout Transition</h3><p>The Need for Alternate Memory Access Patterns</p>
-<p>图像的布局(Image Layouts)指的是图像像素如何从二维坐标系映射到图像内存偏移的方法。比较有代表性的布局是，图像数据使用的线性映射：2D图像按照一行接着一行的方法存储到连续的内存中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">offset = rowCoord * pitch + colCoord</div></pre></td></tr></table></figure></p>
-<p><code>pitch</code>表示一行的大小。该变量通常是和图像的宽度相同，但通常会填充一些字节，使得图像数据的起始位置满足GPU内存地址的对齐要求。</p>
-<p>线性的布局很适合沿着行来读写连续的像素，即按照<code>colCoord</code>变化的方向，但是，多数图形操作包含一些读取相邻行像素的操作，即按照<code>rowCoord</code>的方向。如果图像非常宽，那采用线性映射的方法会导致每次存取相邻行内存地址的跨度很大。在多级缓存内存系统中，由于内存地址转换跨度过大造成TLB未命中或者缓存未命中太多，导致性能低下问题的出现。</p>
-<p>为了减少这些低效现象的出现，许多GPU硬件实现支持优化optimal/tiled的内存存取方案。在一种优化的布局设计中，图像中间的矩形形状的像素被存储到一段连续的内存中，其他的矩形形状的像素也按照中心矩阵的存放方法存到内存中。举个例子，由左上角[16, 32]到右下角[31, 47]建立的像素矩阵，可以圈出一块16 x 16的像素块，该像素块存到一块连续的内存上。行与行之间的间隔就变得不长了。</p>
-<p>如果GPU想要填充上面所讲的像素块，比如可以使用先沟通的颜色，这种方法就可以用一个相对开销较小的内存操作方法来填充这256个像素组成的像素块。</p>
-<p>下面是一个简单的2 x 2的平铺图，注意，蓝色的像素在线性内存布局中两部分想个比较远，而在平铺布局中相隔就比较近：</p>
-<p><img src="/2017/04/25/Vulkan Samples Tutorial 5/ImageMemoryLayout.png" alt="ImageMemoryLayout"></p>
-<p>大部分图像内存布局的实现，采用更复杂的平铺方法，且平铺的大小大于2 x 2(这让我想起了用<strong>希尔伯特曲线</strong>填充平面空间的方法)。</p>
-<p>Vulkan Control Over the Layout</p>
-<p>由于上面所解释的那样，GPU会为了提升渲染效率才支持优化的布局方案。优化的布局方案通常是<strong>不透明的</strong>(opaque)，这表示优化布局方案格式的具体细节并不是公开的或者不会让别人知道如何读写图像数据。</p>
-<p>举个例子，假如你想让GPU使用一种优化的布局方案来渲染图像，但是如果你希望让CPU读取和理解最终需要渲染的图像的数据，你需要从优化的布局方案改成一般的布局方案。</p>
-<p>在Vulkan中，从一种布局转换到另外一种布局叫做<strong>布局转换</strong>(layout transition)。下面三种途径的任何一种，都能够让我们实现布局转换：</p>
+<p>Depth Buffer和Uniform Buffer在OpenGL也有对应的概念，可以参考OpenGL的讲述来理解这两个缓冲区的作用。</p>
+<h2 id="Depth-Buffer"><a href="#Depth-Buffer" class="headerlink" title="Depth Buffer"></a>Depth Buffer</h2><p>本章节代码在<code>06-init_depth_buffer.cpp</code>文件中。</p>
+<h3 id="Create-a-Depth-Buffer"><a href="#Create-a-Depth-Buffer" class="headerlink" title="Create a Depth Buffer"></a>Create a Depth Buffer</h3><p>深度缓冲区（Depth Buffer）可以可选的，在最后的样例工程中要渲染3D立方体，就必须使用深度缓冲区。深度缓冲区对于每个Swapchain的Image都是可以复用的，因此，深度缓冲区应当只使用一个，即便Swapchain中有很多image对象。</p>
+<p>不同于<code>vkCreateSwapchainKHR()</code>，当Swapchain的每个Image对象创建时，你需要自己去创建和分配深度缓冲区给Image：</p>
 <ol>
-<li>内存栅格化命令(Memory Barrier Command)，通过<code>vkCmdPipelineBarrier</code>来控制</li>
-<li>了解渲染通道最终布局规范(Render Pass final layout specification)</li>
-<li>了解渲染通道子通道布局规范(Render Pass subpass layout specification)</li>
+<li>创建使用深度缓冲区Image对象</li>
+<li>深度缓冲区所在<strong>设备</strong>上分配内存</li>
+<li>把申请的内存绑定到Image对象上</li>
+<li>创建使用深度缓冲区的Image View</li>
 </ol>
-<p>内存栅格化命令(Memory Barrier Command)，是一个可以在命令缓冲区中显式调用的布局转换命令。应用举例，比如我们可以通过这个命令来同步多个复杂场景的内存访问。上面的方法一旦采用另外两种方法来实现布局转换，那就不能用内存栅格化命令来实现布局转换了。</p>
-<p>通常，在渲染开始之前和渲染完成之后，需要进行图形布局转换以适应图像渲染。渲染开始前的第一次转换，会为GPU准备好适合的图像格式用于渲染；渲染完成后的最后一次转换，用于将图像呈现给显示设备。在这些情况下，我们需要将布局转换方式指定为渲染通道定义的一部分。在本章节我们将看到是如何具体做的。</p>
-<p>一条布局转换命令，可能会触发也可能不会触发事实上GPU布局转换操作。比如，如果旧的布局格式未定义，且新的布局格式是优化的，那GPU就得什么都不做，除非程序已经安排GPU硬件采用优化的模式访问内存。这是因为图像内容处于未定义状态下，不能够通过转换它的格式来进行另存储。另外，如果旧的数据布局格式是一般的，朴素的，且有迹象表明需要图像数据进行另保存，那转换成优化布局时，可能会涉及到GPU的一些重新调整像素位置的工作，即GPU会进行布局转换操作。</p>
-<p>即使你知道或者认为一条布局转换操作不会实际发生，但最好的实践方式还是在需要的地方进行添加布局转换操作，这是因为这样可以给驱动程序更多的信息，来帮助驱动软件确保你的应用程序能够在更多平台上执行正确。</p>
-<p>Image Layout Transitions in the Samples</p>
-<p>下面的样例采用的子通道定义(subpass definitions)和渲染通道定义(render pass definitions)来指定需要的图像格式的布局转换，而不是采用内存栅格化命令。</p>
-<p><img src="/2017/04/25/Vulkan Samples Tutorial 5/RenderPassLayouts.png" alt="RenderPassLayouts"></p>
-<p>初始的渲染通道布局设置成了未定义，这表示我们不必关心初始的渲染通道布局格式，因为当渲染通道开始时，我们不用考虑图像缓存区中已经有什么样的数据且他们已经处于需要显示的状态了。在渲染通道开始时，我们只需要告诉驱动什么样的布局格式是有效的。在这种情况下，驱动不会进行任何转换，直到子通道开始或者渲染通道结束。</p>
-<p>子通道布局格式被设置成对颜色缓冲区的优化布局，这就告诉驱动子通道渲染过程中，需要对子通道布局格式进行转换成优化的布局格式。对深度缓冲区的优化布局的设置过程是相似的。</p>
-<p>最终渲染通道布局会告诉驱动要将布局转换成最优的布局格式用来显示。</p>
-<h3 id="Create-the-Render-Pass"><a href="#Create-the-Render-Pass" class="headerlink" title="Create the Render Pass"></a>Create the Render Pass</h3><p>现在我们应该知道了如何在某些场景中使用合适的图像布局格式，接下来就可以处理剩下的渲染通道。</p>
-<p>Attachments</p>
-<p>在本样例中，有两个附件(Attachment)，一个是颜色的，另一个是深度缓冲的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">VkAttachmentDescription attachments[2];</div><div class="line">attachments[0].format = info.format;</div><div class="line">attachments[0].samples = NUM_SAMPLES;</div><div class="line">attachments[0].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;</div><div class="line">attachments[0].storeOp = VK_ATTACHMENT_STORE_OP_STORE;</div><div class="line">attachments[0].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;</div><div class="line">attachments[0].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;</div><div class="line">attachments[0].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;</div><div class="line">attachments[0].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;</div><div class="line">attachments[0].flags = 0;</div><div class="line"></div><div class="line">attachments[1].format = info.depth.format;</div><div class="line">attachments[1].samples = NUM_SAMPLES;</div><div class="line">attachments[1].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;</div><div class="line">attachments[1].storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;</div><div class="line">attachments[1].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;</div><div class="line">attachments[1].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;</div><div class="line">attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;</div><div class="line">attachments[1].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;</div><div class="line">attachments[1].flags = 0;</div></pre></td></tr></table></figure></p>
-<p>在两个附件中，<code>loadOp</code>成员属性都设置为 <strong>CLEAR</strong> ，说明我们希望缓冲区能够在渲染通道实例( render pass instance)开始时被清空。</p>
-<p>在颜色附件中，<code>storeOp</code>成员属性被设置为 <strong>STORE</strong> ，表示我们希望将渲染结构留在缓冲区中，这样才能够将图像呈献显示设备上。</p>
-<p>在深度附件中，<code>storeOp</code>成员属性被设置为 <strong>DONT_CARE</strong> ，表示在渲染通道实例完成时不再需要缓冲区的内容，即缓冲区内容可清空可扔掉。</p>
-<p>对于图像布局格式，我们需要将两个附件的初始格式设置为<strong>未定义布局格式</strong>(undefined layouts)，原因如同上面所说。</p>
-<p>渲染子通道，即发生在初始化布局和最终布局期间，会将颜色附件转换成<code>VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL</code>状态，将深度附件转换成<code>VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL</code>。</p>
-<p>对于颜色附件，我们需要指定最终布局为<code>VK_IMAGE_LAYOUT_PRESENT_SRC_KHR</code>格式，该格式是一种用于渲染完成后的呈现操作的适合的格式。而对于深度附件，由于深度缓冲区在呈现操作时不会被用到，我们可以让深度缓冲区布局格式和渲染子通道相同。</p>
-<p>Subpass</p>
-<p>如果需要设置多个子通道，子通道的定义直接而又有趣。假定要实现环境光遮蔽或一些其它的特效，则可能需要对图形数据做一些预处理或后处理，那我们应当关注一下使用多个子通道。在这里，子通道的设定被用于在渲染过程中指定哪些附件有效，和指定渲染时需要用到的布局。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">VkAttachmentReference color_reference = &#123;&#125;;</div><div class="line">color_reference.attachment = 0;</div><div class="line">color_reference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;</div><div class="line"></div><div class="line">VkAttachmentReference depth_reference = &#123;&#125;;</div><div class="line">depth_reference.attachment = 1;</div><div class="line">depth_reference.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;</div></pre></td></tr></table></figure></p>
-<p><code>attachment</code>成员属性表示附件数组中对象附件索引，用于渲染渲染通道中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">VkSubpassDescription subpass = &#123;&#125;;</div><div class="line">subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;</div><div class="line">subpass.flags = 0;</div><div class="line">subpass.inputAttachmentCount = 0;</div><div class="line">subpass.pInputAttachments = NULL;</div><div class="line">subpass.colorAttachmentCount = 1;</div><div class="line">subpass.pColorAttachments = &amp;color_reference;</div><div class="line">subpass.pResolveAttachments = NULL;</div><div class="line">subpass.pDepthStencilAttachment = &amp;depth_reference;</div><div class="line">subpass.preserveAttachmentCount = 0;</div><div class="line">subpass.pPreserveAttachments = NULL;</div></pre></td></tr></table></figure></p>
-<p><code>pipelineBindPoint</code>成员属性表明是一个图形子通道还是一个计算子通道。当前属性值表示，只有图形子通道有效。</p>
-<p>Render Pass</p>
-<p>现在，我们已经拥有所有渲染通道需要定义的内容，可以创建渲染通道了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkRenderPassCreateInfo rp_info = &#123;&#125;;</div><div class="line">rp_info.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;</div><div class="line">rp_info.pNext = NULL;</div><div class="line">rp_info.attachmentCount = 2;</div><div class="line">rp_info.pAttachments = attachments;</div><div class="line">rp_info.subpassCount = 1;</div><div class="line">rp_info.pSubpasses = &amp;subpass;</div><div class="line">rp_info.dependencyCount = 0;</div><div class="line">rp_info.pDependencies = NULL;</div><div class="line">res = vkCreateRenderPass(info.device, &amp;rp_info, NULL, &amp;info.render_pass);</div></pre></td></tr></table></figure></p>
-<p>在接下来的样例中，我们将使用渲染通道。</p>
+<p>以上步骤可以使用下图表示：<br><img src="/2017/04/11/Vulkan Samples Tutorial 3/DepthBufferBindView.png" alt="DepthBufferBindView"></p>
+<h3 id="Create-the-Depth-Buffer-Image-Object"><a href="#Create-the-Depth-Buffer-Image-Object" class="headerlink" title="Create the Depth Buffer Image Object"></a>Create the Depth Buffer Image Object</h3><p>与之前一些使用<code>CreateInfo</code>创建对象的过程相同，创建使用深度缓冲区的Image对象的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">mage_info.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;</div><div class="line">image_info.pNext = NULL;</div><div class="line">image_info.imageType = VK_IMAGE_TYPE_2D;</div><div class="line">image_info.format = VK_FORMAT_D16_UNORM;</div><div class="line">image_info.extent.width = info.width;</div><div class="line">image_info.extent.height = info.height;</div><div class="line">image_info.extent.depth = 1;</div><div class="line">image_info.mipLevels = 1;</div><div class="line">image_info.arrayLayers = 1;</div><div class="line">image_info.samples = NUM_SAMPLES;</div><div class="line">image_info.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;</div><div class="line">image_info.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;</div><div class="line">image_info.queueFamilyIndexCount = 0;</div><div class="line">image_info.pQueueFamilyIndices = NULL;</div><div class="line">image_info.sharingMode = VK_SHARING_MODE_EXCLUSIVE;</div><div class="line">image_info.flags = 0;</div><div class="line"></div><div class="line">vkCreateImage(info.device, &amp;image_info, NULL, &amp;info.depth.image);</div></pre></td></tr></table></figure></p>
+<p>上面这份代码仅仅为Image创建了一个对象，还并没有为它申请深度缓冲区内存。但在创建时，你需要设置足够的信息用于创建匹配窗口大小的深度缓冲区。</p>
+<h3 id="Allocate-the-Memory-for-the-Depth-Buffer"><a href="#Allocate-the-Memory-for-the-Depth-Buffer" class="headerlink" title="Allocate the Memory for the Depth Buffer"></a>Allocate the Memory for the Depth Buffer</h3><p>在申请分配深度缓冲区内存之前，我们需要知道要申请的内存大小。但由于GPU硬件上的内存有对齐约束，而这些约束不同设备之间可能有所不同，因此，我们需要通过Vulkan的API来查询我们需要的内存大小、对齐方式、内存类型等信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vkGetImageMemoryRequirements(info.device, info.depth.image, &amp;mem_reqs);</div></pre></td></tr></table></figure></p>
+<p>然后我们需要用获取到的<code>VkMemoryRequirements</code>对象，来填充<code>VkMemoryAllocateInfo</code>这个Info对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">VkMemoryAllocateInfo mem_alloc = &#123;&#125;;</div><div class="line">mem_alloc.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;</div><div class="line">mem_alloc.pNext = NULL;</div><div class="line">mem_alloc.allocationSize = mem_reqs.size;</div><div class="line">pass = memory_type_from_properties(info, mem_reqs.memoryTypeBits,</div><div class="line">        0, /* No Requirements */</div><div class="line">        &amp;mem_alloc.memoryTypeIndex);</div></pre></td></tr></table></figure></p>
+<p><code>memory_type_from_properties()</code>是一个用于确定适合的内存指针类型的函数。最后，使用下面的代码来进行分配内存：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vkAllocateMemory(info.device, &amp;mem_alloc, NULL, &amp;info.depth.mem);</div></pre></td></tr></table></figure></p>
+<h3 id="Bind-the-Memory-to-the-Depth-Buffer"><a href="#Bind-the-Memory-to-the-Depth-Buffer" class="headerlink" title="Bind the Memory to the Depth Buffer"></a>Bind the Memory to the Depth Buffer</h3><p>在拥有一个Image对象且申请到了设备上的深度缓冲区内存之后，就可以将缓冲区内存帮到Image对象上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vkBindImageMemory(info.device, info.depth.image, info.depth.mem, 0);</div></pre></td></tr></table></figure></p>
+<h3 id="Create-the-Image-View"><a href="#Create-the-Image-View" class="headerlink" title="Create the Image View"></a>Create the Image View</h3><p>接下来就是按照自己的需要，设置ViewCreateInfo对象，然后与之前相同的流程，使用<code>vkCreateImageView()</code>函数创建对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">VkImageViewCreateInfo view_info = &#123;&#125;;</div><div class="line">view_info.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;</div><div class="line">view_info.pNext = NULL;</div><div class="line">view_info.image = info.depth.image;</div><div class="line">view_info.format = VK_FORMAT_D16_UNORM;</div><div class="line">view_info.components.r = VK_COMPONENT_SWIZZLE_R;</div><div class="line">view_info.components.g = VK_COMPONENT_SWIZZLE_G;</div><div class="line">view_info.components.b = VK_COMPONENT_SWIZZLE_B;</div><div class="line">view_info.components.a = VK_COMPONENT_SWIZZLE_A;</div><div class="line">view_info.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;</div><div class="line">view_info.subresourceRange.baseMipLevel = 0;</div><div class="line">view_info.subresourceRange.levelCount = 1;</div><div class="line">view_info.subresourceRange.baseArrayLayer = 0;</div><div class="line">view_info.subresourceRange.layerCount = 1;</div><div class="line">view_info.viewType = VK_IMAGE_VIEW_TYPE_2D;</div><div class="line">view_info.flags = 0;</div><div class="line"></div><div class="line">res = vkCreateImageView(info.device, &amp;view_info, NULL, &amp;info.depth.view);</div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="Uniform-Buffer"><a href="#Uniform-Buffer" class="headerlink" title="Uniform Buffer"></a>Uniform Buffer</h2><p>本章节代码在<code>07-init_uniform_buffer.cpp</code>文件中。</p>
+<h3 id="Create-a-Uniform-Buffer"><a href="#Create-a-Uniform-Buffer" class="headerlink" title="Create a Uniform Buffer"></a>Create a Uniform Buffer</h3><p><strong>Uniform Buffer</strong>是用来为着色器(shaders)程序提供常量数据的只读缓冲区。与深度缓冲区相同，你需要自己申请内存并填充它。</p>
+<h3 id="Setting-up-the-Uniform-Data"><a href="#Setting-up-the-Uniform-Data" class="headerlink" title="Setting up the Uniform Data"></a>Setting up the Uniform Data</h3><p>本章样例中，我们使用Uniform Buffer将MVP(Model-View-Projection)矩阵送到着色器中，如此着色器才能对每一个顶点进行转换。</p>
+<p>下面是创建MVP矩阵的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">info.Projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);</div><div class="line">info.View = glm::lookAt(</div><div class="line">    glm::vec3(-5, 3, -10), // Camera is at (-5,3,-10), in World Space</div><div class="line">    glm::vec3(0, 0, 0),    // and looks at the origin</div><div class="line">    glm::vec3(0, -1, 0)    // Head is up (set to 0,-1,0 to look upside-down)</div><div class="line">    );</div><div class="line">info.Model = glm::mat4(1.0f);</div><div class="line">// Vulkan clip space has inverted Y and half Z.</div><div class="line">info.Clip = glm::mat4(1.0f,  0.0f, 0.0f, 0.0f,</div><div class="line">                      0.0f, -1.0f, 0.0f, 0.0f,</div><div class="line">                      0.0f,  0.0f, 0.5f, 0.0f,</div><div class="line">                      0.0f,  0.0f, 0.5f, 1.0f);</div><div class="line"></div><div class="line">info.MVP = info.Clip * info.Projection * info.View * info.Model;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意，<code>glm</code>库在这里用来简化代码，实际上矩阵运算需要自己写；<code>info.MVP</code>是一个4*4的矩阵。</p>
+</blockquote>
+<h3 id="Creating-the-Uniform-Buffer-Object"><a href="#Creating-the-Uniform-Buffer-Object" class="headerlink" title="Creating the Uniform Buffer Object"></a>Creating the Uniform Buffer Object</h3><p>创建Uniform缓冲区的过程与之前的深度缓冲区(Depth Buffer)基本一致，只有在<code>usage</code>属性上有所不同：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">VkBufferCreateInfo buf_info = &#123;&#125;;</div><div class="line">buf_info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;</div><div class="line">buf_info.pNext = NULL;</div><div class="line">buf_info.usage = VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT;</div><div class="line">buf_info.size = sizeof(info.MVP);</div><div class="line">buf_info.queueFamilyIndexCount = 0;</div><div class="line">buf_info.pQueueFamilyIndices = NULL;</div><div class="line">buf_info.sharingMode = VK_SHARING_MODE_EXCLUSIVE;</div><div class="line">buf_info.flags = 0;</div><div class="line">res = vkCreateBuffer(info.device, &amp;buf_info, NULL, &amp;info.uniform_data.buf);</div><div class="line">assert(res == VK_SUCCESS);</div></pre></td></tr></table></figure></p>
+<h3 id="Allocating-the-Uniform-Buffer-Memory"><a href="#Allocating-the-Uniform-Buffer-Memory" class="headerlink" title="Allocating the Uniform Buffer Memory"></a>Allocating the Uniform Buffer Memory</h3><p>与为深度缓冲区申请内存使的过程一样，先使用API计算出需要的内存大小，然后使用<code>memory_type_from_properties()</code>进行分配：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">VkMemoryRequirements mem_reqs;</div><div class="line">vkGetBufferMemoryRequirements(info.device, info.uniform_data.buf,</div><div class="line">                              &amp;mem_reqs);</div><div class="line"></div><div class="line">VkMemoryAllocateInfo alloc_info = &#123;&#125;;</div><div class="line">alloc_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;</div><div class="line">alloc_info.pNext = NULL;</div><div class="line">alloc_info.memoryTypeIndex = 0;</div><div class="line"></div><div class="line">alloc_info.allocationSize = mem_reqs.size;</div><div class="line">pass = memory_type_from_properties(info, mem_reqs.memoryTypeBits,</div><div class="line">                                   VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |</div><div class="line">                                       VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,</div><div class="line">                                   &amp;alloc_info.memoryTypeIndex);</div><div class="line"></div><div class="line">res = vkAllocateMemory(info.device, &amp;alloc_info, NULL,</div><div class="line">                       &amp;(info.uniform_data.mem));</div></pre></td></tr></table></figure></p>
+<p>使用<code>VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT</code>标记，表示分配的这块内存对CPU(Host)是可以读取的。</p>
+<p>使用<code>VK_MEMORY_PROPERTY_HOST_COHERENT_BIT</code>标记，表示Host的内存与设备是相互可见的，并不需要刷新内存缓存。这种做法对程序是一种简化，如此便不需要调用<code>vkFlushMappedMemoryRanges</code>和<code>vkInvalidateMappedMemoryRanges</code>来确保内存的数据对GPU可见。</p>
+<h3 id="Mapping-and-Setting-the-Uniform-Buffer-Memory"><a href="#Mapping-and-Setting-the-Uniform-Buffer-Memory" class="headerlink" title="Mapping and Setting the Uniform Buffer Memory"></a>Mapping and Setting the Uniform Buffer Memory</h3><p>在使用深度缓冲区内存时，我们不需要去初始化它，这是因为GPU会对它的读写进行适当的处理。但在使用Uniform Buffer时，我们必须用我们要传给着色器的数据来填充它。为了让CPU能够对Uniform Buffer的内存进行读写，我们需要进行如下映射：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">res = vkMapMemory(info.device, info.uniform_data.mem, 0, mem_reqs.size, 0,</div><div class="line">                  (void **)&amp;pData);</div></pre></td></tr></table></figure></p>
+<p>然后将数据复制到Uniform BUffer上，再解除映射：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">memcpy(pData, &amp;info.MVP, sizeof(info.MVP));</div><div class="line">vkUnmapMemory(info.device, info.uniform_data.mem);</div></pre></td></tr></table></figure></p>
+<p>由于这块缓冲区在内存上，进行内存映射会由于页表替换等导致映射无效，因此需要立即解除映射。</p>
+<p>最后，你只需要创建一个Buffer对象来关联内存：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">res = vkBindBufferMemory(info.device, info.uniform_data.buf,</div><div class="line">                         info.uniform_data.mem, 0);</div></pre></td></tr></table></figure></p>
+<p>然后，Unform Buffer就算可以使用了。</p>
 <hr>
 <p>本篇<strong>Vulkan Samples Tutorial</strong>原文是<strong>LUNAEXCHANGE</strong>中的<a href="https://vulkan.lunarg.com/doc/sdk/1.0.42.1/windows/tutorial/html/index.html" target="_blank" rel="external">Vulkan Tutorial</a>的译文。<br>并非逐字逐句翻译，如有错误之处请告知。O(∩_∩)O谢谢~~</p>
 
@@ -259,7 +255,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/25/Vulkan Samples Tutorial 5/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/11/Vulkan Samples Tutorial 3/">展开全文 >></a>
         </p>
       
 
@@ -291,7 +287,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
     </nav>
   
 

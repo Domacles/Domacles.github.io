@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="null" class="profilepic">
-			<img src="/image/avatar.png" class="js-avatar">
+			<img src="/images/avatar.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="null">Domacles</a></h1>
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/image/avatar.png" class="js-avatar">
+				<img src="/images/avatar.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Domacles</h1>
@@ -155,104 +155,39 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Vulkan Samples Tutorial 2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Processing Programs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/07/Vulkan Samples Tutorial 2/">Vulkan Samples Tutorial 2</a>
+      <a class="article-title" href="/2017/03/13/Processing Programs/">Processing Program</a>
     </h1>
   
 
         
-        <a href="/2017/04/07/Vulkan Samples Tutorial 2/" class="archive-article-date">
-  	<time datetime="2017-04-07T02:18:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-07</time>
+        <a href="/2017/03/13/Processing Programs/" class="archive-article-date">
+  	<time datetime="2017-03-13T14:29:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
-<ul>
-<li><a href="#swapchain">Swapchain</a><ul>
-<li><a href="#vulkan-and-the-windowing-system">Vulkan and the Windowing System</a></li>
-<li><a href="#revisiting-instance-and-device-extensions">Revisiting Instance and Device Extensions</a></li>
-<li><a href="#queue-family-and-present">Queue Family and Present</a></li>
-<li><a href="#swapchain-create-info">Swapchain Create Info</a></li>
-<li><a href="#different-queue-families-for-graphics-and-present">Different Queue Families for Graphics and Present</a></li>
-<li><a href="#create-swapchain">Create Swapchain</a></li>
-<li><a href="#create-image-views">Create Image Views</a></li>
+        <h2 id="Processing-简介"><a href="#Processing-简介" class="headerlink" title="Processing 简介"></a>Processing 简介</h2><p><strong>Processing</strong>是一种具有革命前瞻性的新兴计算机语言，它的概念是在电子艺术的环境下介绍程序语言，并将电子艺术的概念介绍给程序设计师。它是 <strong>Java</strong> 语言的延伸，并支持许多现有的 Java 语言架构，不过在语法 (<code>syntax</code>) 上简易许多，并具有许多贴心及人性化的设计。<strong>Processing</strong> 可以在 <em>Windows、MAC OS X、MAC OS 9 、Linux</em> 等操作系统上使用。目前最新版本为<strong>Processing 3.3</strong>。以 <strong>Processing</strong> 完成的作品可在个人本机端作用，或以<strong>Java Applets</strong> 的模式外输至网络上发布。</p>
+<p>虽然图形用户界面(<code>GUI</code>)早在二十年前成为主流，但是基础编程语言的教学到今天仍是以命令行接口为主，学习编程语言为什么要那么枯燥呢？人脑天生擅长空间辨识，图形用户界面利用的正是这种优势，加上它能提供各种实时且鲜明的图像式反馈 (<strong>feedback</strong>)，可以大幅缩短学习曲线，并帮助理解抽象逻辑法则。举例来说，计算机屏幕上的一个像素(<strong>pixel</strong>) 就是一个变量值(<strong>the value of a variable</strong>) 的可视化表现。<strong>Processing</strong>将Java的语法简化并将其运算结果“感官化”，让使用者能很快享有声光兼备的交互式多媒体作品。</p>
+<p><strong>Processing</strong>的源代码是开放的，和近来广受欢迎的 Linux 操作系统、Mozilla浏览器、或Perl语言等一样，用户可依照自己的需要自由裁剪出最合适的使用模式。<strong>Processing</strong>的应用非常丰富，而且它们全部遵守开放源代码的规定，这样的设计大幅增加了整个社群的互动性与学习效率。</p>
+<h2 id="无意中找到了这个……"><a href="#无意中找到了这个……" class="headerlink" title="无意中找到了这个……"></a>无意中找到了这个……</h2><p>话说，我在公司里负责三维模型的处理，而我司的<strong>垃圾代码</strong>不仅经常出Bug，还要什么没什么，基本上只有一个简单的<strong>Mesh</strong>数据结构(OpenMesh)，矩阵计算也只支持 4 <em> 4 规模的。而我处理三维模型的点线面需要用到多维矩阵。不仅如此，接口调用复杂，一个想法难以用这套软件快速实现……最主要是没有API文档，没有注释，也不给看函数的实现，给的全是<em>*lib</em></em>文件！！！</p>
+<p>我想写一下<strong>Delaunay三角化算法</strong>的实现也得先从<strong>参数化</strong>开始一步一步实现……</p>
+<p><strong>Processing</strong> 真是及时雨啊。</p>
+<h2 id="这里有一个3D-Delauny-Triangulation算法"><a href="#这里有一个3D-Delauny-Triangulation算法" class="headerlink" title="这里有一个3D Delauny Triangulation算法"></a>这里有一个3D Delauny Triangulation算法</h2><p>来自：<a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">www.openprocessing.org - By Tercel</a>，是一个日本人写的代码，我跑了一下效果如下：</p>
+<p><img src="/2017/03/13/Processing Programs/3d_Delaunay.gif" alt="3d_Delaunay"></p>
+<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
+<li><a href="https://www.openprocessing.org" target="_blank" rel="external">openprocessing</a> 软件的支持</li>
+<li><a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">Tercel</a> 的实现</li>
+<li><a href="https://www.openprocessing.org/sketch/180760" target="_blank" rel="external">jakkubu</a> 的另外一种实现</li>
 </ul>
-</li>
-</ul>
-<!-- /TOC -->
-<h2 id="Swapchain"><a href="#Swapchain" class="headerlink" title="Swapchain"></a>Swapchain</h2><p>本章节的代码在文件 <code>05-init_swapchain.cpp</code> 中。</p>
-<p><strong>Swapchain</strong> 即帧缓存机制，它是使用了一系列的帧缓存区用来保证帧刷新率稳定的技术。帧缓存区通常放在显卡内存中，但也可以放在内存中。Swapchain 需要通过图形API开启并使用，未使用 Swapchain 会导致刷新不一致等问题。每个 swap chain 至少有两个缓冲区，一个作为屏幕显示缓冲区，另外一个作为后台缓冲区。两个缓冲区一般被称为 <strong>presentation</strong> 和 <strong>swapping</strong> 。</p>
-<p>本小节讲述了如何创建<strong>swapchain</strong>。首先需要做的就是创建用来渲染的图形缓冲区(image buffers)。<br><img src="/2017/04/07/Vulkan Samples Tutorial 2/Swapchain.png" alt="Swapchain"></p>
-<blockquote>
-<p>上图展示了Swapchain与其他各部分之间的联系，图中的其他部分与下面所讲的内容关系也十分密切，需要注意。</p>
-</blockquote>
-<h3 id="Vulkan-and-the-Windowing-System"><a href="#Vulkan-and-the-Windowing-System" class="headerlink" title="Vulkan and the Windowing System"></a>Vulkan and the Windowing System</h3><p>与其他的图形API相似的是，Vulkan将有关于窗口系统的API与图形核心API分离开了。在Vulkan中，窗口系统的细节是通过 <strong>WSI</strong> 扩展(Window System Integration extensions)呈献给开发者的。我们可以从Vulkan的设计规范中找到与WSI相关的扩展的文档。在<a href="https://vulkan.lunarg.com/" target="_blank" rel="external">LunarG LunarXchange website</a>和<a href="https://www.khronos.org/registry/vulkan/" target="_blank" rel="external">Khronos Vulkan Registry</a>这两个地方可以找到Vulkan API规范和发布的扩展的使用规范。</p>
-<p>WSI扩展包含了对多种平台的支持。使用WSI扩展是通过定义下面几个宏定义来实现的：</p>
-<ul>
-<li>VK_USE_PLATFORM_ANDROID_KHR - Android</li>
-<li>VK_USE_PLATFORM_MIR_KHR - Mir</li>
-<li>VK_USE_PLATFORM_WAYLAND_KHR - Wayland</li>
-<li>VK_USE_PLATFORM_WIN32_KHR - Microsoft Windows</li>
-<li>VK_USE_PLATFORM_XCB_KHR - X Window System, using the XCB library (Apples)</li>
-<li>VK_USE_PLATFORM_XLIB_KHR - X Window System, using the Xlib library (Apples)<br><strong>KHR</strong> 命名后缀表示扩展是按照 <strong>Khronos</strong> 组织的规范实现的。</li>
-</ul>
-<p>Surface Abstraction</p>
-<p>Vulkan 使用 <code>VkSurfaceKHR</code> 对象来作为本地平台显示层或者窗口的抽象化对象。该对象是在<strong>VK_KHR_surface</strong>扩展中定义的。WSI扩展的作用是创建，操纵或者销毁显示层对象(surface objects)。</p>
-<h3 id="Revisiting-Instance-and-Device-Extensions"><a href="#Revisiting-Instance-and-Device-Extensions" class="headerlink" title="Revisiting Instance and Device Extensions"></a>Revisiting Instance and Device Extensions</h3><p>在前面的几个章节中，我们推迟了扩展的设置，现在需要我们回顾之前 Instance 和 Device 的扩展设置，从而能够让我们学会如何启动WSI扩展。</p>
-<p>Instance Extensions</p>
-<p>使用WSI扩展的首要步骤是，启动表示层扩展(surface extension)。查看本章样例中使用的<code>init_instance_extension_names()</code>函数的实现代码，我们发现样例是将<code>VK_KHR_SURFACE_EXTENSION_NAME</code>添加到Instance扩展列表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">void init_instance_extension_names(struct sample_info &amp;info) &#123;</div><div class="line">    info.instance_extension_names.push_back(VK_KHR_SURFACE_EXTENSION_NAME);</div><div class="line">#ifdef __ANDROID__</div><div class="line">    info.instance_extension_names.push_back(VK_KHR_ANDROID_SURFACE_EXTENSION_NAME);</div><div class="line">#elif defined(_WIN32)</div><div class="line">    info.instance_extension_names.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);</div><div class="line">#else</div><div class="line">    info.instance_extension_names.push_back(VK_KHR_XCB_SURFACE_EXTENSION_NAME);</div><div class="line">#endif</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>该函数不仅添加了通用Surface扩展，还针对其他平台添加对应的扩展。比如，针对Win32平台会将<code>VK_KHR_WIN32_SURFACE_EXTENSION_NAME</code>添加到Instance扩展列表中。</p>
-<p>这些扩展将会在Instance创建时加载，加载的实现代码可以在<code>init_instance()</code>中进行查看。</p>
-<blockquote>
-<p>注意：在<code>init_instance()</code>中我们看到<code>instance_extension_names</code>列表是通过传指针数组将内容的地址设置到<code>ppEnabledExtensionNames</code>上的。</p>
-</blockquote>
-<p>Device Extensions</p>
-<p>Swapchain 是一个图像缓存的列表，GPU向其中输入图像，该列表的图像会被呈现到显示输出设备。每当GPU向其中写入图像数据，device-level 扩展就会开始处理 Swapchain。所以，在进行 device 初始化之前需要指定device扩展，在<code>init_device_extension_names()</code>函数中，我们看到使用的device扩展是<code>VK_KHR_SWAPCHAIN_EXTENSION_NAME</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">void init_device_extension_names(struct sample_info &amp;info) &#123;</div><div class="line">    info.device_extension_names.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这些扩展将在创建Device时进行加载，加载的实现代码可以在<code>init_device()</code>中进行查看，与<code>init_instance()</code>类似。</p>
-<p>Instance &amp; Device Extensions recap：</p>
-<ul>
-<li>本节样例使用 <code>init_instance_extension_names()</code> 函数来加载常用的surface扩展，并将平台相关的对应扩展也加到了instance扩展列表中了。</li>
-<li>本节样例使用 <code>init_device_extension_names()</code> 函数来加载一个Swapchain设备扩展。</li>
-</ul>
-<h3 id="Queue-Family-and-Present"><a href="#Queue-Family-and-Present" class="headerlink" title="Queue Family and Present"></a>Queue Family and Present</h3><p><strong>Present</strong> 操作，就是使一个Swapchain图像缓冲放到物理显示设备上的操作。当我们的应用程序需要显示图像，那就需要向某一个GPU设备队列发送一个<strong>呈现</strong>(Present)请求（具体方法是调用<code>vkQueuePresentKHR()</code>实现的）但接受请求的GPU队列需要能够支持present请求，或者支持graphics和present请求。下面的代码就展示了如何找到一个支持graphics和present操作的GPU队列：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">// Iterate over each queue to learn whether it supports presenting:</div><div class="line">VkBool32 *pSupportsPresent =</div><div class="line">    (VkBool32 *)malloc(info.queue_family_count * sizeof(VkBool32));</div><div class="line">for (uint32_t i = 0; i &lt; info.queue_family_count; i++) &#123;</div><div class="line">    vkGetPhysicalDeviceSurfaceSupportKHR(info.gpus[0], i, info.surface,</div><div class="line">                                         &amp;pSupportsPresent[i]);</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Search for a graphics and a present queue in the array of queue</div><div class="line">// families, try to find one that supports both</div><div class="line">info.graphics_queue_family_index = UINT32_MAX;</div><div class="line">info.present_queue_family_index = UINT32_MAX;</div><div class="line">for (uint32_t i = 0; i &lt; info.queue_family_count; ++i) &#123;</div><div class="line">    if ((info.queue_props[i].queueFlags &amp; VK_QUEUE_GRAPHICS_BIT) != 0) &#123;</div><div class="line">        if (info.graphics_queue_family_index == UINT32_MAX)</div><div class="line">            info.graphics_queue_family_index = i;</div><div class="line"></div><div class="line">        if (pSupportsPresent[i] == VK_TRUE) &#123;</div><div class="line">            info.graphics_queue_family_index = i;</div><div class="line">            info.present_queue_family_index = i;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">if (info.present_queue_family_index == UINT32_MAX) &#123;</div><div class="line">    // If didn&apos;t find a queue that supports both graphics and present, then</div><div class="line">    // find a separate present queue.</div><div class="line">    for (size_t i = 0; i &lt; info.queue_family_count; ++i)</div><div class="line">        if (pSupportsPresent[i] == VK_TRUE) &#123;</div><div class="line">            info.present_queue_family_index = i;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">&#125;</div><div class="line">free(pSupportsPresent);</div><div class="line"></div><div class="line">// Generate error if could not find queues that support graphics</div><div class="line">    // and present</div><div class="line">    if (info.graphics_queue_family_index == UINT32_MAX ||</div><div class="line">        info.present_queue_family_index == UINT32_MAX) &#123;</div><div class="line">        std::cout &lt;&lt; &quot;Could not find a queues for graphics and &quot;</div><div class="line">                     &quot;present\n&quot;;</div><div class="line">        exit(-1);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>上面这份代码，再次使用在这之前便已获取的变量<code>info.queue_family_count</code>，通过调用<code>vkGetPhysicalDeviceSurfaceSupportKHR()</code>函数来获取每一个queue family的是否支持surface的标志。然后遍历所有的queue family，来寻找同时支持present和graphics的GPU队列族。最后，如果发现没有找到同时支持present和graphics的GPU队列族，则去寻找一个支持present的GPU队列族，将present和graphics功能分到两个GPU queue family上。接下来的代码，会从<code>graphics_queue_family_index</code>获取执行图形命令的队列编号，从<code>present_queue_family_index</code>获取执行呈现操作的队列编号。</p>
-<p><code>free()</code>上面的if语句实际上有些多余，但这里如此写是为了针对没有都支持graphics和present的GPU队列的情况做说明的。</p>
-<p>最后，如果发现graphics或者present功能找不齐，该代码会结束运行。</p>
-<h3 id="Swapchain-Create-Info"><a href="#Swapchain-Create-Info" class="headerlink" title="Swapchain Create Info"></a>Swapchain Create Info</h3><p>接下来更多的内容是设置Swapchain的Create Info结构体：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">typedef struct VkSwapchainCreateInfoKHR &#123;</div><div class="line">    VkStructureType                  sType;</div><div class="line">    const void*                      pNext;</div><div class="line">    VkSwapchainCreateFlagsKHR        flags;</div><div class="line">    VkSurfaceKHR                     surface;</div><div class="line">    uint32_t                         minImageCount;</div><div class="line">    VkFormat                         imageFormat;</div><div class="line">    VkColorSpaceKHR                  imageColorSpace;</div><div class="line">    VkExtent2D                       imageExtent;</div><div class="line">    uint32_t                         imageArrayLayers;</div><div class="line">    VkImageUsageFlags                imageUsage;</div><div class="line">    VkSharingMode                    imageSharingMode;</div><div class="line">    uint32_t                         queueFamilyIndexCount;</div><div class="line">    const uint32_t*                  pQueueFamilyIndices;</div><div class="line">    VkSurfaceTransformFlagBitsKHR    preTransform;</div><div class="line">    VkCompositeAlphaFlagBitsKHR      compositeAlpha;</div><div class="line">    VkPresentModeKHR                 presentMode;</div><div class="line">    VkBool32                         clipped;</div><div class="line">    VkSwapchainKHR                   oldSwapchain;</div><div class="line">&#125; VkSwapchainCreateInfoKHR;</div></pre></td></tr></table></figure></p>
-<p>下面的几段文章，讲述了创建设置Swapchain前后的全部过程。</p>
-<p>Creating a Surface</p>
-<p>要在instance和device中使用WSI扩展，首先需要创建一个<code>VkSurface</code>对象，然后才能用它来进行Swapchain的创建。在<code>05-init_swapchain.cpp</code>文件的<code>main</code>函数开始的地方，我们可以看到针对本地平台的Surface的创建过程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#ifdef _WIN32</div><div class="line">    VkWin32SurfaceCreateInfoKHR createInfo = &#123;&#125;;</div><div class="line">    createInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;</div><div class="line">    createInfo.pNext = NULL;</div><div class="line">    createInfo.hinstance = info.connection;</div><div class="line">    createInfo.hwnd = info.window;</div><div class="line">    res = vkCreateWin32SurfaceKHR(info.inst, &amp;createInfo, NULL, &amp;info.surface);</div><div class="line">#endif</div></pre></td></tr></table></figure></p>
-<p>本段代码中的<code>info.connection</code>和<code>info.window</code>分别在<code>init_connection()</code>和<code>init_window()</code>函数中针对本地平台进行了创建和初始化。在Vulkan中，通过<code>vkCreateWin32SurfaceKHR()</code>函数创建的VkSurfaceKHR Surface对象表示一个用于处理平台窗口的对象。</p>
-<blockquote>
-<p>注意：<code>init_connection()</code>和<code>init_window()</code>是平台相关的，这两个函数为我们连接显示设备创建窗口程序屏蔽了很多细节。</p>
-</blockquote>
-<p>接下来我们需要将创建的<code>info.surface</code>对象设置到Swapchain Create Info结构体中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">VkSwapchainCreateInfoKHR swapchain_ci = &#123;&#125;;</div><div class="line">swapchain_ci.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;</div><div class="line">swapchain_ci.pNext = NULL;</div><div class="line">swapchain_ci.surface = info.surface;</div></pre></td></tr></table></figure></p>
-<p>Device Surface Formats</p>
-<p>当你创建Swapchain时，你需要指定surface的格式(Formats)。<strong>Format</strong> 在这里表示<code>VkFormat</code>枚举器中描述的像素格式，比如：<code>VK_FORMAT_B8G8R8A8_UNORM</code>格式就是一种Device SUrface Format。</p>
-<p>本章节接下来的一段代码就是获取一个<code>VkSurfaceFormatKHR</code>结构体列表，该列表保存着显示设备支持的<code>VkFormat</code>格式以及其他信息。本样例代码不关心用什么格式，于是便采用了第一个可用格式作为将要使用的格式。</p>
-<p>然后，我们在本章节代码的后面部分可以看到<code>VkFormat</code>被设置到Swapchain create info结构体中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">swapchain_ci.imageFormat = info.format;</div></pre></td></tr></table></figure></p>
-<p>Surface Capabilities</p>
-<p>获取到Formats之后，我们需要获取到Surface Capabilities和Present Modes来填充Swapchain的create info结构体，在本章节代码中，我们看到调用了<code>vkGetPhysicalDeviceSurfaceCapabilitiesKHR()</code>和 <code>vkGetPhysicalDeviceSurfacePresentModesKHR()</code>两个函数分别获取Surface Capabilities和Present Modes，之后的部分我们可以看到这两个对象中的信息被设置到了Swapchain create info结构体中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">uint32_t desiredNumberOfSwapChainImages = surfCapabilities.minImageCount;</div><div class="line"></div><div class="line">swapchain_ci.minImageCount = desiredNumberOfSwapChainImages;</div><div class="line">swapchain_ci.imageExtent.width = swapChainExtent.width;</div><div class="line">swapchain_ci.imageExtent.height = swapChainExtent.height;</div><div class="line">swapchain_ci.preTransform = preTransform;</div><div class="line">swapchain_ci.presentMode = swapchainPresentMode;</div></pre></td></tr></table></figure></p>
-<p><code>minImageCount</code>属性，用于设置缓冲区使用策略：双缓冲区、三缓冲区等。本章节代码中是从使用<code>vkGetPhysicalDeviceSurfaceCapabilitiesKHR()</code>函数获取到到的<code>surfCapabilities</code>对象中查到Device支持的图像缓冲区的最小个数。</p>
-<h3 id="Different-Queue-Families-for-Graphics-and-Present"><a href="#Different-Queue-Families-for-Graphics-and-Present" class="headerlink" title="Different Queue Families for Graphics and Present"></a>Different Queue Families for Graphics and Present</h3><p>在本章之前的代码中，我们找到了有graphics和present功能的GPU队列，如果他们并不是同一个队列，我们需要做一些其他设置，让它们能够共享图像缓冲：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">swapchain_ci.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;</div><div class="line">swapchain_ci.queueFamilyIndexCount = 0;</div><div class="line">swapchain_ci.pQueueFamilyIndices = NULL;</div><div class="line">uint32_t queueFamilyIndices[2] = &#123;</div><div class="line">    (uint32_t)info.graphics_queue_family_index,</div><div class="line">    (uint32_t)info.present_queue_family_index&#125;;</div><div class="line">if (info.graphics_queue_family_index != info.present_queue_family_index) &#123;</div><div class="line">    // If the graphics and present queues are from different queue families,</div><div class="line">    // we either have to explicitly transfer ownership of images between the</div><div class="line">    // queues, or we have to create the swapchain with imageSharingMode</div><div class="line">    // as VK_SHARING_MODE_CONCURRENT</div><div class="line">    swapchain_ci.imageSharingMode = VK_SHARING_MODE_CONCURRENT;</div><div class="line">    swapchain_ci.queueFamilyIndexCount = 2;</div><div class="line">    swapchain_ci.pQueueFamilyIndices = queueFamilyIndices;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>上面的代码是创建Swapchain常用的做法。本章节其余代码是设置Swapchain Create Info结构体的其他属性，可以参考用于将来自己的程序实现。</p>
-<h3 id="Create-Swapchain"><a href="#Create-Swapchain" class="headerlink" title="Create Swapchain"></a>Create Swapchain</h3><p>在Swapchain Create Info结构体设置完成后，我们使用下面这一句代码创建Swapchain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">res = vkCreateSwapchainKHR(info.device, &amp;swapchain_ci, NULL, &amp;info.swap_chain);</div></pre></td></tr></table></figure></p>
-<p><code>vkCreateSwapchainKHR()</code>函数创建了许多图像缓冲区用于建立Swapchain。</p>
-<p>在程序进行时，我们可能需要获取每个Swapchain上的图像缓冲区，我们应该用下面这段符合之前获取格式的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">res = vkGetSwapchainImagesKHR(info.device, info.swap_chain,</div><div class="line">                                  &amp;info.swapchainImageCount, NULL);</div><div class="line">    assert(res == VK_SUCCESS);</div><div class="line"></div><div class="line">    VkImage *swapchainImages =</div><div class="line">        (VkImage *)malloc(info.swapchainImageCount * sizeof(VkImage));</div><div class="line">    assert(swapchainImages);</div><div class="line">    res = vkGetSwapchainImagesKHR(info.device, info.swap_chain,</div><div class="line">                                  &amp;info.swapchainImageCount, swapchainImages);</div><div class="line">    assert(res == VK_SUCCESS);</div></pre></td></tr></table></figure></p>
-<p>来获取Swapchain Images的列表，然后向其中输入数据，在之后通知GPU渲染他们。</p>
-<h3 id="Create-Image-Views"><a href="#Create-Image-Views" class="headerlink" title="Create Image Views"></a>Create Image Views</h3><p><code>VkImageView</code>中存储着图像数据的信息，如：图像内存的排列格式，用于1D，2D还是3D，也用于记录图像的格式，颜色组成的顺序以及插件的信息。在本章节代码中，我们可以看到最后的<code>for</code>循环中使用<code>vkCreateImageView</code>创建了针对于每个Swapchain的image缓冲区的view缓冲区，存于info中。</p>
-<p>在创建完image view之后，算是完成了创建Swapchain的过程，在后面的章节中我们将使用info中的iamge view。</p>
-<hr>
-<p>本篇<strong>Vulkan Samples Tutorial</strong>原文是<strong>LUNAEXCHANGE</strong>中的<a href="https://vulkan.lunarg.com/doc/sdk/1.0.42.1/windows/tutorial/html/index.html" target="_blank" rel="external">Vulkan Tutorial</a>的译文。<br>并非逐字逐句翻译，如有错误之处请告知。O(∩_∩)O谢谢~~</p>
 
       
 
@@ -266,7 +201,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vulkan</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CG</a>
         		</li>
       		
 		</ul>
@@ -276,7 +211,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/07/Vulkan Samples Tutorial 2/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/13/Processing Programs/">展开全文 >></a>
         </p>
       
 
@@ -308,7 +243,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
     </nav>
   
 

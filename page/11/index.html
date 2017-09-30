@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="null" class="profilepic">
-			<img src="/image/avatar.png" class="js-avatar">
+			<img src="/images/avatar.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="null">Domacles</a></h1>
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/image/avatar.png" class="js-avatar">
+				<img src="/images/avatar.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Domacles</h1>
@@ -155,38 +155,99 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Processing Programs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-C++ 11 模版使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/13/Processing Programs/">Processing Program</a>
+      <a class="article-title" href="/2017/03/05/C++ 11 模版使用/">C++ 11 模版的使用</a>
     </h1>
   
 
         
-        <a href="/2017/03/13/Processing Programs/" class="archive-article-date">
-  	<time datetime="2017-03-13T14:29:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-13</time>
+        <a href="/2017/03/05/C++ 11 模版使用/" class="archive-article-date">
+  	<time datetime="2017-03-05T02:37:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Processing-简介"><a href="#Processing-简介" class="headerlink" title="Processing 简介"></a>Processing 简介</h2><p><strong>Processing</strong>是一种具有革命前瞻性的新兴计算机语言，它的概念是在电子艺术的环境下介绍程序语言，并将电子艺术的概念介绍给程序设计师。它是 <strong>Java</strong> 语言的延伸，并支持许多现有的 Java 语言架构，不过在语法 (<code>syntax</code>) 上简易许多，并具有许多贴心及人性化的设计。<strong>Processing</strong> 可以在 <em>Windows、MAC OS X、MAC OS 9 、Linux</em> 等操作系统上使用。目前最新版本为<strong>Processing 3.3</strong>。以 <strong>Processing</strong> 完成的作品可在个人本机端作用，或以<strong>Java Applets</strong> 的模式外输至网络上发布。</p>
-<p>虽然图形用户界面(<code>GUI</code>)早在二十年前成为主流，但是基础编程语言的教学到今天仍是以命令行接口为主，学习编程语言为什么要那么枯燥呢？人脑天生擅长空间辨识，图形用户界面利用的正是这种优势，加上它能提供各种实时且鲜明的图像式反馈 (<strong>feedback</strong>)，可以大幅缩短学习曲线，并帮助理解抽象逻辑法则。举例来说，计算机屏幕上的一个像素(<strong>pixel</strong>) 就是一个变量值(<strong>the value of a variable</strong>) 的可视化表现。<strong>Processing</strong>将Java的语法简化并将其运算结果“感官化”，让使用者能很快享有声光兼备的交互式多媒体作品。</p>
-<p><strong>Processing</strong>的源代码是开放的，和近来广受欢迎的 Linux 操作系统、Mozilla浏览器、或Perl语言等一样，用户可依照自己的需要自由裁剪出最合适的使用模式。<strong>Processing</strong>的应用非常丰富，而且它们全部遵守开放源代码的规定，这样的设计大幅增加了整个社群的互动性与学习效率。</p>
-<h2 id="无意中找到了这个……"><a href="#无意中找到了这个……" class="headerlink" title="无意中找到了这个……"></a>无意中找到了这个……</h2><p>话说，我在公司里负责三维模型的处理，而我司的<strong>垃圾代码</strong>不仅经常出Bug，还要什么没什么，基本上只有一个简单的<strong>Mesh</strong>数据结构(OpenMesh)，矩阵计算也只支持 4 <em> 4 规模的。而我处理三维模型的点线面需要用到多维矩阵。不仅如此，接口调用复杂，一个想法难以用这套软件快速实现……最主要是没有API文档，没有注释，也不给看函数的实现，给的全是<em>*lib</em></em>文件！！！</p>
-<p>我想写一下<strong>Delaunay三角化算法</strong>的实现也得先从<strong>参数化</strong>开始一步一步实现……</p>
-<p><strong>Processing</strong> 真是及时雨啊。</p>
-<h2 id="这里有一个3D-Delauny-Triangulation算法"><a href="#这里有一个3D-Delauny-Triangulation算法" class="headerlink" title="这里有一个3D Delauny Triangulation算法"></a>这里有一个3D Delauny Triangulation算法</h2><p>来自：<a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">www.openprocessing.org - By Tercel</a>，是一个日本人写的代码，我跑了一下效果如下：</p>
-<p><img src="/2017/03/13/Processing Programs/3d_Delaunay.gif" alt="3d_Delaunay"></p>
+        <!-- TOC -->
+<ul>
+<li><a href="#为什么要使用模版">为什么要使用模版</a></li>
+<li><a href="#关键字-typename">关键字 typename</a></li>
+<li><a href="#c-11新的模版特性---变参模板">C++ 11新的模版特性 - 变参模板</a></li>
+<li><a href="#c-11新的模板特性---外部模板">C++ 11新的模板特性 - 外部模板</a></li>
+<li><a href="#c-11新的模版特性---模版别名">C++ 11新的模版特性 - 模版别名</a></li>
+<li><a href="#c-11新的模板特性---默认模板实参">C++ 11新的模板特性 - 默认模板实参</a></li>
+<li><a href="#c-11新的模板特性---回返类型后置的函数声明">C++ 11新的模板特性 - 回返类型后置的函数声明</a></li>
+<li><a href="#c-11新的模板特性---用于元编程的类别属性">C++ 11新的模板特性 - 用于元编程的类别属性</a></li>
+<li><a href="#感谢">感谢</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="为什么要使用模版"><a href="#为什么要使用模版" class="headerlink" title="为什么要使用模版"></a>为什么要使用模版</h2><p>在声明变量、函数和大多数其他类型的实体的时候，C++要求我们使用特定的类型。然而许多代码除了类型不同不同之外，其余代码都看起来是相同的。<br>比如<code>sort()</code>函数，每当你实现了一个顺序容器，就需要重新写一个<code>sort()</code>函数……</p>
+<p>如果程序设计语言并不支持这个语言特性，为了实现相同的功能，你只能使用下面这些糟糕的替代方法：</p>
+<ol>
+<li>针对每个所需相同行为的不同类型，你可以一次又一次地实现它。</li>
+<li>你可以把通用代码放在一个注入Object或者void*的公共基础类里面。</li>
+<li>你可以使用特殊的预处理程序，如#define。</li>
+</ol>
+<p>而在Java和C等类似的语言中，上面的方法都有自身的缺点：</p>
+<ol>
+<li>做了许多重复工作，会趋向舍弃复杂但更好用的算法来保证尽可能不出错，复杂算法通常都趋向于引入更多的错误。</li>
+<li>采用公共基类编写代码，会失去类型检查这个优点。另外，对于以后实现的许多类都必须继承自某个特定的基类，这会令代码的维护更加困难。</li>
+<li>如如果使用了预处理程序，你会使代码变得格式混乱难以阅读，使用“文本替换机制”并不会考虑作用域和类型。</li>
+</ol>
+<p>在现今的程序中，模版的应用非常广泛。C++的标准库中，几乎所有代码都是模版代码。</p>
+<h2 id="关键字-typename"><a href="#关键字-typename" class="headerlink" title="关键字 typename"></a>关键字 typename</h2><p>关键字<code>typename</code>用来指明紧跟其后的名称是个类型的名称。最常用在<code>template</code>之后，比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">template &lt;typename T&gt;</div><div class="line">class MyClass&#123;</div><div class="line">private:</div><div class="line">    T val;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>我们应该尽可能使用<code>typename</code><strong>取代</strong><code>class</code>在<code>template</code>后面的尖括号中的应用。<br>当然，关键字<code>typename</code>不仅仅只有这一个用法，还可以像下面的方式进行使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">class MyClass&#123;</div><div class="line">    typename T::SubType *ptr;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在这里<code>typename</code>用来阐明“<code>SubType</code>是个类型，定义于<code>class T</code>内”。因此，<code>ptr</code>是个指针，指向类型为<code>T::SubType</code>。</p>
+<blockquote>
+<p>如果没有<code>typename</code>，则<code>SubType</code>会被视为一个<code>static</code>成员，于是<code>T::SubType *ptr</code>被视为“类型<code>T</code>的数值<code>SubType</code>”乘以<code>ptr</code>。<br>“基于<code>SubType</code>必须是个类型”这样的限定，任何被用来替换<code>T</code>的类型，都必须提供一个内层类型<code>SubType</code>。比如下面的<code>Test</code>类:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">class Test &#123;</div><div class="line">public:</div><div class="line">	void print() &#123;&#125;</div><div class="line">	using SubType = int;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在这里，<code>using SubType = int;</code>等价于<code>typedef int SubType;</code>。C++ 11的关键字using的新的用法比原来的<code>typedef</code>更加强大，建议使用。</p>
+</blockquote>
+<h2 id="C-11新的模版特性-变参模板"><a href="#C-11新的模版特性-变参模板" class="headerlink" title="C++ 11新的模版特性 - 变参模板"></a>C++ 11新的模版特性 - 变参模板</h2><p>自C++11起，<code>template</code>可拥有那种“得以接受不确定个数的<code>template</code>实参”的个数。此能力被称为 <strong>variadic template</strong>。下面代码是<code>print()</code>使用变参模版的实现方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">void print() &#123;&#125;</div><div class="line">template &lt;typename T, typename... Types&gt;</div><div class="line">void print(const T&amp; firstArg, const Type&amp;... args)</div><div class="line">&#123;</div><div class="line">    std::cout &lt;&lt; firstArg &lt;&lt; std::endl; // 输出第一个参数</div><div class="line">    print(args...);                     // 输出剩余的参数，如果没有剩余，则调用print()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这是一种<strong>递归</strong>写法，必须提供一个不用<code>template</code>的重载函数<code>print()</code>，才能结束整个递归过程。如同下面的使用一个用了<code>template</code>的<code>print()</code>的方法虽然可能通过编译，但不推荐：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">template &lt;typename T&gt;</div><div class="line">void print(const T&amp; arg) </div><div class="line">&#123;</div><div class="line">    std::cout &lt;&lt; arg &lt;&lt; std::endl;</div><div class="line">&#125;</div><div class="line">template &lt;typename T, typename... Types&gt;</div><div class="line">void print(const T&amp; firstArg, const Type&amp;... args)</div><div class="line">&#123;</div><div class="line">    std::cout &lt;&lt; firstArg &lt;&lt; std::endl; // 输出第一个参数</div><div class="line">    print(args...);                     // 输出剩余的参数</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>并不确定在只有一个参数的时候，该调用哪一个<code>print()</code>。这种会形成歧义的代码应当避免。</p>
+<p>在<strong>实验楼</strong>的<a href="https://www.shiyanlou.com/courses/605/labs/2023/document" target="_blank" rel="external">《C++ 11/14 高速上手教程中-语言可用性的强化》</a>(需要账号登录)提供了一种使用<code>std::initializer_list</code>和<code>lambda</code>表达式的写法(修改版)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">template&lt;typename... Args&gt;</div><div class="line">void print(Args&amp;&amp;... args)</div><div class="line">&#123;</div><div class="line">	cout &lt;&lt; sizeof...(args) &lt;&lt; endl;</div><div class="line">	auto res = std::initializer_list&lt;int&gt;&#123;</div><div class="line">		([](const Args&amp; arg) &#123; </div><div class="line">            std::cout &lt;&lt; arg &lt;&lt; std::endl; </div><div class="line">            return 0; </div><div class="line">        &#125;)(args)...&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这个写法利用了<code>std::initializer_list</code>对<code>args</code>的展开<code>...</code>所用到的初始化列表构造函数，由于<code>std::initializer_list&lt;int&gt;</code>在这里接受的是<code>int</code>类型的初始化列表，所以匿名<code>lambda</code>表达式返回整数0用于填充<code>std::initializer_list</code>。<br>但在上面的教程说道，可以使用<code>std::bind</code>和完美转发进行<code>args</code>的<code>...</code>操作并转发。没想到该如何做。另外，该做法虽然简洁，但性能问题并不确定，如需使用请通过大规模的调用进行与<strong>递归式</strong>的测试进行比较，选用最合适的方法。</p>
+</blockquote>
+<h2 id="C-11新的模板特性-外部模板"><a href="#C-11新的模板特性-外部模板" class="headerlink" title="C++ 11新的模板特性 - 外部模板"></a>C++ 11新的模板特性 - 外部模板</h2><p>在标准C++中，只要在编译单元内遇到被完整定义的模板，编译器都必须将其<strong>实例化</strong>（instantiate）。这会大大增加编译时间，特别是模板在许多编译单元内使用相同的参数实例化。看起来没有办法告诉C++不要引发模板的实例化。<br>C++11将会引入外部模板这一概念。C++已经有了强制编译器在特定位置开始实例化的语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">template class std::vector&lt;MyClass&gt;;</div></pre></td></tr></table></figure></p>
+<p>而C++所缺乏的是阻止编译器在某个编译单元内实例化模板的能力。C++11将简单地扩充前文语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">extern template class std::vector&lt;MyClass&gt;;</div></pre></td></tr></table></figure></p>
+<p>这样就告诉编译器不要在该编译单元内将该模板实例化。使用方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//fun.h  </div><div class="line">template &lt;typename T&gt;  </div><div class="line">void fun(T t)&#123; &#125;  </div><div class="line">  </div><div class="line">//use1.cpp  </div><div class="line">void test1()</div><div class="line">&#123;  </div><div class="line">    fun&lt;int&gt;(1);  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">//use2.cpp  </div><div class="line">extern template void fun&lt;int&gt;(int);  </div><div class="line">void test2()</div><div class="line">&#123;  </div><div class="line">    fun&lt;int&gt;(1);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>extern</code>有两个作用： 第一个,当它与<code>&quot;C&quot;</code>一起连用时，如: <code>extern &quot;C&quot; void fun(int a, int b);</code>则告诉编译器在编译<code>fun</code>这个函数名时按着C的规则去翻译相应的函数名而不是C++的，C++的规则在翻译这个函数名时会把<code>fun</code>这个名字变得面目全非，可能是<code>fun@aBc_int_int#%$</code>也可能是别的，这要看编译器的”脾气”了(不同的编译器采用的方法不一样)，为什么这么做呢，因为C++支持函数的重载啊，在这里不去过多的论述这个问题，如果你有兴趣可以去网上搜索，相信你可以得到满意的解释! 第二，当<code>extern</code>不与<code>&quot;C&quot;</code>在一起修饰变量或函数时，如在头文件中: <code>extern int g_Int;</code> 它的作用就是声明函数或全局变量的作用范围的关键字，其声明的函数和变量可以在本模块活其他模块中使用，记住它是一个声明不是定义!也就是说B模块(编译单元)要是引用模块(编译单元)A中定义的全局变量或函数时，它只要包含A模块的头文件即可,在编译阶段，模块B虽然找不到该函数或变量，但它不会报错，它会在连接时从模块A生成的目标代码中找到此函数。</p>
+</blockquote>
+<h2 id="C-11新的模版特性-模版别名"><a href="#C-11新的模版特性-模版别名" class="headerlink" title="C++ 11新的模版特性 - 模版别名"></a>C++ 11新的模版特性 - 模版别名</h2><p>自C++11起，支持使用关键字<code>using</code>来命名一个模板的<code>Alias Template</code>，示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">命名方法:</div><div class="line">template&lt;typename T&gt;</div><div class="line">using Vec = std::vector&lt;T, MyAlloc&lt;T&gt;&gt;;</div><div class="line">使用方法:</div><div class="line">Vec&lt;int&gt; coll; </div><div class="line">等价于:</div><div class="line">std::vector&lt;int, MyAlloc&lt;int&gt;&gt; coll;</div></pre></td></tr></table></figure></p>
+<p>上面这样的使用方法，可以避免像STL的<code>vector</code>源码中的各种<code>#define</code>，能很大程度提高模板的可读性。</p>
+<h2 id="C-11新的模板特性-默认模板实参"><a href="#C-11新的模板特性-默认模板实参" class="headerlink" title="C++ 11新的模板特性 - 默认模板实参"></a>C++ 11新的模板特性 - 默认模板实参</h2><p>这里应该提一下以前的一个关于模板的特性，<strong>非类型模板参数(Nontype Tempalte Parameter)</strong>, 声明方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">template&lt; typename T, typename U, int value&gt;</div><div class="line">class SuckType &#123;</div><div class="line">public:</div><div class="line">    T a;</div><div class="line">    U b;</div><div class="line">    SuckType():a(value),b(value)&#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这样在使用<code>SuckType</code>的时候，就可以使用<code>int</code>值使用<code>SuckType</code>类模板生成一个类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SuckType&lt;int, long, 1024&gt; suckType;</div></pre></td></tr></table></figure></p>
+<p>这种用法，在线性代数库 <strong>Eigen</strong> 中的矩阵模板大规模进行使用。</p>
+<h2 id="C-11新的模板特性-回返类型后置的函数声明"><a href="#C-11新的模板特性-回返类型后置的函数声明" class="headerlink" title="C++ 11新的模板特性 - 回返类型后置的函数声明"></a>C++ 11新的模板特性 - 回返类型后置的函数声明</h2><p>C++11引进一种新的函数定义与声明的语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">template&lt; typename LHS, typename RHS&gt; </div><div class="line">auto AddingFunc(const LHS &amp;lhs, const RHS &amp;rhs) -&gt; decltype(lhs+rhs) </div><div class="line">&#123;</div><div class="line">    return lhs + rhs;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>用于解决模板类型推导的实现。这种语法也能套用到一般的函数定义与声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">struct SomeStruct</div><div class="line">&#123;</div><div class="line">  auto FuncName(int x, int y) -&gt; int;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">auto SomeStruct::FuncName(int x, int y) -&gt; int</div><div class="line">&#123;</div><div class="line">  return x + y;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="C-11新的模板特性-用于元编程的类别属性"><a href="#C-11新的模板特性-用于元编程的类别属性" class="headerlink" title="C++ 11新的模板特性 - 用于元编程的类别属性"></a>C++ 11新的模板特性 - 用于元编程的类别属性</h2><p>模版元编程（template metaprogram）是C++中最复杂也是威力最强大的编程范式，它是一种可以创建和操纵程序的程序。模版元编程完全不同于普通的运行期程序，它很独特，因为模版元程序的执行完全是在编译期，并且模版元程序操纵的数据不能是运行时变量，只能是编译期常量，不可修改，另外它用到的语法元素也是相当有限，不能使用运行期的一些语法，比如if-else，for等语句都不能用。因此，模版元编程需要很多技巧，常常需要类型重定义、枚举常量、继承、模板偏特化等方法来配合，因此编写模版元编程比较复杂也比较困难。 </p>
+<p>模版元程序由元数据和元函数组成，元数据就是元编程可以操作的数据，即C++编译器在编译期可以操作的数据。元数据不是运行期变量，只能是编译期常量，不能修改，常见的元数据有<code>enum</code>枚举常量、静态常量、基本类型和自定义类型等。</p>
+<p>　　元函数是模板元编程中用于操作处理元数据的“构件”，可以在编译期被“调用”，因为它的功能和形式和运行时的函数类似，而被称为元函数，它是元编程中最重要的构件。元函数实际上表现为C++的一个类、模板类或模板函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">template&lt;int N, int M&gt;</div><div class="line">struct meta_func</div><div class="line">&#123;</div><div class="line">    static const int value = N+M;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>调用元函数获取<code>value</code>值：<code>cout&lt;&lt;meta_func&lt;1, 2&gt;::value&lt;&lt;endl;</code><br>模板元编程产生的源程序是在编译期执行的程序，因此它首先要遵循C++和模板的语法，但是它操作的对象不是运行时普通的变量，因此不能使用运行时的C++关键字（如if、else、for），可用的语法元素相当有限，最常用的是：</p>
+<ul>
+<li><code>enum</code>、<code>static</code>、<code>const</code>，用来定义编译期的整数常量；</li>
+<li><code>typedef/using</code>，用于定义元数据；</li>
+<li><code>T</code>、<code>Args...</code>，声明元数据类型；</li>
+<li><code>template</code>，主要用于定义元函数；</li>
+<li><code>::</code>，域运算符，用于解析类型作用域获取计算结果（元数据）。</li>
+</ul>
+<blockquote>
+<p>模板元编程中的<code>if-else</code>等逻辑通过<code>type_traits</code>来实现，它不仅仅可以在编译期做判断，还可以做计算、查询、转换和选择。<code>type_traits</code>是C++11提供的模板元基础库，通过<code>type_traits</code>可以实现在编译期计算、查询、判断、转换和选择，提供了模板元编程需要的一些常用元函数。</p>
+<p>模板元中的<code>for</code>等逻辑可以通过<strong>递归</strong>、<strong>重载</strong>、和<strong>模板特化</strong>(<strong>偏特化</strong>)等方法实现。</p>
+</blockquote>
+<p><strong>这个元编程需要仔细再看看。</strong></p>
 <h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
-<li><a href="https://www.openprocessing.org" target="_blank" rel="external">openprocessing</a> 软件的支持</li>
-<li><a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">Tercel</a> 的实现</li>
-<li><a href="https://www.openprocessing.org/sketch/180760" target="_blank" rel="external">jakkubu</a> 的另外一种实现</li>
+<li><a href="https://www.shiyanlou.com/courses/605/labs/2023/document" target="_blank" rel="external">C++ 11/14 高速上手教程 - 语言可用性的强化 - 实验楼</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/C%2B%2B11#.E5.A4.96.E9.83.A8.E6.A8.A1.E6.9D.BF" target="_blank" rel="external">C++11 - 中文维基百科</a></li>
 </ul>
 
       
@@ -201,7 +262,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CG</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
         		</li>
       		
 		</ul>
@@ -211,7 +272,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/13/Processing Programs/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/05/C++ 11 模版使用/">展开全文 >></a>
         </p>
       
 
@@ -243,7 +304,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
     </nav>
   
 
