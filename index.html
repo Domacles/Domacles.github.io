@@ -151,6 +151,185 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-C++ 11 and 14 Lambda表达式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/09/C++ 11 and 14 Lambda表达式/">C++ 11 and 14 Lambda表达式</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/09/C++ 11 and 14 Lambda表达式/" class="archive-article-date">
+  	<time datetime="2017-10-09T07:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#lambda表达式基本介绍">Lambda表达式基本介绍</a></li>
+<li><a href="#lambda表达式的使用情形">Lambda表达式的使用情形</a><ul>
+<li><a href="#c标准库中使用lambda表达式">C++标准库中使用Lambda表达式</a><ul>
+<li><a href="#algorithm">algorithm</a></li>
+<li><a href="#thread">thread</a></li>
+<li><a href="#function">function</a></li>
+</ul>
+</li>
+<li><a href="#qt库信号槽中使用lambda表达式">Qt库信号槽中使用Lambda表达式</a></li>
+<li><a href="#用lambda表达式代替回调函数">用Lambda表达式代替回调函数</a></li>
+</ul>
+</li>
+<li><a href="#lambda表达式相关内容">Lambda表达式相关内容</a></li>
+<li><a href="#感谢">感谢</a></li>
+</ul>
+<!-- /TOC -->
+<p><strong>Lambda表达式</strong> 算得上是C++ 11新增特性中最激动人心的一个。这个全新的特性听起来很深奥，但却是很多其他语言早已提供（比如 C#）。简而言之，Lambda表达式就是用于创建匿名函数的。</p>
+<p>为什么说 lambda 表达式如此激动人心呢？举一个例子。标准 C++ 库中有一个常用算法的库，其中提供了很多算法函数，比如<code>sort()</code>和<code>find()</code>。这些函数通常需要提供一个<strong>谓词函数(predicate function)</strong>。所谓谓词函数，就是进行一个操作用的临时函数。比如<code>find()</code>需要一个谓词，用于查找元素满足的条件；能够满足谓词函数的元素才会被查找出来。这样的谓词函数，使用临时的匿名函数，既可以减少函数数量，又会让代码变得清晰易读。</p>
+<h2 id="Lambda表达式基本介绍"><a href="#Lambda表达式基本介绍" class="headerlink" title="Lambda表达式基本介绍"></a>Lambda表达式基本介绍</h2><p>首先，我们需要认识C++的Lambda表达式的形式：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 完整声明格式 1：</span></div><div class="line">[captures] (params) specifiers exception attr -&gt; ret &#123; <span class="selector-tag">body</span> &#125;</div><div class="line"></div><div class="line"><span class="comment">// 常用声明格式 2:</span></div><div class="line">[captures] (params) -&gt; ret &#123; <span class="selector-tag">body</span> &#125;</div><div class="line"></div><div class="line"><span class="comment">// 常用声明格式 3:</span></div><div class="line">[captures] (params) &#123; <span class="selector-tag">body</span> &#125;</div><div class="line"></div><div class="line"><span class="comment">// 常用声明格式 4:</span></div><div class="line">[captures] &#123; <span class="selector-tag">body</span> &#125;</div></pre></td></tr></table></figure></p>
+<p>对于1,2,3,4的声明格式，我们需要了解：</p>
+<ol>
+<li>完整声明。</li>
+<li><code>const lambda</code>的声明：不能修改以复制捕获的对象。</li>
+<li>省略尾随返回类型：闭包的<code>operator()</code>的返回类型根据下列规则确定：<ul>
+<li>若<code>body</code>仅由单个带表达式的<code>return</code>语句组成，则返回类型是被返回表达式的类型（在左值到右值、数组到指针或函数到指针隐式转换后）；否则，返回类型是 <code>void</code>。</li>
+<li>返回类型从<code>return</code>语句推导，如同对于返回类型声明为<code>auto</code>的函数。</li>
+</ul>
+</li>
+<li>省略参数列表：函数不接收参数，如同参数列表是<code>()</code>。仅若不使用<code>constexpr</code>、<code>mutable</code>、<code>异常规定</code>、<code>属性</code>或<code>尾随返回</code>类型之一才能使用此形式。</li>
+</ol>
+<p>对于声明格式的各个部分中，我们需要记住：</p>
+<ul>
+<li><code>captures</code> - 零或更多捕获的逗号分隔列表，捕获列表能按如下方式传递（详细描述见下方）：<ul>
+<li><code>[a,&amp;b]</code> 其中，<code>a</code>以复制捕获而<code>b</code>以引用捕获，即<code>a</code>的类型的构造函数会被调用（如果有），而<code>b</code>不会。</li>
+<li><code>[this]</code> 以引用捕获当前对象（<code>*this</code>）。</li>
+<li><code>[&amp;]</code> 以引用捕获所有被用于lambda body的非lambda体内声明的变量(使用auto&amp;进行捕获)。</li>
+<li><code>[=]</code> 以复制捕获所有被用于lambda body的非lambda体内声明的变量(使用auto进行捕获)。</li>
+<li><code>[]</code> 不捕获</li>
+<li>若变量为静态变量，或者为线程的全局变量或者没有被用于lambda body内，则不会被捕获。</li>
+</ul>
+</li>
+<li><code>params</code> - lambda的可输入的参数列表，形式如同函数的参数: <code>(T arg1, T&amp; arg2 ...)</code>，但请注意，不能使用默认参数， C++ 14中，参数类型可以使用<code>auto</code>。</li>
+<li><code>specifiers</code> - 可含有下列指定符：<ul>
+<li><code>mutable</code> ：允许<code>body</code>修改以复制捕获的参数，及调用其非 const 成员函数;</li>
+<li><code>constexpr</code> ：显式指定函数调用运算符为<code>constexpr</code>函数。此指定符不存在时，若函数调用运算符恰好满足所有<code>constexpr</code>函数要求，则它也会是<code>constexpr</code>（C++ 17）。</li>
+</ul>
+</li>
+<li><code>exception</code> - 为lambda表达式的<code>operator()</code>提供异常规定或可指定为<code>noexcept</code>。</li>
+<li><code>attr</code> - 为lambda表达式的 operator() 提供<strong>属性指定(attribute specification)</strong>。</li>
+<li><code>ret</code> - 返回类型。若存在，则由函数的<code>return</code>语句所隐含（或若函数不返回任何值则为<code>void</code>）。</li>
+<li><code>body</code> - 函数体。</li>
+</ul>
+<p>在这里给出一个使用 <strong>常用声明格式 2</strong> 的lambda表达式声明和使用的示例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; numbers = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;;</div><div class="line">    <span class="keyword">auto</span> sum_func = [&amp;sum](<span class="keyword">int</span> i) -&gt; <span class="keyword">void</span> &#123; </div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">' '</span>; </div><div class="line">        sum += i;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="built_in">std</span>::for_each(c.begin(), c.end(), sum_func);</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"sum of all : "</span> &lt;&lt; sum &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这里，我们需要注意的是，<code>sum_func</code>使用的是<code>auto</code>来自动推导类型，有时候我们或许可能写成下面的样子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::function&lt;<span class="keyword">int</span>(<span class="keyword">int</span>)&gt; sum_func = [](<span class="keyword">int</span> x)&#123; <span class="keyword">return</span> x; &#125;;</div></pre></td></tr></table></figure></p>
+<p>这种形式虽然与上面示例代码差别只有在<code>auto</code>上，但这两个<code>sum_func</code>有本质的差别：示例代码中，编译器将将<code>sum_func</code>作为函数指针来处理；上面这段代码中，<code>sum_func</code>是一个<code>function</code>模版类的对象，我们只是用赋值符号<code>=</code>调用了<code>function</code>的构造函数。</p>
+<h2 id="Lambda表达式的使用情形"><a href="#Lambda表达式的使用情形" class="headerlink" title="Lambda表达式的使用情形"></a>Lambda表达式的使用情形</h2><p>充分了解lambda表达式的特点之后，我们应当了解该在哪些地方进行使用，防止频繁声明导致的代码膨胀或者运行速度降低等问题的出现。下面三种情形中，第一种是使用标准库中对Lambda表达式的支持，从而达到简化代码，清晰逻辑的目的；第二种，是我在使用Qt开发软件时，对于lambda表达式的使用观点；第三种，则是我在前两种的基础上，总结了别人的设计方法，提出的一些建议，本人经验并不丰富，谬误之处请批评指出。</p>
+<h3 id="C-标准库中使用Lambda表达式"><a href="#C-标准库中使用Lambda表达式" class="headerlink" title="C++标准库中使用Lambda表达式"></a>C++标准库中使用Lambda表达式</h3><p>C++标准库中有 <strong>谓词(Predicate)</strong> 的概念：谓词表示一个可以接受迭代器解引用的值，并返回<code>bool</code>类型或者其他值作为反馈的回调对象。该回调对象，可以是一个函数，也可以是一个重载了<code>operator()</code>的类或者结构体。</p>
+<p>在lambda表达式出现之前，我们会使用<strong>仿函数(functor)</strong>，来作为标准库中的算法库函数的谓词。例如某个使用自定义比较方法的快速排序：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sort_func</span>&#123;</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&amp; l, <span class="keyword">const</span> pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&amp; r)</span> <span class="keyword">const</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">if</span> (l.first == r.first)</div><div class="line">            <span class="keyword">return</span> l.second &lt; r.second;</div><div class="line">        <span class="keyword">return</span> l.first &lt; r.first;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; num_pairs = &#123; </div><div class="line">        &#123;<span class="number">1</span>, <span class="number">2</span>&#125;, &#123;<span class="number">3</span>, <span class="number">1</span>&#125;, &#123;<span class="number">2</span>, <span class="number">2</span>&#125;, &#123;<span class="number">4</span>, <span class="number">3</span>&#125;</div><div class="line">    &#125;;</div><div class="line">    sort(num_pairs.begin(), num_pairs.end(), sort_func());</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>而现在C++支持了lambda表达式的使用，上面的写法可以写成下面的样子:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; num_pairs = &#123; </div><div class="line">        &#123;<span class="number">1</span>, <span class="number">2</span>&#125;, &#123;<span class="number">3</span>, <span class="number">1</span>&#125;, &#123;<span class="number">2</span>, <span class="number">2</span>&#125;, &#123;<span class="number">4</span>, <span class="number">3</span>&#125;</div><div class="line">    &#125;;</div><div class="line">    sort(num_pairs.begin(), num_pairs.end(), [](<span class="keyword">const</span> pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&amp; l, <span class="keyword">const</span> pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&amp; r) </div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (l.first == r.first)</div><div class="line">            <span class="keyword">return</span> l.second &lt; r.second;</div><div class="line">        <span class="keyword">return</span> l.first &lt; r.first;</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面两段代码需要注意：</p>
+<blockquote>
+<p>需要在支持 C++ 11 的情况下进行编译，其中用到了 <strong>列表初始化</strong> ，而该特性是 C++ 11 新增的。</p>
+</blockquote>
+<h4 id="algorithm"><a href="#algorithm" class="headerlink" title="algorithm"></a>algorithm</h4><p>在标准库<code>&lt;algorithm&gt;</code>中，实现了许多常用的算法函数，他们通常是某一个元素范围上进行操作，该范围可以使用容器迭代器给出，也可以自行重载迭代器，这里要注意的是，操作的范围定义为[first, last)前闭后开区间，last为最后元素的后一个元素。</p>
+<p>算法库中，算法函数可分为 <strong>不修改序列操作</strong> 和 <strong>修改序列操作</strong> 两大类，查找、计数、最大最小值等算法属于第一类，排序、划分、二分查找、集合交并补、堆操作等属于第二类。</p>
+<p>我们可以看一下算法库中，对所有元素进行统一操作的<code>std::transform()</code>函数的使用：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cctype&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"hello"</span>)</span></span>;</div><div class="line">    <span class="built_in">std</span>::transform(s.begin(), s.end(), s.begin(), [](<span class="keyword">char</span> c)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">char</span>&gt;(</div><div class="line">            <span class="built_in">std</span>::<span class="built_in">toupper</span>(<span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(c))</div><div class="line">        );</div><div class="line">    &#125;);</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; s;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>上面这段代码会将小写字母转换成大写。</p>
+<p>在对某些对象进行操作时，我们应当首先考虑是否能够使用算法库函数来进行操作。在这里，我们需要注意，对象可以是任何的概念，包括 <strong>内存(memory)</strong> 。我们可以看一下算法库中<code>std::uninitialized_copy</code>的实例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;tuple&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; v = &#123;<span class="string">"This"</span>, <span class="string">"is"</span>, <span class="string">"an"</span>, <span class="string">"example"</span>&#125;;</div><div class="line"> </div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span>* p;</div><div class="line">    <span class="built_in">std</span>::<span class="keyword">size_t</span> sz;</div><div class="line">    <span class="built_in">std</span>::tie(p, sz) = <span class="built_in">std</span>::get_temporary_buffer&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;(v.size());</div><div class="line">    sz = <span class="built_in">std</span>::min(sz, v.size());</div><div class="line"> </div><div class="line">    <span class="built_in">std</span>::uninitialized_copy(v.begin(), v.begin() + sz, p);</div><div class="line"> </div><div class="line">    <span class="keyword">for</span> (<span class="built_in">std</span>::<span class="built_in">string</span>* i = p; i != p + sz; ++i) &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; *i &lt;&lt; <span class="string">' '</span>;</div><div class="line">        i-&gt;~basic_string&lt;<span class="keyword">char</span>&gt;();</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">std</span>::return_temporary_buffer(p);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面这段示例代码中，我们使用了<code>std::get_temporary_buffer()</code>函数为p指针分配了4个<code>std::string</code>使用的内存空间(如果程序没有出现内存不足等异常)，然后使用了<code>std::uninitialized_copy()</code>函数将<code>v</code>中的字符串挨个复制到了<code>p</code>指针指向的数组的对应位置上，然后<code>for</code>循环输出<code>p</code>数组的字符串，并析构它们；最后释放<code>p</code>的内存。</p>
+<blockquote>
+<p>注意，<code>std::get_temporary_buffer</code> 和 <code>std::return_temporary_buffer</code> 在 C++ 17 被弃用，我认为用 <code>new</code> 和 <code>delete</code> 就足够了。 另外，<code>std::string</code> 占用的空间大小是固定的，它其中封装了一个数组指针。</p>
+</blockquote>
+<h4 id="thread"><a href="#thread" class="headerlink" title="thread"></a>thread</h4><p>线程库中可以用到lambda表达式的地方，主要在<code>std::thread</code>的构造函数上。</p>
+<p><code>std::thread</code>的变参构造函数：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">template&lt; <span class="keyword">class</span> <span class="function"><span class="keyword">Function</span></span>, <span class="keyword">class</span>... Args &gt; </div><div class="line">explicit thread( <span class="function"><span class="keyword">Function</span></span>&amp;&amp; f, Args&amp;&amp;... args );</div></pre></td></tr></table></figure></p>
+<p>其中<code>f</code>必须是一个 <code>可调用对象(Callable)</code>，这也是C++的一个概念，该类型是可应用 <code>INVOKE操作</code>，例如：函数对象(FunctionObject), <code>std::function</code>, <code>std::bind</code>等。</p>
+<h4 id="function"><a href="#function" class="headerlink" title="function"></a>function</h4><p>类模板 <code>std::function</code> 是通用多态函数封装器。 <code>std::function</code> 的实例能存储、复制及调用任何可调用(Callable)目标——函数、 lambda表达式、 bind表达式或其他函数对象，还有指向成员函数指针和指向数据成员指针。</p>
+<p>之前，我们举例符<code>function</code>的例子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::function&lt;<span class="keyword">int</span>(<span class="keyword">int</span>)&gt; sum_func = [](<span class="keyword">int</span> x)&#123; <span class="keyword">return</span> x; &#125;;</div></pre></td></tr></table></figure></p>
+<p>以上，就是C++标准库常用到lambda表达式的地方，但其实还有一些被封装到了例如<code>&lt;memory&gt;</code>等库中，在这里并没有被列出。代码重构时希望大家能够好好利用标准库函数，写出友好而又高效的代码。</p>
+<p>C++ 17标准对<code>auto</code>的使用又做了一些加强，其中有涉及到lambda表达式的地方，希望各位仔细查找相关资料进行学习；C++ 20标准已提出了模版lambda表达式，大家可以关注一下。目前，我在Window环境下使用C++，使用的是MSVC 14.0的编译器，对C++ 17还并不完全，可能需要尽快更换到更新的编译器下使用，而且将学习并使用Boost C++库进行开发。</p>
+<h3 id="Qt库信号槽中使用Lambda表达式"><a href="#Qt库信号槽中使用Lambda表达式" class="headerlink" title="Qt库信号槽中使用Lambda表达式"></a>Qt库信号槽中使用Lambda表达式</h3><p>Qt库是我最近比较常用的C++库，但Qt库对lambda表达式的支持并没有像C++标准库那样完善。例如，QThread类就不支持构造函数使用lambda表达式进行初始化(Qt 5.9及之前， Qt dev版还未使用过)。但Qt的 <strong>Signals &amp; Slots</strong> 机制已对lambda表达式进行了支持。</p>
+<p>十分推荐大家在Qt库的基础上使用lambda表达式这一特性：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">connect(sender, &amp;QObject::destroyed, [<span class="string">=</span>](<span class="link"></span>)&#123; this-&gt;m_objects.remove(sender); &#125;);</div></pre></td></tr></table></figure></p>
+<p>在使用信号槽机制的时候，或者说我们在应用事件驱动机制来设计程序时，通常需要一个在某一特定上下文环境下的某一段代码进行执行，在没有lambda表达式前，我们需要写一个函数或者一个类，然后将需要的参数传进去，再将该Callable对象送到槽函数上，或者在槽函数里调用。而现在，我们只需要写一个匿名的lambda表达式，不仅可以捕捉使用到的变量，还可以简化代码。</p>
+<p>但在使用的过程中，要确定好捕获列表是否使用正确：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">connect(sender, &amp;QObject::destroyed, [<span class="string">=</span>](<span class="link"></span>)&#123; this-&gt;m_objects.remove(sender); &#125;);</div><div class="line"></div><div class="line">connect(sender, &amp;QObject::destroyed, [<span class="string">&amp;</span>](<span class="link"></span>)&#123; this-&gt;m_objects.remove(sender); &#125;);</div></pre></td></tr></table></figure></p>
+<p>上面两个<code>connect</code>区别在于捕获列表，一种是 <code>=</code> ，另外一种是 <code>&amp;</code> ，一般情况下，使用第一种基本上不会出现什么问题，但对于不可复制类型(删除了复制构造函数和赋值符号函数)，可能就需要特殊注意一下。第二种，我们要明确connect这个模版函数会将后面的槽函数发送到一个其他作用域中进行执行，或者发送到一个事件循环作用域中执行，使用时需要注意，捕获列表中的变量是否会在析构后被调用，如果确保不会，则使用这种捕获列表的形式可以提高一些性能，且不用费劲设计一些调用函数。</p>
+<p>使用lambda表达式，可以让我们不必要设计一些类型用来装slot函数，于是我们可以通过一段简洁的代码，来启动一个简单的FileDialog来保存文件：<br><figure class="highlight zephir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">void saveDocumentAs() </div><div class="line">&#123;</div><div class="line">    QFileDialog *dlg = <span class="keyword">new</span> QFileDialog();</div><div class="line">    dlg-&gt;open();</div><div class="line">    QObject::connect(dlg, &amp;QDialog::finished, [=](<span class="keyword">int</span> result) &#123;</div><div class="line">        <span class="keyword">if</span> (result) &#123;</div><div class="line">            QFile file(dlg-&gt;selectedFiles().first());</div><div class="line">            <span class="comment">// ... save document here ...</span></div><div class="line">        &#125;</div><div class="line">        dlg-&gt;deleteLater();</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>或者启动一个QNetworkManager和QEventLoop来实现一个同步http请求：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">int <span class="symbol">CNetworkManager:</span><span class="symbol">:sync_request</span>(UrlType type, const <span class="symbol">std:</span><span class="symbol">:vector&lt;QString&gt;&amp;</span> value, </div><div class="line">	<span class="symbol">std:</span><span class="symbol">:function&lt;void</span>(const QByteArray&amp;)&gt; success_func)</div><div class="line">&#123;</div><div class="line">	int res = <span class="number">0</span>;</div><div class="line">	<span class="symbol">std:</span><span class="symbol">:shared_ptr&lt;QEventLoop&gt;</span> loop(new QEventLoop, [](QEventLoop* loop) &#123;</div><div class="line">		loop-&gt;deleteLater();</div><div class="line">	&#125;);</div><div class="line">	<span class="symbol">std:</span><span class="symbol">:shared_ptr&lt;QTimer&gt;</span> timer(new QTimer, [](QTimer* timer) &#123;</div><div class="line">		timer-&gt;deleteLater();</div><div class="line">	&#125;);</div><div class="line">	<span class="symbol">std:</span><span class="symbol">:shared_ptr&lt;QNetworkAccessManager&gt;</span> manager(new QNetworkAccessManager, </div><div class="line">		[](QNetworkAccessManager* manager) &#123;</div><div class="line">		manager-&gt;deleteLater();</div><div class="line">	&#125;);</div><div class="line">	auto url = generate_post_url(_http, httpUrl[type], in_type[type], value);</div><div class="line">	auto body = generate_post_body(in_type[type], value);</div><div class="line">	auto request = generate_request(url);</div><div class="line"></div><div class="line">	connect(timer.get(), &amp;<span class="symbol">QTimer:</span><span class="symbol">:timeout</span>, loop.get(), &amp;<span class="symbol">QEventLoop:</span><span class="symbol">:quit</span>);</div><div class="line">	connect(manager.get(), &amp;<span class="symbol">QNetworkAccessManager:</span><span class="symbol">:finished</span>, loop.get(), &amp;<span class="symbol">QEventLoop:</span><span class="symbol">:quit</span>);</div><div class="line">	connect(manager.get(), &amp;<span class="symbol">QNetworkAccessManager:</span><span class="symbol">:finished</span>, [&amp;](QNetworkReply* reply) &#123;</div><div class="line">		if (reply-&gt;error() == <span class="symbol">QNetworkReply:</span><span class="symbol">:NoError</span>)</div><div class="line">			success_func(reply-&gt;readAll());</div><div class="line">		reply-&gt;deleteLater();</div><div class="line">		qDebug() &lt;&lt; reply-&gt;error();</div><div class="line">	&#125;);</div><div class="line"></div><div class="line">	auto reply = manager-&gt;post(request, body);</div><div class="line">	timer-&gt;start(<span class="number">10000</span>);</div><div class="line">	loop-&gt;exec();</div><div class="line"></div><div class="line">	if (timer-&gt;isActive() == <span class="keyword">false</span>)</div><div class="line">		res = <span class="number">1</span>;</div><div class="line">	else</div><div class="line">		timer-&gt;stop();</div><div class="line">	</div><div class="line">	reply-&gt;abort(), reply-&gt;deleteLater();</div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面这段代码，混合使用了lambda表达式以及智能指针等C++ 11新特性。</p>
+<h3 id="用Lambda表达式代替回调函数"><a href="#用Lambda表达式代替回调函数" class="headerlink" title="用Lambda表达式代替回调函数"></a>用Lambda表达式代替回调函数</h3><p>在我们自己开发的软件中，我们可能会写出异步执行的函数，此时，我们就需要在异步执行之后，执行一个回调函数。在lambda表达式出现之后，一旦我们设计并开发出这种框架，那我们完全可以使用<code>std::function</code>来封装lambda表达式来使用，这样能够大大提高框架的灵活性。</p>
+<p>我们需要经常学习一些新的思路和方法，来不断重构我们自己的程序。</p>
+<h2 id="Lambda表达式相关内容"><a href="#Lambda表达式相关内容" class="headerlink" title="Lambda表达式相关内容"></a>Lambda表达式相关内容</h2><p>C++的概念中，<code>Callable</code> 是理解lambda表达式的重要概念，对象不仅仅是存储一些变量或者常量，还可以提供可调用的方法或函数，那在面向对象的思路中，函数也应当作为一个对象来理解，虽然函数的代码形式与 <code>class</code> 完全不同。实际上，C中的函数是一个指针，而C++也是继承了这一特性，<code>class</code> 类型也对应了一个指针，这个指针可以让我们获取其中的 <code>static</code> 函数，如：<code>MyClass::static_func()</code>。</p>
+<p>提到 <code>Callable</code> 我们就需要想到除lambda表达式之外的可调用对象，如 <code>funcObject</code>, <code>std::function</code>, <code>std::bind</code> 等。灵活运用它们可以提高框架的可读性。</p>
+<p>我最早见到lmabda表达式是在学习JavaScript时看到的，浏览器就是一个EventLoop框架，这个框架会执行JavaScript脚本，如果你使用了<br><figure class="highlight d"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">function</span> addEventListener(<span class="built_in">string</span> eventFlag, <span class="built_in">function</span> eventFunc, [<span class="built_in">bool</span> useCapture=<span class="literal">false</span>])</div></pre></td></tr></table></figure></p>
+<p>并且为某一个dom对象添加了click事件监听：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> button = <span class="built_in">document</span>.getElementById(<span class="string">"button_submit"</span>);</div><div class="line">button.attachEvent(<span class="string">"onclick"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">// ....</span></div><div class="line">&#125; , <span class="literal">false</span>);</div></pre></td></tr></table></figure></p>
+<p>则浏览器会在button上添加一个点击事件。</p>
+<p>由于JavaScript的变量作用域与C++完全不同，使用js的人提出了“闭包”概念，虽然C++上可能完全没有必要，但也需要了解一下。</p>
+<p>在python下，我们可以如下方式使用：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">low = 3</div><div class="line">high = 7</div><div class="line">aList = [1, 2, 3, 4, 5, 6, 7, 8, 9]</div><div class="line">filter(lambda x, l = low, h = high : h &gt; x &gt; l, aList)</div></pre></td></tr></table></figure></p>
+<p>这些脚本语言的lambda表达式形式，比起C++来讲，简洁许多。但随着新标准出现，C++的lambda表达式会变得<del>越来越简单(我是不信的)</del>。</p>
+<p>本段内容限于本人经验，不能详细解释。</p>
+<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
+<li><a href="http://zh.cppreference.com/w/cpp/language/lambda" target="_blank" rel="external">Lambda 表达式 （自C++11起）</a></li>
+<li><a href="http://en.cppreference.com/w/cpp/language/lambda" target="_blank" rel="external">Lambda expressions (since C++11)</a></li>
+<li><a href="https://www.devbean.net/2012/05/cpp11-lambda/" target="_blank" rel="external">C++11 新特性：Lambda 表达式</a></li>
+<li><a href="http://doc.qt.io/qt-5/signalsandslots.html" target="_blank" rel="external">Signals &amp; Slots | Qt Core 5.9</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/09/C++ 11 and 14 Lambda表达式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Vulkan Samples Tutorial 8" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -375,141 +554,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/04/27/Vulkan Samples Tutorial 7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Vulkan Samples Tutorial 6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/26/Vulkan Samples Tutorial 6/">Vulkan Samples Tutorial 6</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/26/Vulkan Samples Tutorial 6/" class="archive-article-date">
-  	<time datetime="2017-04-26T06:26:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#shaders">Shaders</a><ul>
-<li><a href="#compiling-glsl-shaders-into-spir-v">Compiling GLSL Shaders into SPIR-V</a></li>
-<li><a href="#creating-vulkan-shader-modules">Creating Vulkan Shader Modules</a></li>
-</ul>
-</li>
-<li><a href="#create-the-framebuffers">Create the Framebuffers</a><ul>
-<li><a href="#the-vulkan-framebuffer">The vulkan Framebuffer</a></li>
-</ul>
-</li>
-<li><a href="#create-a-vertex-buffer">Create a Vertex Buffer</a><ul>
-<li><a href="#creating-the-vertex-buffer-object">Creating the Vertex Buffer Object</a></li>
-<li><a href="#allocating-the-vertex-buffer-memory">Allocating the Vertex Buffer Memory</a></li>
-<li><a href="#store-the-vertex-data-in-the-buffer">Store the Vertex Data in the Buffer</a></li>
-<li><a href="#describing-the-input-vertex-data">Describing the Input Vertex Data</a></li>
-<li><a href="#binding-the-vertex-buffer-to-a-render-pass">Binding the Vertex Buffer to a Render Pass</a></li>
-</ul>
-</li>
-</ul>
-<!-- /TOC -->
-<h2 id="Shaders"><a href="#Shaders" class="headerlink" title="Shaders"></a>Shaders</h2><p>本章节代码在<code>11-init_shaders.cpp</code>文件中。</p>
-<h3 id="Compiling-GLSL-Shaders-into-SPIR-V"><a href="#Compiling-GLSL-Shaders-into-SPIR-V" class="headerlink" title="Compiling GLSL Shaders into SPIR-V"></a>Compiling GLSL Shaders into SPIR-V</h3><p>Vulkan中底层着色器（shader）使用的代码是<code>SPIR-V</code>。样例程序调用了一个函数工具，使用着色器编译器将GLSL转换了成SPIR-V：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLSLtoSPV(VK_SHADER_STAGE_VERTEX_BIT, vertShaderText, vtx_spv);</div></pre></td></tr></table></figure></p>
-<p>着色器源代码在<code>vertShaderText</code>变量中，编译SPIR-V得到的返回值在<code>vtx_spv</code>中，它是一个<code>unsigned int</code>的vector，适合于存储SPIR-V代码。</p>
-<p>从样例代码中可以找到顶点着色器的着色源码，注意，样例同时也提供了片段着色器（fragment shader）源码，他们的编译方法和过程类似。</p>
-<p>同时，我们应当注意到，代码中给出的着色器代码都是简单的着色器。顶点着色器只是简单地把颜色传递到输出，并且用MVP矩阵（MVP可以参考以前的章节）变换位置。片段着色器甚至更简单，仅仅传递颜色至输出。</p>
-<p>在这个简单的样例中，有两个着色阶段：顶点着色阶段和片段着色阶段，顺序存储在<code>info.shaderStages</code>中。</p>
-<h3 id="Creating-Vulkan-Shader-Modules"><a href="#Creating-Vulkan-Shader-Modules" class="headerlink" title="Creating Vulkan Shader Modules"></a>Creating Vulkan Shader Modules</h3><p>在Vulkan中，通过创建<code>VkShaderModule</code>来经过编译的着色器代码，并且存储在结构体<code>VkPipelineShaderStageCreateInfo</code>中，这个结构体在后面的另一个样例中用到，作为创建整个图形管线的一部分。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">VkShaderModuleCreateInfo moduleCreateInfo;</div><div class="line">moduleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;</div><div class="line">moduleCreateInfo.pNext = NULL;</div><div class="line">moduleCreateInfo.flags = 0;</div><div class="line">moduleCreateInfo.codeSize = vtx_spv.size() * sizeof(unsigned int);</div><div class="line">moduleCreateInfo.pCode = vtx_spv.data();</div><div class="line">res = vkCreateShaderModule(info.device, &amp;moduleCreateInfo, NULL,</div><div class="line">                           &amp;info.shaderStages[0].module);</div></pre></td></tr></table></figure></p>
-<p>注意，从GLSL转换到的SPIR-V代码是用来创建着色器模块(shader module)。用同样的过程为片段着色器创建<code>vkShaderModule</code>，并将它存储在<code>info.shaderStages[1].module</code>中。</p>
-<p>与此同时，也可以完成一些着色器管线阶段(pipeline shader stage)中附加的creation info的初始化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">info.shaderStages[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;</div><div class="line">info.shaderStages[0].pNext = NULL;</div><div class="line">info.shaderStages[0].pSpecializationInfo = NULL;</div><div class="line">info.shaderStages[0].flags = 0;</div><div class="line">info.shaderStages[0].stage = VK_SHADER_STAGE_VERTEX_BIT;</div><div class="line">info.shaderStages[0].pName = &quot;main&quot;;</div></pre></td></tr></table></figure></p>
-<p>现在，着色器可以运行了。</p>
-<hr>
-<h2 id="Create-the-Framebuffers"><a href="#Create-the-Framebuffers" class="headerlink" title="Create the Framebuffers"></a>Create the Framebuffers</h2><p>本章节代码在<code>12-init_frame_buffers.cpp</code>文件中。</p>
-<h3 id="The-vulkan-Framebuffer"><a href="#The-vulkan-Framebuffer" class="headerlink" title="The vulkan Framebuffer"></a>The vulkan Framebuffer</h3><p>帧缓冲（Framebuffers）是一种被渲染通道对象使用的内存附件集合。这些内存附件的例子包括前面创建的例子中的颜色图像缓存和深度缓存。渲染时，帧缓存提供了渲染通道需要的附件。</p>
-<p>在前面的交换链（swapchain）样例中，我们创建一个交换链，它为在交换链中的每一“帧”(frame)提供一个颜色图像附件。在深度缓存样例中，我们也创建了一个深度图象附件，它被每一帧中每一个图像附件重复使用。</p>
-<p>在渲染通道(render pass)样例中，我们创建了一个描述附件性质的渲染通道，但是事实上我们并没有将实际资源（即images）与渲染通道连接起来。帧缓存本质上将实际的附件与渲染通道联系起来。</p>
-<p>举个例子，如果swapchain有两帧，那么需要创建两个帧缓存。第一个帧缓存包括第一个颜色图像缓存，它可以在swapchain例子中用<code>vkGetSwapchainImagesKHR()</code>获取到。在depthbuffer例子中，第一个帧缓存也包括我们创建的单个深度缓存。第二个帧缓存包括第二个颜色图像缓存和在第一个帧缓存中使用的同一个深度缓存。</p>
-<p><img src="/2017/04/26/Vulkan Samples Tutorial 6/FrameBuffers.png" alt="FrameBuffers"></p>
-<p>看样例代码，我们开始时声明了一个包括两个附件的数组，预初始化第二个附件给深度缓存，这是因为它会被所有的帧缓存使用。随后我们填充第一个附件。注意，”view”对象的作用是引用这个图像，由于视图对象(view)包括用来描述缓存的格式和用法的附加元数据(metadata)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">VkImageView attachments[2];</div><div class="line">attachments[1] = info.depth.view;</div></pre></td></tr></table></figure></p>
-<p>接下来，填充create info结构:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">VkFramebufferCreateInfo fb_info = &#123;&#125;;</div><div class="line">fb_info.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;</div><div class="line">fb_info.pNext = NULL;</div><div class="line">fb_info.renderPass = info.render_pass;</div><div class="line">fb_info.attachmentCount = 2;</div><div class="line">fb_info.pAttachments = attachments;</div><div class="line">fb_info.width = info.width;</div><div class="line">fb_info.height = info.height;</div><div class="line">fb_info.layers = 1;</div></pre></td></tr></table></figure></p>
-<p>样例支持运行时确定的swapchain数量，所以动态地分配帧缓存处理的数组array。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">info.framebuffers = (VkFramebuffer *)malloc(info.swapchainImageCount *</div><div class="line">                                            sizeof(VkFramebuffer));</div></pre></td></tr></table></figure></p>
-<p>对每一个帧缓存，设置第一个附件给swapchain中每个各自的颜色图像缓存，设置第二个附件给相同的深度缓存，所以被所有帧缓存共享。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for (int i = 0; i &lt; info.swapchainImageCount; i++) &#123;</div><div class="line">    attachments[0] = info.buffers[i].view;</div><div class="line">    res = vkCreateFramebuffer(info.device, &amp;fb_info, NULL, &amp;info.framebuffers[i]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>注意，在renderpass样例中，我们定义的相同的渲染通道也与每一个帧缓存相联系。</p>
-<hr>
-<h2 id="Create-a-Vertex-Buffer"><a href="#Create-a-Vertex-Buffer" class="headerlink" title="Create a Vertex Buffer"></a>Create a Vertex Buffer</h2><p>本章节代码在<code>13-init_vertex_buffer.cpp</code>文件中。</p>
-<p>顶点缓存（vertex buffer）是可见的CPU和可见的GPU缓存，包括描述渲染对象的几何结构的顶点数据（vertex data）。总之，顶点数据由数据的位置（x,y,z）和选择的颜色（color）、法线（normal）或其它的信息组成。像其它的3D APIs，在画图操作中，这里的方法是用顶点数据填充缓存，并把它传给GPU。</p>
-<h3 id="Creating-the-Vertex-Buffer-Object"><a href="#Creating-the-Vertex-Buffer-Object" class="headerlink" title="Creating the Vertex Buffer Object"></a>Creating the Vertex Buffer Object</h3><p>创建vertex buffer与创建uniform buffer几乎一致，就像在uniform sample中一样，以创建一个缓存对象开始。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">VkBufferCreateInfo buf_info = &#123;&#125;;</div><div class="line">buf_info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;</div><div class="line">buf_info.pNext = NULL;</div><div class="line">buf_info.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;</div><div class="line">buf_info.size = sizeof(g_vb_solid_face_colors_Data);</div><div class="line">buf_info.queueFamilyIndexCount = 0;</div><div class="line">buf_info.pQueueFamilyIndices = NULL;</div><div class="line">buf_info.sharingMode = VK_SHARING_MODE_EXCLUSIVE;</div><div class="line">buf_info.flags = 0;</div><div class="line">res = vkCreateBuffer(info.device, &amp;buf_info, NULL, &amp;info.vertex_buffer.buf);</div></pre></td></tr></table></figure></p>
-<p>创建uniform buffer对象与vertex buffer对象实际上唯一不同是<code>usage</code>参数的设置。</p>
-<p>立方体数据（<code>g_vb_solid_face_colors_Data</code>）由定义了12个三角形的36个顶点构成，立方体的6个面中，每一个面包括2个三角形。每一个三角形都有一个面的颜色。从<code>cube_data.h</code>中可以看到真实的数据。</p>
-<h3 id="Allocating-the-Vertex-Buffer-Memory"><a href="#Allocating-the-Vertex-Buffer-Memory" class="headerlink" title="Allocating the Vertex Buffer Memory"></a>Allocating the Vertex Buffer Memory</h3><p>此外，分配vertex buffer的步骤与分配uniform buffer的步骤相似。首先，查询获取内存的requirements，它包括考虑机器的限制条件，如对齐（alignment）。从样例中的代码中可以看到这个过程与uniform样例非常相似。</p>
-<h3 id="Store-the-Vertex-Data-in-the-Buffer"><a href="#Store-the-Vertex-Data-in-the-Buffer" class="headerlink" title="Store the Vertex Data in the Buffer"></a>Store the Vertex Data in the Buffer</h3><p>一旦vertex buffer的内存分配完，然后进行内存映射操作、使用顶点数据进行初始化、之后进行解除映射操作(在之前使用uniform buffer时，解释过为何要在使用之后立即解除映射)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">uint8_t *pData;</div><div class="line">res = vkMapMemory(info.device, info.vertex_buffer.mem, 0,</div><div class="line">                  mem_reqs.size, 0, (void **)&amp;pData);</div><div class="line"></div><div class="line">memcpy(pData, g_vb_solid_face_colors_Data,</div><div class="line">       sizeof(g_vb_solid_face_colors_Data));</div><div class="line"></div><div class="line">vkUnmapMemory(info.device, info.vertex_buffer.mem);</div></pre></td></tr></table></figure></p>
-<p>最后一步，将内存绑定到缓存对象上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">res = vkBindBufferMemory(info.device, info.vertex_buffer.buf,</div><div class="line">                         info.vertex_buffer.mem, 0);</div></pre></td></tr></table></figure></p>
-<h3 id="Describing-the-Input-Vertex-Data"><a href="#Describing-the-Input-Vertex-Data" class="headerlink" title="Describing the Input Vertex Data"></a>Describing the Input Vertex Data</h3><p>样例中的顶点数据如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">struct Vertex &#123;</div><div class="line">    float posX, posY, posZ, posW; // Position data</div><div class="line">    float r, g, b, a;             // Color</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>我们需要创建一个顶点输入的绑定来为GPU描述数据的组织形式。虽然是在这里进行<code>vi_binding</code>和<code>vi_attribs</code>成员的设置，但他们将在后面的样例中作为创建图形管线的一部分。注意看西面顶点数据的格式，这是个很好的参考样例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">info.vi_binding.binding = 0;</div><div class="line">info.vi_binding.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;</div><div class="line">info.vi_binding.stride = sizeof(g_vb_solid_face_colors_Data[0]);</div><div class="line"></div><div class="line">info.vi_attribs[0].binding = 0;</div><div class="line">info.vi_attribs[0].location = 0;</div><div class="line">info.vi_attribs[0].format = VK_FORMAT_R32G32B32A32_SFLOAT;</div><div class="line">info.vi_attribs[0].offset = 0;</div><div class="line">info.vi_attribs[1].binding = 0;</div><div class="line">info.vi_attribs[1].location = 1;</div><div class="line">info.vi_attribs[1].format = VK_FORMAT_R32G32B32A32_SFLOAT;</div><div class="line">info.vi_attribs[1].offset = 16;</div></pre></td></tr></table></figure></p>
-<p><code>stride</code>表示一个顶点数据的大小，也可以表示成获取下一个顶点数据需要的字节长度。</p>
-<p><code>binding</code>和<code>location</code>成员表示他们在GLSL着色器源码中各自的值。可以在shader样例中回顾shader源码。</p>
-<p>尽管我们让<code>vi_attribs[0]</code>表示顶点位置数据的信息，但在<code>info.vi_attribs[0]</code>中，实际上是<code>format</code>属性用4个字节颜色格式(即<code>VK_FORMAT_R32G32B32A32_SFLOAT</code>)来为GPU描述数据格式的。那<code>vi_attribs[1]</code>很自然地使用来表示颜色数据，所以我们可以看到<code>info.vi_attribs[1].format</code>的颜色格式设置。</p>
-<p><code>offset</code>成员表示顶点数据中每个属性的偏移量(在OpenGL中也有这个概念，即第一个顶点数据是从0字节开始的，第一个颜色数据是从16字节开始的，然后根据它们的<code>format</code>来计算下一个数据的位置)。</p>
-<h3 id="Binding-the-Vertex-Buffer-to-a-Render-Pass"><a href="#Binding-the-Vertex-Buffer-to-a-Render-Pass" class="headerlink" title="Binding the Vertex Buffer to a Render Pass"></a>Binding the Vertex Buffer to a Render Pass</h3><p>由于后面样例可以看到，我们可以掠过render pass中的大部分代码。然后找到绑定vertex buffer到render pass的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vkCmdBeginRenderPass(info.cmd, &amp;rp_begin, VK_SUBPASS_CONTENTS_INLINE);</div><div class="line"></div><div class="line">vkCmdBindVertexBuffers(info.cmd, 0,             /* Start Binding */</div><div class="line">                       1,                       /* Binding Count */</div><div class="line">                       &amp;info.vertex_buffer.buf, /* pBuffers */</div><div class="line">                       offsets);                /* pOffsets */</div><div class="line"></div><div class="line">vkCmdEndRenderPass(info.cmd);</div></pre></td></tr></table></figure></p>
-<p>注意，在渲染通道中，只能用一个render pass链接vertex buffer；也就是，当记录命令缓冲区时，在<code>vkCmdBeginRenderPass</code>和<code>vkCmdEndRenderPass</code>之间的代码进行额。当画图时，必须告诉GPU用什么顶点缓存。</p>
-<hr>
-<p>本篇<strong>Vulkan Samples Tutorial</strong>原文是<strong>LUNAEXCHANGE</strong>中的<a href="https://vulkan.lunarg.com/doc/sdk/1.0.42.1/windows/tutorial/html/index.html" target="_blank" rel="external">Vulkan Tutorial</a>的译文。<br>并非逐字逐句翻译，如有错误之处请告知。O(∩_∩)O谢谢~~</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vulkan</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/26/Vulkan Samples Tutorial 6/">展开全文 >></a>
         </p>
       
 

@@ -151,6 +151,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Processing Programs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/13/Processing Programs/">Processing Program</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/13/Processing Programs/" class="archive-article-date">
+  	<time datetime="2017-03-13T14:29:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#processing-简介">Processing 简介</a></li>
+<li><a href="#无意中找到了这个">无意中找到了这个……</a></li>
+<li><a href="#这里有一个3d-delauny-triangulation算法">这里有一个3D Delauny Triangulation算法</a></li>
+<li><a href="#感谢">感谢</a></li>
+</ul>
+<!-- /TOC -->
+<h2 id="Processing-简介"><a href="#Processing-简介" class="headerlink" title="Processing 简介"></a>Processing 简介</h2><p><strong>Processing</strong>是一种具有革命前瞻性的新兴计算机语言，它的概念是在电子艺术的环境下介绍程序语言，并将电子艺术的概念介绍给程序设计师。它是 <strong>Java</strong> 语言的延伸，并支持许多现有的 Java 语言架构，不过在语法 (<code>syntax</code>) 上简易许多，并具有许多贴心及人性化的设计。<strong>Processing</strong> 可以在 <em>Windows、MAC OS X、MAC OS 9 、Linux</em> 等操作系统上使用。目前最新版本为<strong>Processing 3.3</strong>。以 <strong>Processing</strong> 完成的作品可在个人本机端作用，或以<strong>Java Applets</strong> 的模式外输至网络上发布。</p>
+<p>虽然图形用户界面(<code>GUI</code>)早在二十年前成为主流，但是基础编程语言的教学到今天仍是以命令行接口为主，学习编程语言为什么要那么枯燥呢？人脑天生擅长空间辨识，图形用户界面利用的正是这种优势，加上它能提供各种实时且鲜明的图像式反馈 (<strong>feedback</strong>)，可以大幅缩短学习曲线，并帮助理解抽象逻辑法则。举例来说，计算机屏幕上的一个像素(<strong>pixel</strong>) 就是一个变量值(<strong>the value of a variable</strong>) 的可视化表现。<strong>Processing</strong>将Java的语法简化并将其运算结果“感官化”，让使用者能很快享有声光兼备的交互式多媒体作品。</p>
+<p><strong>Processing</strong>的源代码是开放的，和近来广受欢迎的 Linux 操作系统、Mozilla浏览器、或Perl语言等一样，用户可依照自己的需要自由裁剪出最合适的使用模式。<strong>Processing</strong>的应用非常丰富，而且它们全部遵守开放源代码的规定，这样的设计大幅增加了整个社群的互动性与学习效率。</p>
+<h2 id="无意中找到了这个……"><a href="#无意中找到了这个……" class="headerlink" title="无意中找到了这个……"></a>无意中找到了这个……</h2><p>话说，我在公司里负责三维模型的处理，而我司的<strong>垃圾代码</strong>不仅经常出Bug，还要什么没什么，基本上只有一个简单的<strong>Mesh</strong>数据结构(OpenMesh)，矩阵计算也只支持 4x4 规模的。而我处理三维模型的点线面需要用到多维矩阵。不仅如此，接口调用复杂，一个想法难以用这套软件快速实现……最主要是没有API文档，没有注释，也不给看函数的实现，给的全是<strong>lib</strong>文件！！！</p>
+<p>我想写一下<strong>Delaunay三角化算法</strong>的实现也得先从<strong>参数化</strong>开始一步一步实现……</p>
+<p><strong>Processing</strong> 真是及时雨啊。</p>
+<h2 id="这里有一个3D-Delauny-Triangulation算法"><a href="#这里有一个3D-Delauny-Triangulation算法" class="headerlink" title="这里有一个3D Delauny Triangulation算法"></a>这里有一个3D Delauny Triangulation算法</h2><p>来自：<a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">www.openprocessing.org - By Tercel</a>，是一个日本人写的代码，我跑了一下效果如下：</p>
+<p><img src="/2017/03/13/Processing Programs/3d_Delaunay.gif" alt="3d_Delaunay"></p>
+<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
+<li><a href="https://www.openprocessing.org" target="_blank" rel="external">openprocessing</a> 软件的支持</li>
+<li><a href="https://www.openprocessing.org/sketch/31295#" target="_blank" rel="external">Tercel</a> 的实现</li>
+<li><a href="https://www.openprocessing.org/sketch/180760" target="_blank" rel="external">jakkubu</a> 的另外一种实现</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CG</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/13/Processing Programs/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Vulkan 简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -418,193 +512,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/05/C++ 11 模版使用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-C++ 11 右值引用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/03/C++ 11 右值引用/">C++ 11 右值引用</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/03/C++ 11 右值引用/" class="archive-article-date">
-  	<time datetime="2017-03-03T12:34:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#右值引用解决的问题">右值引用解决的问题</a></li>
-<li><a href="#c11之前与java的对比">C++11之前与Java的对比</a></li>
-<li><a href="#c11右值引用">C++11右值引用</a></li>
-<li><a href="#stdmoveval-和-stdforwardtt-val-的作用">std::move(val) 和 std::forward<t>(T&amp;&amp; val) 的作用</t></a></li>
-<li><a href="#右值引用使用注意">右值引用使用注意</a></li>
-<li><a href="#何时发生移动何时发生复制">何时发生移动，何时发生复制</a></li>
-<li><a href="#感谢">感谢</a></li>
-</ul>
-<!-- /TOC -->
-<h2 id="右值引用解决的问题"><a href="#右值引用解决的问题" class="headerlink" title="右值引用解决的问题"></a>右值引用解决的问题</h2><p>右值引用是 C++11 中最重要的新特性之一，它解决了C++中大量的历史遗留问题，使C++标准库的实现在多种场景下消除了不必要的额外开销(如<code>std::vector</code>, <code>std::string</code>)，也使得另外一些标准库成为可以实现的可能。在 C++11 之前，移动语义的确实是C++饱受诟病的问题之一。</p>
-<p>使用右值引用特性，可以实现：<strong>移动语义(move)</strong> 和 <strong>完美转发(perfect forwarding)</strong>。</p>
-<h2 id="C-11之前与Java的对比"><a href="#C-11之前与Java的对比" class="headerlink" title="C++11之前与Java的对比"></a>C++11之前与Java的对比</h2><p>右值引用与对象的资源所有权的交换复制有关。</p>
-<p>在之前初学Java时，我们就要明确两个概念：<strong>深复制</strong> 和 <strong>浅复制</strong> 。</p>
-<blockquote>
-<p>深复制：被复制对象的所有变量都含有与原来的对象相同的值，除去那些引用其他对象的变量。那些引用其他对象的变量将指向被复制过的新对象，而不再是原有的那些被引用的对象。换言之，深复制把要复制的对象所引用的对象都复制了一遍。</p>
-<p>浅复制：被复制对象的所有变量都含有与原来的对象相同的值，而所有的对其他对象的引用仍然指向原来的对象。换言之，浅复制仅仅复制所考虑的对象，而不复制它所引用的对象。</p>
-</blockquote>
-<p>在Java当中，所有的参数与赋值符号，实现的所有权转移都是使用<strong>传递引用</strong>，这里的引用与C中的引用概念类似，但C中的引用在使用过程中并不能改变引用的对象。Java 示例代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public static void main(String args[]) &#123;</div><div class="line">       long t1 = System.currentTimeMillis();</div><div class="line">       Professor p = new Professor(&quot;wangwu&quot;, 50);</div><div class="line">       Student s1 = new Student(&quot;zhangsan&quot;, 18, p);</div><div class="line">       Student s2 = s1; // 浅复制</div><div class="line">       s2.p.name = &quot;lisi&quot;;</div><div class="line">       s2.p.age = 30;</div><div class="line">       System.out.println(&quot;name=&quot; + s1.p.name + &quot;,&quot; + &quot;age=&quot; + s1.p.age);</div><div class="line">       long t2 = System.currentTimeMillis();</div><div class="line">       System.out.println(t2-t1);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<p>在上述代码中，s2改变则s1也会随之改变，很多情况下，当把s1放到一个函数参数位置上当作参数，参数获取的仍然也是s1的引用。但有一些函数提供复制的语义，如字符串的 “+” 操作符，它会将两个字符串拼成一个，但却是在内存中重新分配了空间。</p>
-<p><strong>浅复制</strong> 是移动语义的实现方法，速度快，同时能够保证不同作用域可以操作同一个对象。而当我们需要使用复制语义存储某一对象的副本时，例如我们存储一个<code>Student</code>对象的副本到ArrayList中，当我们改变了Student，ArrayList中的也随之改变，这并不是我们想要的结果，因此，需要使用 <strong>深复制</strong>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class Student implements Serializable &#123; </div><div class="line">    Student(String name, int age, Professor p) &#123;</div><div class="line">        this.name = name;</div><div class="line">        this.age = age;</div><div class="line">        this.p = p;</div><div class="line">    &#125;</div><div class="line">    public Object deepClone() &#123;</div><div class="line">        ByteArrayOutputStream bo = new ByteArrayOutputStream();</div><div class="line">        ObjectOutputStream oo = new ObjectOutputStream(bo);</div><div class="line">        oo.writeObject(this);</div><div class="line">        ByteArrayInputStream bi = new ByteArrayInputStream(bo.toByteArray());</div><div class="line">        ObjectInputStream oi = new ObjectInputStream(bi);</div><div class="line">        return (oi.readObject());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上述代码使用输入输出流将对象 <strong>串行化</strong> 之后进行了复制，返回了复制的对象的引用，调用这个函数可以获得一个<code>Studnet</code>的实例的副本。</p>
-<p>在C++中，浅复制代码可以写成下面这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">int main() </div><div class="line">&#123;</div><div class="line">        Professor p = Professor(&quot;wangwu&quot;, 50);</div><div class="line">        Student s1 = new Student(&quot;zhangsan&quot;, 18, p);</div><div class="line">        Student s2 = s1; // 深复制</div><div class="line">        s2.p.name = &quot;lisi&quot;;</div><div class="line">        s2.p.age = 30;</div><div class="line">        cout&lt;&lt; &quot;name=&quot; + s1.p.name + &quot;,&quot; + &quot;age=&quot; + s1.p.age &lt;&lt; endl;</div><div class="line">        return 0;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>而在C++的表现却是<strong>s1与s2并不是指向同一个对象</strong>，s1的改变并不会影响到s2中的值。 赋值符号”=”在这里会调用s2的复制构造函数，将s1当做复制构造函数的参数进行调用。如果不使用指针，无法实现Java中的<strong>浅复制</strong>。</p>
-<p>C++之所以与Java在内存管理方面存在上面所述的差异，原因是他们两种语言的内存回收方式的不同。C++（RAII机制）在栈上创建的对象(如局部变量)在离开作用于就会被<strong>析构</strong>，在堆上分配内存的对象只有在调用 <code>delete</code> 之后或者程序结束之后才会释放，而Java采用垃圾回收算法来判断是否回收创建的对象。</p>
-<p>C++的指针设计简单，应用灵活，但却很容易造成<strong>内存泄漏</strong>(即便采用 <del>谁开发谁治理</del> 谁负责申请内存谁就负责销毁的方法，在一些过程函数中难以定义“谁”，且在多人协作容易出现问题)，Java虽然采用垃圾回收机制却仍然无法避免使用不当产生的内存泄漏。</p>
-<h2 id="C-11右值引用"><a href="#C-11右值引用" class="headerlink" title="C++11右值引用"></a>C++11右值引用</h2><p>右值引用是C++11引入的与Lambda表达式齐名的重要特征之一。</p>
-<p>右值引用了解之前需要明确这几个定义：<strong>左值</strong>、<strong>右值</strong>，C++11标准中将右值划分出的<strong>纯右值</strong>、<strong>将亡值</strong>。</p>
-<blockquote>
-<p>左值(lvalue, left value)，顾名思义就是赋值符号左边的值。准确来说，左值是表达式（不一定是赋值表达式）后依然存在的持久对象。函数名和变量名（实际上是函数指针③和具名变量，具名变量如std::cin、std::endl等）、返回左值引用的函数调用、前置自增/自减运算符连接的表达式++i/–i、由赋值运算符或复合赋值运算符连接的表达式(a=b、a+=b、a%=b）、解引用表达式*p、字符串字面值”abc”等。</p>
-<p>右值(rvalue, right value)，右边的值，是指表达式结束后就不再存在的临时对象。</p>
-<p>纯右值(prvalue, pure rvalue)，纯粹的右值，要么是纯粹的字面量，例如 10, true；要么是求值结果相当于字面量或匿名(不具名)临时对象，例如 1+2。非引用返回的临时变量、运算表达式产生的临时变量、原始字面量、Lambda 表达式都属于纯右值。</p>
-<p>将亡值(xvalue, expiring value)，是 C++11 为了引入右值引用而提出的概念（因此在传统 C++中，纯右值和右值是统一个概念），也就是即将被销毁、却能够(或者说要使用移动)被移动的值。</p>
-</blockquote>
-<p>将亡值可能稍有些难以理解，我们来看这样的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt; createAVector() &#123;</div><div class="line">    std::vector&lt;int&gt; res = &#123;1, 2, 3, 4&#125;;</div><div class="line">    return res;</div><div class="line">&#125;</div><div class="line">std::vector&lt;int&gt; v = createAVector();</div></pre></td></tr></table></figure></p>
-<p>在这样的代码中，函数 <code>createAVector</code> 的返回值 <code>res</code> 在内部创建然后被赋值给 <code>v</code>，然而 <code>v</code> 获得这个对象时，会将整个 <code>res</code> 拷贝一份，然后把 <code>res</code> 销毁，如果这个 <code>res</code> 非常大，这将造成大量额外的开销（这也就是传统 C++ 一直被诟病的问题）。在最后一行中，<code>v</code> 是左值、<code>createAVector()</code> 返回的值就是右值（也是纯右值）。</p>
-<p>但是，<code>v</code> 可以被别的变量捕获到，而 <code>createAVector()</code> 产生的那个返回值作为一个临时值，一旦被 <code>v</code> 复制后，将立即被销毁，无法获取、也不能修改。</p>
-<p>将亡值就定义了这样一种行为：临时的值能够被识别、同时又能够被移动。</p>
-<p>需要拿到一个将亡值，就需要用到右值引用的申明：<code>T &amp;&amp;</code>，其中 <code>T</code> 是类型。右值引用的声明让这个临时值的生命周期得以延长、只要变量还活着，那么将亡值将继续存活。</p>
-<p>C++11 提供了 <code>std::move</code> 这个方法将左值参数无条件的转换为右值，有了它我们就能够方便的获得一个右值临时对象，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">void reference(std::string&amp; str) &#123;</div><div class="line">    std::cout &lt;&lt; &quot;左值&quot; &lt;&lt; std::endl;</div><div class="line">&#125;</div><div class="line">void reference(std::string&amp;&amp; str) &#123;</div><div class="line">    std::cout &lt;&lt; &quot;右值&quot; &lt;&lt; std::endl;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">    std::string  lv1 = &quot;string,&quot;;       // lv1 是一个左值</div><div class="line">    // std::string&amp;&amp; r1 = s1;           // 非法, 右值引用不能引用左值</div><div class="line">    std::string&amp;&amp; rv1 = std::move(lv1); // 合法, std::move可以将左值转移为右值</div><div class="line">    std::cout &lt;&lt; rv1 &lt;&lt; std::endl;      // string,</div><div class="line"></div><div class="line">    const std::string&amp; lv2 = lv1 + lv1; // 合法, 常量左值引用能够延长临时变量的申明周期</div><div class="line">    // lv2 += &quot;Test&quot;;                   // 非法, 引用的右值无法被修改</div><div class="line">    std::cout &lt;&lt; lv2 &lt;&lt; std::endl;      // string,string</div><div class="line"></div><div class="line">    std::string&amp;&amp; rv2 = lv1 + lv2;      // 合法, 右值引用延长临时对象声明周期</div><div class="line">    rv2 += &quot;Test&quot;;                      // 合法, 非常量引用能够修改临时变量</div><div class="line">    std::cout &lt;&lt; rv2 &lt;&lt; std::endl;      // string,string,string,</div><div class="line"></div><div class="line">    reference(rv2);                     // 输出左值</div><div class="line"></div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>注意：rv2 虽然引用了一个右值，但由于它是个具名变量可以在后面的代码中使用，所以 rv2 是一个左值。</strong></p>
-<p>在程序设计中，我们重点的是如何使用右值引用才能使程序效率提高，而不是区分哪些是左值，哪些是右值。</p>
-<blockquote>
-<p>事实上，将亡值不过是C++11提出的一块晦涩的语法糖。它与纯右值在功能上及其相似，如都不能做操作符的左操作数，都可以使用移动构造函数和移动赋值运算符。当一个纯右值来完成移动构造或移动赋值任务时，其实它也具有“将亡”的特点。一般我们不必刻意区分一个右值到底是纯右值还是将亡值。</p>
-</blockquote>
-<h2 id="std-move-val-和-std-forward-T-amp-amp-val-的作用"><a href="#std-move-val-和-std-forward-T-amp-amp-val-的作用" class="headerlink" title="std::move(val) 和 std::forward(T&amp;&amp; val) 的作用"></a>std::move(val) 和 std::forward<t>(T&amp;&amp; val) 的作用</t></h2><p><code>std::move(val)</code> 会将val强制转换成右值并返回该右值，代码如下（MSVC）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">template&lt;class _Ty&gt; inline</div><div class="line">	constexpr typename remove_reference&lt;_Ty&gt;::type&amp;&amp;</div><div class="line">		move(_Ty&amp;&amp; _Arg) _NOEXCEPT</div><div class="line">	&#123;	// forward _Arg as movable</div><div class="line">	return (static_cast&lt;typename remove_reference&lt;_Ty&gt;::type&amp;&amp;&gt;(_Arg));</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p><code>std::forward&lt;T&gt;(T&amp;&amp; val)</code> 会将val转换成与其传入时相同的类型并将转换后的进行返回，即如果传入时是左值则返回左值，如果传入的是右值则返回右值，实现代码（MSVC）如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">template&lt;class _Ty&gt; inline constexpr _Ty&amp;&amp; forward(</div><div class="line">typename remove_reference&lt;_Ty&gt;::type&amp;&amp; _Arg) _NOEXCEPT</div><div class="line">	&#123;	// forward an rvalue as an rvalue</div><div class="line">	static_assert(!is_lvalue_reference&lt;_Ty&gt;::value, &quot;bad forward call&quot;);</div><div class="line">	return (static_cast&lt;_Ty&amp;&amp;&gt;(_Arg));</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>使用方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">void fun(int &amp;x) &#123; cout &lt;&lt; &quot;lvalue ref&quot; &lt;&lt; endl; &#125;  </div><div class="line">void fun(int &amp;&amp;x) &#123; cout &lt;&lt; &quot;rvalue ref&quot; &lt;&lt; endl; &#125;  </div><div class="line">void fun(const int &amp;x) &#123; cout &lt;&lt; &quot;const lvalue ref&quot; &lt;&lt; endl; &#125;  </div><div class="line">void fun(const int &amp;&amp;x) &#123; cout &lt;&lt; &quot;const rvalue ref&quot; &lt;&lt; endl; &#125;  </div><div class="line">  </div><div class="line">template&lt;typename T&gt;  </div><div class="line">void PerfectForward(T &amp;&amp;t) &#123; fun(std::forward&lt;T&gt;(t)); &#125;  </div><div class="line">  </div><div class="line">int _tmain(int argc, _TCHAR* argv[])  </div><div class="line">&#123;  </div><div class="line">    PerfectForward(10);           // rvalue ref  </div><div class="line">  </div><div class="line">    int a;  </div><div class="line">    PerfectForward(a);            // lvalue ref  </div><div class="line">    PerfectForward(std::move(a)); // rvalue ref  </div><div class="line">  </div><div class="line">    const int b = 8;  </div><div class="line">    PerfectForward(b);            // const lvalue ref  </div><div class="line">    PerfectForward(std::move(b)); // const rvalue ref  </div><div class="line">  </div><div class="line">    system(&quot;pause&quot;);  </div><div class="line">    return 0;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>完美转发涉及到了<strong>引用折叠规则(reference collapsing rule)</strong>, 以及一个<strong>特殊原则</strong>，在  <a href="http://www.cnblogs.com/catch/p/3507883.html" target="_blank" rel="external">2.两个原则</a> 中有讲到，这两个原则应当归属在 <strong>模板</strong> 的新增特性里。</p>
-<blockquote>
-<p>注意：为了避免这两个原则对我们造成思维混乱，将其归为 <strong>完美转发</strong> ，并使用完美转发来解决根据输入的左值或右值调用参数为左值或右值的重载函数。 若要使用上述原则，则需要进行针对性的测试，并能根据实际情况测试出能得到自己想要的结果的使用方法才可以使用。</p>
-</blockquote>
-<h2 id="右值引用使用注意"><a href="#右值引用使用注意" class="headerlink" title="右值引用使用注意"></a>右值引用使用注意</h2><ul>
-<li><p>对于将亡值，如果对象能够调用 <strong>移动构造函数</strong> 和 <strong>移动赋值函数</strong>，则会自动使用 <strong>移动语义</strong>， 因此，对于右值引用在函数返回值方面，最佳使用方法是：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt; return_vector(void)</div><div class="line">&#123;</div><div class="line">    std::vector&lt;int&gt; tmp &#123;1,2,3,4,5&#125;;</div><div class="line">    return tmp;</div><div class="line">&#125;</div><div class="line"></div><div class="line">std::vector&lt;int&gt; rval_ref = return_vector();</div></pre></td></tr></table></figure>
-<p>  <strong>与我们之前写的函数并无其他特殊之处。</strong></p>
-</li>
-<li><p>无论是左值引用 <code>&amp;</code> 还是右值引用 <code>&amp;&amp;</code>，本质上都是 <strong>引用类型</strong>（是一种基本类型），以前使用 <code>&amp;</code> 会导致的错误的地方，把 <code>&amp;</code> 替换成 <code>&amp;&amp;</code> 也会出现错误。</p>
-<p>  错误使用 <code>&amp;&amp;</code> 和 <code>&amp;</code>的方法如下，该方法返回的对象临时的，在返回完成之后会被析构，导致引用指向错误，运行错误：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt;&amp;&amp; return_vector(void)</div><div class="line">&#123;</div><div class="line">    std::vector&lt;int&gt; tmp &#123;1,2,3,4,5&#125;;</div><div class="line">    return std::move(tmp);</div><div class="line">&#125;</div><div class="line"></div><div class="line">std::vector&lt;int&gt; &amp;&amp;rval_ref = return_vector();</div></pre></td></tr></table></figure>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt;&amp; return_vector(void)</div><div class="line">&#123;</div><div class="line">    std::vector&lt;int&gt; tmp &#123;1,2,3,4,5&#125;;</div><div class="line">    return tmp;</div><div class="line">&#125;</div><div class="line"></div><div class="line">std::vector&lt;int&gt; &amp;rval_ref = return_vector();</div></pre></td></tr></table></figure>
-</li>
-<li><p>如何使用右值引用，与上面同理，右值引用也是一种 <strong>引用类型</strong>，以前为了传参数避免参数调用复制构造而使用 <code>&amp;</code> 传引用的地方，或者返回一个非函数内创建的变量的引用而是用 <code>&amp;</code> 的地方，都是可以使用右值引用 <code>&amp;&amp;</code> 的地方。</p>
-<p>  <code>&amp;&amp;</code> 与 <code>&amp;</code> 的声明方法相同，只能在声明<strong>右值引用</strong>的同时必须指定一个引用对象。示例如下：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">MyString&amp; reference(MyString&amp; v) &#123;      // &amp; 引用在参数、返回值上的应用</div><div class="line">    std::cout &lt;&lt; &quot;左值引用&quot; &lt;&lt; std::endl;</div><div class="line">    return v;</div><div class="line">&#125;</div><div class="line">MyString c;</div><div class="line">MyString&amp; d = reference(c);</div></pre></td></tr></table></figure>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int&amp;&amp; reference(MyString&amp;&amp; v) &#123;         // &amp;&amp; 引用在参数、返回值上的应用</div><div class="line">    std::cout &lt;&lt; &quot;左值引用&quot; &lt;&lt; std::endl;</div><div class="line">    return std::move(v);                // 注意：这里需要将左值v转换成右值</div><div class="line">&#125;</div><div class="line">MyString c;</div><div class="line">MyString&amp;&amp; d = reference(std::move(c)); // 注意：这里需要将左值c转换成右值</div></pre></td></tr></table></figure>
-</li>
-<li><p>上述<strong>函数返回引用类型</strong>的用法很少用到，如需用到需要参考 <strong>输入输出流</strong> 的<code>&gt;&gt;</code> 或 <code>&lt;&lt;</code> 运算符的写法。我们经常用到的是在函数参数上声明<strong>引用类型</strong>，如 <code>reference(MyString&amp; v)</code>, 如果我们要使用 <strong>移动语义</strong> 对某一对象要将其移动函数内进行操作，则可有如下写法：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int&amp;&amp; reference(MyString&amp;&amp; v)  &#123;        // &amp;&amp; 引用在参数、返回值上的应用</div><div class="line">    MyString&amp;&amp; tmp = std::move(v);</div><div class="line">    ...                                 // op for tmp</div><div class="line">    ...                                 </div><div class="line">    return std::move(tmp);              // 注意：这里需要将左值v转换成右值</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>而实际上，我认为在使用移动语义的时候配合 <strong>完美转发(Perfect Forwarding)</strong> 则能够使函数提供更多的用法，典型用法可参考 <code>vector</code> 的 <code>void push_back(value_type&amp;&amp; _Val)</code>。<del>可我怎么觉得我很少能用到</del></p>
-<h2 id="何时发生移动，何时发生复制"><a href="#何时发生移动，何时发生复制" class="headerlink" title="何时发生移动，何时发生复制"></a>何时发生移动，何时发生复制</h2><p>在实际程序设计时，我们需要知道何时是调用 <strong>复制构造函数</strong> 与 <strong>复制赋值函数</strong>，何时调用 <strong>移动构造函数</strong> 与 <strong>移动赋值函数</strong>。下面是一个我<del>抄的(出处在最后的链接上)</del>一个类的写法，上面粗体的四个函数都有实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">class MyString &#123;</div><div class="line">private:</div><div class="line">    char* _data;</div><div class="line">    size_t   _len;</div><div class="line">    void _init_data(const char *s) &#123;</div><div class="line">        _data = new char[_len + 1];</div><div class="line">        memcpy(_data, s, _len);</div><div class="line">        _data[_len] = &apos;\0&apos;;</div><div class="line">    &#125;</div><div class="line">public:</div><div class="line">    MyString() &#123;</div><div class="line">        _data = NULL;</div><div class="line">        _len = 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    MyString(const char* p) &#123;</div><div class="line">        _len = strlen(p);</div><div class="line">        _init_data(p);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 复制构造函数, 标号1函数</div><div class="line">    MyString(const MyString&amp; str) &#123; </div><div class="line">        _len = str._len;</div><div class="line">        _init_data(str._data);</div><div class="line">        std::cout &lt;&lt; &quot;Copy Constructor is called! source: &quot; &lt;&lt; str._data &lt;&lt; std::endl;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 复制赋值函数, 标号2函数</div><div class="line">    MyString&amp; operator=(const MyString&amp; str) &#123; </div><div class="line">        if (this != &amp;str) &#123;</div><div class="line">            _len = str._len;</div><div class="line">            _init_data(str._data);</div><div class="line">        &#125;</div><div class="line">        std::cout &lt;&lt; &quot;Copy Assignment is called! source: &quot; &lt;&lt; str._data &lt;&lt; std::endl;</div><div class="line">        return *this;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 移动构造函数, 标号3函数</div><div class="line">    MyString(MyString&amp;&amp; str) &#123;</div><div class="line">        std::cout &lt;&lt; &quot;Move Constructor is called! source: &quot; &lt;&lt; str._data &lt;&lt; std::endl;</div><div class="line">        _len = str._len;</div><div class="line">        _data = str._data;</div><div class="line">        str._len = 0;</div><div class="line">        str._data = NULL;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 移动赋值函数, 标号4函数</div><div class="line">    MyString&amp; operator=(MyString&amp;&amp; str) &#123;</div><div class="line">        std::cout &lt;&lt; &quot;Move Assignment is called! source: &quot; &lt;&lt; str._data &lt;&lt; std::endl;</div><div class="line">        if (this != &amp;str) &#123;</div><div class="line">            _len = str._len;</div><div class="line">            _data = str._data;</div><div class="line">            str._len = 0;</div><div class="line">            str._data = NULL;</div><div class="line">        &#125;</div><div class="line">        return *this;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    virtual ~MyString() &#123;</div><div class="line">        if (_data) free(_data);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>接下来我们我们进行试验，来了解 <strong>移动</strong> 和 <strong>复制</strong> 的调用情况，先给出试验用的测试：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">int main() </div><div class="line">&#123;</div><div class="line">    std::vector&lt;MyString&gt; v;</div><div class="line">    MyString a0(&quot;a0&quot;), a1(&quot;a1&quot;), a2(&quot;a2&quot;);</div><div class="line"></div><div class="line">    a0 = a1;                        // 测试调用 复制</div><div class="line">    a0 = std::move(a2);             // 测试调用 移动</div><div class="line">    a0 = MyString(&quot;a4&quot;);            // 测试调用 移动 or 复制</div><div class="line">    a0 = creatAnNumString(1000);    // 测试调用 移动 or 复制</div><div class="line">    v.push_back(MyString(&quot;a5&quot;));    // 测试调用 移动 or 复制</div><div class="line">    v.push_back(a0);                // 测试调用 复制</div><div class="line">    v.push_back(std::move(a0));     // 测试调用 移动</div><div class="line">    </div><div class="line">    system(&quot;pause&quot;);</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<ul>
-<li><p>在1, 2, 3, 4都定义的情况下，我们会得到下面的结果：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Copy Assignment is called! source: a1</div><div class="line">Move Assignment is called! source: a2</div><div class="line">Move Assignment is called! source: a4</div><div class="line">Move Assignment is called! source: 1000</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Move Constructor is called! source: 1000</div><div class="line">Move Constructor is called! source: 1000</div></pre></td></tr></table></figure>
-</li>
-<li><p>在1,2,3都定义的情况下，我们会得到下面的结果：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Copy Assignment is called! source: a1</div><div class="line">Copy Assignment is called! source: a2</div><div class="line">Copy Assignment is called! source: a4</div><div class="line">Copy Assignment is called! source: 1000</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Move Constructor is called! source: a5</div><div class="line">Move Constructor is called! source: 1000</div><div class="line">Move Constructor is called! source: 1000</div></pre></td></tr></table></figure>
-</li>
-<li><p>在1,2都定义的情况，我们会得到下面的结果：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Copy Assignment is called! source: a1</div><div class="line">Copy Assignment is called! source: a2</div><div class="line">Copy Assignment is called! source: a4</div><div class="line">Copy Assignment is called! source: 1000</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Copy Constructor is called! source: 1000</div></pre></td></tr></table></figure>
-</li>
-<li><p>在只定义1的情况下，我们得到了一个运行错误的结果.在Debug的过程中，<code>a0 = MyString(&quot;a4&quot;);</code> 在运行时并<strong>未调用</strong>标号1函数，那没有调用 <strong>复制构造函数</strong> 则调用是使用了移动的 <strong>移动赋值函数</strong> 。 </p>
-</li>
-<li><p>在我们定义了1,3,4的情况下，我们得到如下结果:</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Copy Assignment is called! source: a1</div><div class="line">Move Assignment is called! source: a2</div><div class="line">Move Assignment is called! source: a4</div><div class="line">Move Assignment is called! source: 1000</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Copy Constructor is called! source: a5</div><div class="line">Copy Constructor is called! source: 1000</div><div class="line">Copy Constructor is called! source: 1000</div></pre></td></tr></table></figure>
-<p>  本次的输出，告诉我们<strong>第三句</strong>调用的是 <strong>移动赋值函数</strong>。</p>
-</li>
-<li>在1,2,3,4都未定义的情况下，我们在<strong>析构函数</strong>的时候，得到了一个运行错误，而析构函数做的是 <code>delete</code> 操作。</li>
-</ul>
-<p>上述输出结果告诉我们，要想像 <code>main()</code> 函数中那样调用，并且想得到自己最理想的调用结果，就需要自己设计能用的<strong>复制构造函数</strong> 与 <strong>复制赋值函数</strong>，以及 <strong>移动构造函数</strong> 与 <strong>移动赋值函数</strong> 或者 <strong>遵照C++新标准的推荐，避免使用C风格的指针</strong> 。</p>
-<p><del><strong>上述代码可能是使用了<code>C</code>风格的指针，导致在移动赋值函数调用之后，出现问题</strong></del>，本句存疑，容我之后好好想想。</p>
-<blockquote>
-<p>在这里解释一下为什么7行代码却输出了10行输出，原因在于 <code>vector</code> 身上，众所周知，<code>vector</code> 是一个动态数组，其内部的数据是连续存放的，因此，当 <code>vector</code> 每增加一个元素就需要判断一下vector的大小是否已经达到目前分配的最大数量，如果达到了最大数量则需要先申请一个更大的数组，然后将现在的元素 <strong>移动</strong> 或者 <strong>复制</strong> 到新的数组中进行存储，然后将新的元素追加到当前数组的最后位置。</p>
-<p>注意：一个类型如果明确它是可以移动的，则一定要显式定义它的 <strong>移动构造函数</strong> 与 <strong>移动赋值函数</strong>，若是明确它是可以拷贝的，则一定要显式定义它的 <strong>复制构造函数</strong> 与 <strong>复制赋值函数</strong>, 如果明确它不可以移动或者拷贝，则将其 <strong>私有化</strong> 即可封闭相应的函数调用。 </p>
-</blockquote>
-<p><strong>注意：涉及到新特性，需要进行针对特性的测试。</strong></p>
-<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><ul>
-<li><a href="http://www.ibm.com/developerworks/cn/aix/library/1307_lisl_c11/" target="_blank" rel="external">C++11 标准新特性: 右值引用与转移语义 - ibm</a></li>
-<li><a href="http://www.cnblogs.com/catch/p/3507883.html" target="_blank" rel="external">c++11 中的 move 与 forward - twoon</a></li>
-<li><a href="http://www.cnblogs.com/catch/p/5019402.html" target="_blank" rel="external">左值右值的一点总结 - twoon</a></li>
-<li><a href="http://blog.csdn.net/aqtata/article/details/35372769" target="_blank" rel="external">C++11：完美转发的使用 - 一如当初</a></li>
-<li><a href="http://www.cnblogs.com/zpcdbky/p/5275959.html" target="_blank" rel="external">话说C++中的左值、纯右值、将亡值 - 同勉共进</a></li>
-<li><a href="https://www.shiyanlou.com/courses/605/labs/2024/document" target="_blank" rel="external">C++ 11/14 高速上手教程 - 语言运行期的强化 - 实验楼</a></li>
-<li><a href="http://stackoverflow.com/questions/4986673/c11-rvalues-and-move-semantics-confusion-return-statement" target="_blank" rel="external">C++11 rvalues and move semantics confusion (return statement) - stackoverflow</a></li>
-<li><a href="http://en.cppreference.com/w/cpp/language/value_category" target="_blank" rel="external">Value categories - cppreference.com</a></li>
-<li><a href="http://en.cppreference.com/w/cpp/utility/forward" target="_blank" rel="external">std::forward</a></li>
-</ul>
-<p><strong>本文抄袭了他们的一些原文，如果作者禁止使用，则请告知，我会第一时间修改。</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/03/C++ 11 右值引用/">展开全文 >></a>
         </p>
       
 
